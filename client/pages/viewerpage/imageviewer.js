@@ -1,6 +1,6 @@
 import React from 'react';
 import path from 'path';
-import ReactCSSTransitionGroup from 'react-transition-group';
+import { CSSTransitionGroup } from 'react-transition-group';
 
 import { MenuBar } from './menubar';
 import { Bundle, Icon, NgIf, Loader, EventEmitter, EventReceiver } from '../../components/';
@@ -249,7 +249,7 @@ class ImageFancy extends React.Component {
             );
         }
         return (
-            <ReactCSSTransitionGroup transitionName="image" transitionLeave={true} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={5000} transitionAppearTimeout={5000} transitionLeaveTimeout={5000}>
+            <CSSTransitionGroup transitionName="image" transitionLeave={true} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={5000} transitionAppearTimeout={5000} transitionLeaveTimeout={5000}>
               <div key={this.props.url}>
                 <Img
                   src={this.props.url}
@@ -263,7 +263,7 @@ class ImageFancy extends React.Component {
                   onTouchMove={this.imageDrag.bind(this)}
                   draggable={this.props.draggable} />
               </div>
-            </ReactCSSTransitionGroup>
+            </CSSTransitionGroup>
         );
     }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactCSSTransitionGroup from 'react-transition-group';
+import { CSSTransitionGroup } from 'react-transition-group';
 
 import './connectpage.scss';
 import { Session } from '../model/';
@@ -95,14 +95,14 @@ export class ConnectPage extends React.Component {
                   <Loader/>
                 </NgIf>
                 <NgShow cond={this.state.loading === false}>
-                  <ReactCSSTransitionGroup transitionName="form" transitionLeave={false} transitionEnter={false} transitionAppear={true} transitionAppearTimeout={500}>
+                  <CSSTransitionGroup transitionName="form" transitionLeave={false} transitionEnter={false} transitionAppear={true} transitionAppearTimeout={500}>
                     <Form onLoadingChange={this.setLoading.bind(this)}
                           onError={this.onError.bind(this)}
                           onSubmit={this.onFormSubmit.bind(this)} />
-                  </ReactCSSTransitionGroup>
-                  <ReactCSSTransitionGroup transitionName="remember" transitionLeave={false} transitionEnter={false} transitionAppear={true} transitionAppearTimeout={5000}>
+                  </CSSTransitionGroup>
+                  <CSSTransitionGroup transitionName="remember" transitionLeave={false} transitionEnter={false} transitionAppear={true} transitionAppearTimeout={5000}>
                     <PoweredByFilestash />
-                  </ReactCSSTransitionGroup>
+                  </CSSTransitionGroup>
                 </NgShow>
               </Container>
             </div>

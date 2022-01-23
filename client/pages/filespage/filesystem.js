@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactCSSTransitionGroup from 'react-transition-group';
+import { CSSTransitionGroup } from 'react-transition-group';
 import { DropTarget } from 'react-dnd';
 
 import Path from 'path';
@@ -26,7 +26,7 @@ export class FileSystem extends React.PureComponent {
                   <FileZone path={this.props.path} />
                 </NgIf>
                 <NgIf className="list" cond={this.props.files.length > 0}>
-                  <ReactCSSTransitionGroup transitionName="filelist-item" transitionLeave={false} transitionEnter={false} transitionAppear={true} transitionAppearTimeout={200}>
+                  <CSSTransitionGroup transitionName="filelist-item" transitionLeave={false} transitionEnter={false} transitionAppear={true} transitionAppearTimeout={200}>
                   {
                       this.props.files.map((file, index) => {
                           if(file.type === 'directory' || file.type === 'file' || file.type === 'link' || file.type === 'bucket'){
@@ -35,7 +35,7 @@ export class FileSystem extends React.PureComponent {
                           return null;
                       })
                   }
-                  </ReactCSSTransitionGroup>
+                  </CSSTransitionGroup>
                 </NgIf>
                 <NgIf className="error" cond={this.props.files.length === 0}>
                   <p className="empty_image">

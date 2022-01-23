@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactCSSTransitionGroup from 'react-transition-group';
+import { CSSTransitionGroup } from 'react-transition-group';
 
 import { Container, Icon, NgIf } from '../../components/';
 import { Link } from 'react-router-dom';
@@ -16,7 +16,7 @@ export class FrequentlyAccess extends React.Component {
     render(){
         return (
             <div className="component_frequently-access">
-              <ReactCSSTransitionGroup transitionName="frequent-access" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={500} transitionAppearTimeout={300}>
+              <CSSTransitionGroup transitionName="frequent-access" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={500} transitionAppearTimeout={300}>
 			    <Container key={this.props.files === null ? 'nothing' : 'something'}>
 			      <NgIf cond={!!this.props.files && this.props.files.length > 0}>
                     <span className="caption">{t("Quick Access")}</span>
@@ -40,7 +40,7 @@ export class FrequentlyAccess extends React.Component {
                     { t("Frequently access folders will be shown here") }
                   </NgIf>
                 </Container>
-              </ReactCSSTransitionGroup>
+              </CSSTransitionGroup>
             </div>
         );
     }

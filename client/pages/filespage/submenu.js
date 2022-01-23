@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactCSSTransitionGroup from 'react-transition-group';
+import { CSSTransitionGroup } from 'react-transition-group';
 
 import { Card, NgIf, Icon, EventEmitter, Dropdown, DropdownButton, DropdownList, DropdownItem, Container } from '../../components/';
 import { pathBuilder, debounce, prompt } from '../../helpers/';
@@ -126,14 +126,14 @@ export class Submenu extends React.Component {
                     { window.innerWidth < 410 && t("New Directory").length > 10 ? t("New Directory", null, "NEW_DIRECTORY::SHORT") : t("New Directory") }
                   </NgIf>
                   <NgIf cond={this.props.selected.length > 0} type="inline" onMouseDown={this.onDownload.bind(this, this.props.selected)}>
-                    <ReactCSSTransitionGroup transitionName="submenuwithSelection" transitionLeave={false} transitionEnter={false} transitionAppear={true} transitionAppearTimeout={10000}>
+                    <CSSTransitionGroup transitionName="submenuwithSelection" transitionLeave={false} transitionEnter={false} transitionAppear={true} transitionAppearTimeout={10000}>
                       <span>{ t("Download") }</span>
-                    </ReactCSSTransitionGroup>
+                    </CSSTransitionGroup>
                   </NgIf>
                   <NgIf cond={this.props.selected.length > 0} type="inline" onMouseDown={this.onDelete.bind(this, this.props.selected)}>
-                    <ReactCSSTransitionGroup transitionName="submenuwithSelection" transitionLeave={false} transitionEnter={false} transitionAppear={true} transitionAppearTimeout={10000}>
+                    <CSSTransitionGroup transitionName="submenuwithSelection" transitionLeave={false} transitionEnter={false} transitionAppear={true} transitionAppearTimeout={10000}>
                       <span>{ t("Remove") }</span>
-                    </ReactCSSTransitionGroup>
+                    </CSSTransitionGroup>
                   </NgIf>
 
                   <Dropdown className="view sort" onChange={this.onSortChange.bind(this)}>

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ReactCSSTransitionGroup from "react-transition-group";
+import { CSSTransitionGroup } from "react-transition-group";
 
 import { Container, NgIf, Icon } from "../../components/";
 import "./menubar.scss";
@@ -10,7 +10,7 @@ export const MenuBar = (props) => {
     return (
         <div className="component_menubar">
           <Container>
-            <ReactCSSTransitionGroup transitionName="menubar" transitionLeave={false} transitionEnter={false} transitionAppear={true} transitionAppearTimeout={550}>
+            <CSSTransitionGroup transitionName="menubar" transitionLeave={false} transitionEnter={false} transitionAppear={true} transitionAppearTimeout={550}>
               <div className="titlebar" style={{letterSpacing: "0.3px"}}>{props.title}</div>
               <div className="action-item no-select">
                 <span className="specific">
@@ -18,7 +18,7 @@ export const MenuBar = (props) => {
                 </span>
                 { props.download === null ? null : <DownloadButton link={props.download} name={props.title} /> }
               </div>
-            </ReactCSSTransitionGroup>
+            </CSSTransitionGroup>
           </Container>
         </div>
     );

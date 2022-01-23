@@ -1,6 +1,6 @@
 import React from 'react';
 import EXIF from 'exif-js';
-import ReactCSSTransitionGroup from 'react-transition-group';
+import { CSSTransitionGroup } from 'react-transition-group';
 import { withRouter } from 'react-router-dom';
 
 import { NgIf, Icon, EventReceiver, MapShot, Button } from '../../components/';
@@ -262,67 +262,67 @@ export class LargeExif extends Exif{
         const formatCameraHeadline = () => {
             if(!this.format('model') || !this.format('focal')){
                 return (
-                    <ReactCSSTransitionGroup transitionName="placeholder" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={500} transitionAppearTimeout={500}>
+                    <CSSTransitionGroup transitionName="placeholder" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={500} transitionAppearTimeout={500}>
                       <span key={this.format('model')+this.format('model')}>-</span>
-                    </ReactCSSTransitionGroup>
+                    </CSSTransitionGroup>
                 );
             }
             return (
-                <ReactCSSTransitionGroup transitionName="text" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={300} transitionAppearTimeout={300}>
+                <CSSTransitionGroup transitionName="text" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={300} transitionAppearTimeout={300}>
                   <span key={this.format('model')}>
                     {this.format("model")} ({this.format("focal")})
                   </span>
-                </ReactCSSTransitionGroup>
+                </CSSTransitionGroup>
             );
         };
         const formatCameraDescription = () => {
             if(!this.format('shutter') || !this.format('aperture') || !this.format('focal')){
                 return (
-                    <ReactCSSTransitionGroup transitionName="placeholder" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={500} transitionAppearTimeout={500}>
+                    <CSSTransitionGroup transitionName="placeholder" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={500} transitionAppearTimeout={500}>
                       <span key={this.format('shutter')+this.format('aperture')+this.format('focal')}>-</span>
-                    </ReactCSSTransitionGroup>
+                    </CSSTransitionGroup>
                 );
             }
             return (
-                <ReactCSSTransitionGroup transitionName="text" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={300} transitionAppearTimeout={300}>
+                <CSSTransitionGroup transitionName="text" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={300} transitionAppearTimeout={300}>
                   <span key={this.format('shutter')}>
                     {this.format("aperture")} {this.format("shutter")} {this.format("iso")}
                   </span>
-                </ReactCSSTransitionGroup>
+                </CSSTransitionGroup>
             );
         };
 
         const formatCalendarHeadline = () => {
             if(!this.formatDate()){
                 return (
-                    <ReactCSSTransitionGroup transitionName="placeholder" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={500} transitionAppearTimeout={500}>
+                    <CSSTransitionGroup transitionName="placeholder" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={500} transitionAppearTimeout={500}>
                       <span key={this.formatDate()}>-</span>
-                    </ReactCSSTransitionGroup>
+                    </CSSTransitionGroup>
                 );
             }
             return (
-                <ReactCSSTransitionGroup transitionName="text" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={300} transitionAppearTimeout={300}>
+                <CSSTransitionGroup transitionName="text" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={300} transitionAppearTimeout={300}>
                   <span key={this.formatDate()}>
                     {this.formatDate()}
                   </span>
-                </ReactCSSTransitionGroup>
+                </CSSTransitionGroup>
             );
         };
 
         const formatCalendarDescription = () => {
             if(!this.formatTime()){
                 return (
-                    <ReactCSSTransitionGroup transitionName="placeholder" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={500} transitionAppearTimeout={500}>
+                    <CSSTransitionGroup transitionName="placeholder" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={500} transitionAppearTimeout={500}>
                       <span key={this.formatTime()}>-</span>
-                    </ReactCSSTransitionGroup>
+                    </CSSTransitionGroup>
                 );
             }
             return (
-                <ReactCSSTransitionGroup transitionName="text" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={300} transitionAppearTimeout={300}>
+                <CSSTransitionGroup transitionName="text" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={300} transitionAppearTimeout={300}>
                   <span key={this.formatTime()}>
                     {this.formatTime()}
                   </span>
-                </ReactCSSTransitionGroup>
+                </CSSTransitionGroup>
             );
         };
 
@@ -346,27 +346,27 @@ export class LargeExif extends Exif{
 
 
               <NgIf cond={this.state.location !== null}>
-                <ReactCSSTransitionGroup transitionName="image" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={300} transitionAppearTimeout={300}>
+                <CSSTransitionGroup transitionName="image" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={300} transitionAppearTimeout={300}>
                   <div key={JSON.stringify(this.state.location)}>
                     <MapShot
                       lat={DMSToDD(this.state.location && this.state.location[0])}
                       lng={DMSToDD(this.state.location && this.state.location[1])} />
                   </div>
-                </ReactCSSTransitionGroup>
+                </CSSTransitionGroup>
               </NgIf>
 
               <NgIf cond={!!this.state.all} className="more">
-                <ReactCSSTransitionGroup transitionName="image" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={300} transitionAppearTimeout={300}>
+                <CSSTransitionGroup transitionName="image" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={300} transitionAppearTimeout={300}>
                   <div key={this.state.all === null}>
                     <Button onClick={() => this.setState({show_more: !this.state.show_more})} theme="primary">MORE</Button>
                   </div>
-                </ReactCSSTransitionGroup>
+                </CSSTransitionGroup>
               </NgIf>
-              <ReactCSSTransitionGroup transitionName="image" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={300} transitionAppearTimeout={300}>
+              <CSSTransitionGroup transitionName="image" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={300} transitionAppearTimeout={300}>
                 <NgIf className="more_container" key={this.state.show_more} cond={!!this.state.show_more}>
                   { this.all_meta() }
                 </NgIf>
-              </ReactCSSTransitionGroup>
+              </CSSTransitionGroup>
             </div>
         );
     }

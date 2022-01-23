@@ -1,5 +1,5 @@
 import React from "react";
-import ReactCSSTransitionGroup from "react-transition-group";
+import { CSSTransitionGroup } from "react-transition-group";
 
 import { NgIf, Icon } from "./";
 import { notify } from "../helpers/";
@@ -66,7 +66,7 @@ export class Notification extends React.Component {
 
     render(){
         return (
-            <ReactCSSTransitionGroup transitionName="notification" transitionLeave={true} transitionLeaveTimeout={200} transitionEnter={true} transitionEnterTimeout={100} transitionAppear={false} className="component_notification">
+            <CSSTransitionGroup transitionName="notification" transitionLeave={true} transitionLeaveTimeout={200} transitionEnter={true} transitionEnterTimeout={100} transitionAppear={false} className="component_notification">
               <NgIf key={this.state.message_text+this.state.message_type+this.state.appear} cond={this.state.appear === true} className="no-select">
                 <div className={"component_notification--container "+(this.state.message_type || "info")}>
                   <div className="message">
@@ -77,7 +77,7 @@ export class Notification extends React.Component {
                   </div>
                 </div>
               </NgIf>
-            </ReactCSSTransitionGroup>
+            </CSSTransitionGroup>
         );
     }
 }

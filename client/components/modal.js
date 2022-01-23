@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ReactCSSTransitionGroup from "react-transition-group";
+import { CSSTransitionGroup } from "react-transition-group";
 import PropTypes from "prop-types";
 
 import { NgIf } from "./";
@@ -44,7 +44,7 @@ export function Modal({
     });
 
     return (
-        <ReactCSSTransitionGroup transitionName="modal" transitionLeaveTimeout={300} transitionEnterTimeout={300} transitionAppear={true} transitionAppearTimeout={300}>
+        <CSSTransitionGroup transitionName="modal" transitionLeaveTimeout={300} transitionEnterTimeout={300} transitionAppear={true} transitionAppearTimeout={300}>
             <NgIf key={"modal-"+isActive} cond={isActive}>
                 <div className={"component_modal"+(className? " " + className : "")} onClick={onClick} id="modal-box">
                     <div style={{margin: marginTop+"px auto 0 auto", visibility: marginTop === -1 ? "hidden" : "visible"}}>
@@ -52,6 +52,6 @@ export function Modal({
                     </div>
                 </div>
             </NgIf>
-        </ReactCSSTransitionGroup>
+        </CSSTransitionGroup>
     );
 }

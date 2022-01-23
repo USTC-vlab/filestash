@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactCSSTransitionGroup from 'react-transition-group';
+import { CSSTransitionGroup } from 'react-transition-group';
 import { withRouter } from 'react-router';
 import { Prompt } from "react-router-dom";
 import { Subject } from 'rxjs/Subject';
@@ -142,7 +142,7 @@ export class IDE extends React.Component {
                 </NgIf>
               </MenuBar>
 
-              <ReactCSSTransitionGroup transitionName="editor" transitionAppear={true} transitionEnter={false} transitionLeave={false} transitionAppearTimeout={300} className="editor_container">
+              <CSSTransitionGroup transitionName="editor" transitionAppear={true} transitionEnter={false} transitionLeave={false} transitionAppearTimeout={300} className="editor_container">
                 <Editor onSave={this.save.bind(this)} filename={this.props.filename}
                         content={this.state.contentToSave}
                         readonly={/PUT/.test(this.props.acl)}
@@ -150,9 +150,9 @@ export class IDE extends React.Component {
                         onModeChange={this.onUpdate.bind(this, 'mode', false)}
                         onFoldChange={this.onUpdate.bind(this, 'folding', false)}
                         onChange={this.onUpdate.bind(this, 'contentToSave', false)} />
-              </ReactCSSTransitionGroup>
+              </CSSTransitionGroup>
 
-              <ReactCSSTransitionGroup transitionName="fab" transitionLeave={true} transitionEnter={true} transitionAppear={true} transitionAppearTimeout={400} transitionEnterTimeout={400} transitionLeaveTimeout={200}>
+              <CSSTransitionGroup transitionName="fab" transitionLeave={true} transitionEnter={true} transitionAppear={true} transitionAppearTimeout={400} transitionEnterTimeout={400} transitionLeaveTimeout={200}>
                 <NgIf key={this.props.needSaving} cond={this.props.needSaving}>
                   <NgIf cond={!this.props.isSaving}>
                     <Fab onClick={this.save.bind(this)}><Icon name="save" style={{height: '100%', width: '100%'}}/></Fab>
@@ -161,7 +161,7 @@ export class IDE extends React.Component {
                     <Fab><Icon name="loading" style={{height: '100%', width: '100%'}}/></Fab>
                   </NgIf>
                 </NgIf>
-              </ReactCSSTransitionGroup>
+              </CSSTransitionGroup>
 
               <OrgEventsViewer isActive={this.state.appear_agenda} content={this.state.contentToSave}
                                onUpdate={this.onUpdate.bind(this, "contentToSave", true)} goTo={this.goTo.bind(this)}

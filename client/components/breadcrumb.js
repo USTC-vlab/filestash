@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { NgIf, Icon, EventEmitter, EventReceiver } from './';
-import ReactCSSTransitionGroup from 'react-transition-group';
+import { CSSTransitionGroup } from 'react-transition-group';
 
 import './breadcrumb.scss';
 
@@ -52,7 +52,7 @@ export class BreadCrumb extends React.Component {
             <div className="component_breadcrumb" role="navigation">
               <BreadCrumbContainer className={this.props.className+' no-select'}>
                 <Logout />
-                <ReactCSSTransitionGroup transitionName="breadcrumb" transitionLeave={true} transitionEnter={true} transitionLeaveTimeout={150} transitionEnterTimeout={200} transitionAppear={false}>
+                <CSSTransitionGroup transitionName="breadcrumb" transitionLeave={true} transitionEnter={true} transitionLeaveTimeout={150} transitionEnterTimeout={200} transitionAppear={false}>
                   {
                       this.state.path.map((path, index) => {
                           return (
@@ -60,7 +60,7 @@ export class BreadCrumb extends React.Component {
                           );
                       })
                 }
-               </ReactCSSTransitionGroup>
+               </CSSTransitionGroup>
              </BreadCrumbContainer>
            </div>
         );
@@ -104,11 +104,11 @@ const Logout = (props) => {
 
 const Saving = (props) => {
     return (
-        <ReactCSSTransitionGroup transitionName="saving_indicator" transitionLeave={true} transitionEnter={true} transitionAppear={true} transitionLeaveTimeout={200} transitionEnterTimeout={500} transitionAppearTimeout={500}>
+        <CSSTransitionGroup transitionName="saving_indicator" transitionLeave={true} transitionEnter={true} transitionAppear={true} transitionLeaveTimeout={200} transitionEnterTimeout={500} transitionAppearTimeout={500}>
           <NgIf key={props.needSaving} className="component_saving" cond={props.needSaving === true}>
             *
           </NgIf>
-        </ReactCSSTransitionGroup>
+        </CSSTransitionGroup>
     );
 }
 

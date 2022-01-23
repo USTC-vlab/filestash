@@ -7,7 +7,7 @@ pkg/
 *.o
 *.bin
 .DS_Store
-package-lock.json
+# package-lock.json
 \#*\#
 .\#*
 *.log

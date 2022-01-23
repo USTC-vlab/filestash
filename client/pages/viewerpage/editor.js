@@ -193,7 +193,7 @@ export class Editor extends React.Component {
 
         return import(/* webpackChunkName: "editor" */'./editor/'+mode)
             .catch(() => import("./editor/text"))
-            .then((module) => Promise.resolve([module.default, mode: mode]));
+            .then((module) => Promise.resolve([module.default, mode]));
     }
 
     loadKeybinding(){

@@ -4,7 +4,7 @@ import { Input, Button, Container, Icon, NgIf, Loader, CSSTransition } from "../
 import { Config, Admin } from "../../model/";
 import { notify, FormObjToJSON, alert, prompt } from "../../helpers";
 import { bcrypt_password } from "../../helpers/bcrypt";
-//import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+//import ReactCSSTransitionGroup from "react-transition-group";
 
 import "./setup.scss";
 

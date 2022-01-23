@@ -1,11 +1,11 @@
 import React from "react";
-import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import ReactCSSTransitionGroup from "react-transition-group";
 
 import { Pager } from "./pager";
 import { MenuBar } from "./menubar";
 import { getMimeType } from "../../helpers/";
 import videojs from "video.js";
-import "videojs-contrib-hls";
+// import "videojs-contrib-hls";
 
 import "video.js/dist/video-js.css";
 import "./videoplayer.scss";

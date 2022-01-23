@@ -100,8 +100,10 @@ if (process.env.NODE_ENV === 'production') {
         threshold: 0,
         minRatio: 0.8
     }));
+    config.mode = "production";
 } else {
     config.devtool = '#inline-source-map';
+    config.mode = "development";
 }
 
 module.exports = config;

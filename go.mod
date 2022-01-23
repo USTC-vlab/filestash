@@ -5,6 +5,7 @@ go 1.13
 require (
 	github.com/aws/aws-sdk-go v1.28.0
 	github.com/cretz/bine v0.1.0
+	github.com/davidbyttow/govips/v2 v2.10.0
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gorilla/mux v1.7.3
 	github.com/gorilla/websocket v1.4.1
@@ -17,12 +18,12 @@ require (
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pkg/sftp v1.11.0
 	github.com/secsy/goftp v0.0.0-20200609142545-aa2de14babf4
-	github.com/stretchr/testify v1.4.0
+	github.com/stretchr/testify v1.6.1 // indirect
 	github.com/tidwall/gjson v1.3.5
 	github.com/tidwall/sjson v1.0.4
 	golang.org/x/crypto v0.0.0-20200728195943-123391ffb6de
-	golang.org/x/image v0.0.0-20210622092929-e6eecd499c2c
-	golang.org/x/net v0.0.0-20191209160850-c0dbc17a3553
+	golang.org/x/image v0.0.0-20211028202545-6944b10bf410
+	golang.org/x/net v0.0.0-20220121210141-e204ce36a2ba
 	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
 	google.golang.org/api v0.15.0

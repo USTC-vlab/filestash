@@ -2,13 +2,14 @@ package plg_image_light
 
 import (
 	"fmt"
-	. "github.com/mickael-kerjean/filestash/server/common"
 	"io"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
+
+	. "github.com/mickael-kerjean/filestash/server/common"
 )
 
 const ImageCachePath = "data/cache/image/"
@@ -171,14 +172,15 @@ func init() {
 
 		/////////////////////////
 		// Transcode RAW image
-		if IsRaw(mType) {
-			if ExtractPreview(transform) == nil {
-				mType = "image/jpeg"
-				(*res).Header().Set("Content-Type", mType)
-			} else {
-				return reader, nil
-			}
-		}
+		// We expect USTC Vlab users will not process RAW images (from high-end cameras), so this function (libtranscode) is removed.
+		// if IsRaw(mType) {
+		// 	if ExtractPreview(transform) == nil {
+		// 		mType = "image/jpeg"
+		// 		(*res).Header().Set("Content-Type", mType)
+		// 	} else {
+		// 		return reader, nil
+		// 	}
+		// }
 
 		/////////////////////////
 		// final stage: resizing

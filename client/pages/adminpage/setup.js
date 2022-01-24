@@ -23,23 +23,24 @@ export class SetupPage extends React.Component {
         };
 
         Config.all().then((config) => {
-            if(config.log.telemetry.value === true) return;
-            this.unlisten = this.props.history.listen((location, action) => {
-                this.unlisten();
-                alert.now((
-                    <div>
-                      <p style={{textAlign: "justify"}}>
-                        Help making this software better by sending crash reports and anonymous usage statistics
-                      </p>
-                      <form onSubmit={start.bind(this)} style={{fontSize: "0.9em", marginTop: "10px"}}>
-                        <label>
-                          <Input type="checkbox" style={{width: "inherit", marginRight: "10px"}} onChange={(e) => this.enableLog(e.target.checked)} defaultChecked={config.log.telemetry.value} />
-                          I accept but the data is not to be share with any third party
-                        </label>
-                      </form>
-                    </div>
-                ));
-            });
+            return;
+            // if(config.log.telemetry.value === true) return;
+            // this.unlisten = this.props.history.listen((location, action) => {
+            //     this.unlisten();
+            //     alert.now((
+            //         <div>
+            //           <p style={{textAlign: "justify"}}>
+            //             Help making this software better by sending crash reports and anonymous usage statistics
+            //           </p>
+            //           <form onSubmit={start.bind(this)} style={{fontSize: "0.9em", marginTop: "10px"}}>
+            //             <label>
+            //               <Input type="checkbox" style={{width: "inherit", marginRight: "10px"}} onChange={(e) => this.enableLog(e.target.checked)} defaultChecked={config.log.telemetry.value} />
+            //               I accept but the data is not to be share with any third party
+            //             </label>
+            //           </form>
+            //         </div>
+            //     ));
+            // });
         });
     }
 
@@ -67,14 +68,14 @@ export class SetupPage extends React.Component {
         });
     }
 
-    enableLog(value){
-        Config.all().then((config) => {
-            config = FormObjToJSON(config);
-            config.connections = window.CONFIG.connections;
-            config.log.telemetry = value;
-            Config.save(config, false);
-        });
-    };
+    // enableLog(value){
+    //     Config.all().then((config) => {
+    //         config = FormObjToJSON(config);
+    //         config.connections = window.CONFIG.connections;
+    //         config.log.telemetry = value;
+    //         Config.save(config, false);
+    //     });
+    // };
 
     summaryCall(){
         this.setState({busy: true});

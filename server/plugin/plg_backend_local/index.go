@@ -58,7 +58,7 @@ func (this Local) Cat(path string) (io.ReadCloser, error) {
 }
 
 func (this Local) Mkdir(path string) error {
-	return os.Mkdir(path, 0664)
+	return os.Mkdir(path, 0774)
 }
 
 func (this Local) Rm(path string) error {

@@ -61,26 +61,16 @@ export class VideoPlayer extends React.Component {
                     download={this.props.data}
                 />
                 <div className="video_container">
-                    <TransitionGroup>
-                        <CSSTransition
-                            classNames="video"
-                            appear={true}
-                            exit={false}
-                            enter={true}
-                            timeout={{ enter: 300, appear: 300 }}
-                        >
-                            <div key={this.props.data} data-vjs-player>
-                                <video
-                                    ref={this.video}
-                                    className="video-js vjs-fill vjs-default-skin vjs-big-play-centered"
-                                    style={{
-                                        boxShadow:
-                                            "rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px, rgba(0, 0, 0, 0.2) 0px 2px 4px -1px",
-                                    }}
-                                ></video>
-                            </div>
-                        </CSSTransition>
-                    </TransitionGroup>
+                    <div key={this.props.data} data-vjs-player>
+                        <video
+                            ref={this.video}
+                            className="video-js vjs-fill vjs-default-skin vjs-big-play-centered"
+                            style={{
+                                boxShadow:
+                                    "rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px, rgba(0, 0, 0, 0.2) 0px 2px 4px -1px",
+                            }}
+                        ></video>
+                    </div>
                     <Pager path={this.props.path} />
                 </div>
             </div>

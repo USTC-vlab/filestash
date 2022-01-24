@@ -12,7 +12,7 @@ export class BackendPage extends React.Component {
         this.state = {
             backend_enabled: [],
             backend_available: [],
-            auth_available: ["LDAP", "SAML", "OpenID", "External"],
+            auth_available: [],
             auth_enabled: null,
             config: null
         };
@@ -132,40 +132,6 @@ export class BackendPage extends React.Component {
                         ))
                 }
               </div>
-
-              <h2>Authentication Middleware</h2>
-
-              <Alert>
-                Integrate Filestash with your identity management system
-              </Alert>
-
-              <div className="box-container">
-                {
-                    this.state.auth_available.map((auth) => (
-                        <div onClick={this.onClickAuthAvailable.bind(this, auth)} key={auth}
-                             className={"box-item pointer no-select" + (isActiveAuth(auth) ? " active": "")}>
-                          <div>
-                            { auth }
-                            <span className="no-select">
-                              <span className="icon">
-                                { isActiveAuth(auth) === false ? "+" : <Icon name="delete" /> }
-                              </span>
-                            </span>
-                          </div>
-                        </div>
-                    ))
-                }
-              </div>
-
-              {
-                  this.state.auth_enabled !== null && (
-                      <React.Fragment>
-                        <Alert className="success">
-                          <i><strong>Register your interest: <a href={`mailto:mickael@kerjean.me?Subject=Filestash - Authentication Middleware - ${this.state.auth_enabled}`}>mickael@kerjean.me</a></strong></i>
-                        </Alert>
-                      </React.Fragment>
-                  )
-              }
 
               <h2>Backend Configuration</h2>
 

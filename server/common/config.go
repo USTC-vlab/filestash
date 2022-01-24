@@ -91,7 +91,7 @@ func NewConfiguration() Configuration {
 					Form{
 						Title: "share",
 						Elmnts: []FormElement{
-							FormElement{Name: "enable", Type: "boolean", Default: true, Description: "Enable/Disable the share feature"},
+							FormElement{Name: "enable", Type: "boolean", Default: false, Description: "Enable/Disable the share feature"},
 						},
 					},
 				},

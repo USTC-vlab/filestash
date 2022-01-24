@@ -10,10 +10,10 @@ export function CSSTransition({ transitionName = "animate", children = null, tra
     const [className, setClassName] = useState(`${transitionName} ${transitionName}-appear`);
 
     useEffect(() => {
-        setClassName(`${transitionName} ${transitionName}-appear ${transitionName}-appear-active`)
+        setClassName(`${transitionName} ${transitionName}-appear ${transitionName}-appear-active`);
 
         const timeout = setTimeout(() => {
-            setClassName(`${transitionName}`)
+            setClassName(`${transitionName}`);
         }, transitionAppearTimeout);
         return () => clearTimeout(timeout);
     }, []);
@@ -22,5 +22,5 @@ export function CSSTransition({ transitionName = "animate", children = null, tra
         <div className={className}>
             { children }
         </div>
-    )
+    );
 }

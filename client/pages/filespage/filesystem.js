@@ -76,7 +76,7 @@ export class FileSystem extends React.PureComponent {
                                                 selectableKey={file}
                                                 selected={
                                                     this.props.selected.indexOf(
-                                                        file.path
+                                                        file.path,
                                                     ) !== -1
                                                 }
                                                 currentSelection={
@@ -102,7 +102,7 @@ export class FileSystem extends React.PureComponent {
                         <p>{t("There is nothing here")}</p>
                     </NgIf>
                 </Container>
-            </div>
+            </div>,
         );
     }
 }

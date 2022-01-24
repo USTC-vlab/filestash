@@ -11,7 +11,7 @@ export function NotFoundPage({ history }) {
         const timeout = window.setTimeout(() => {
             if (t == 0) {
                 history.push("/");
-                return
+                return;
             }
             setTimer(t - 1);
         }, 1000);

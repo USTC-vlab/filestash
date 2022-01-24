@@ -6,11 +6,11 @@ import { cache } from "../helpers/";
 
 @ErrorPage
 export class LogoutPage extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         Session.logout().then((res) => {
             cache.destroy();
             this.props.history.push("/");

@@ -10,21 +10,21 @@ export function LoginPage({ reload = nop }) {
     const [isLoading, setIsLoading] = useState(false);
     const [hasError, setHasError] = useState(false);
     const $input = useRef();
-    const marginTop = () => ({ marginTop: `${parseInt(window.innerHeight / 3)}px` })
+    const marginTop = () => ({ marginTop: `${parseInt(window.innerHeight / 3)}px` });
     const authenticate = (e) => {
         e.preventDefault();
         setIsLoading(true);
         Admin.login($input.current.ref.value)
             .then(() => reload())
-            .catch(() => {                
+            .catch(() => {
                 $input.current.ref.value = "";
-                setIsLoading(false)
+                setIsLoading(false);
                 setHasError(true);
                 setTimeout(() => {
                     setHasError(false);
                 }, 500);
             });
-    }
+    };
 
     useRef(() => {
         $input.current.ref.focus();
@@ -40,5 +40,5 @@ export function LoginPage({ reload = nop }) {
                 </Button>
             </form>
         </Container>
-    )
+    );
 }

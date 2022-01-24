@@ -32,8 +32,8 @@ export class Notification extends React.Component {
                     }),
                     this.closeNotification.bind(this),
                     8000,
-                    500
-                )
+                    500,
+                ),
             );
         });
 
@@ -53,7 +53,7 @@ export class Notification extends React.Component {
                 {
                     appear: false,
                 },
-                done
+                done,
             );
         });
     }
@@ -66,7 +66,7 @@ export class Notification extends React.Component {
                     message_text: message.text,
                     message_type: message.type,
                 },
-                done
+                done,
             );
         });
     }
@@ -118,13 +118,13 @@ export class Notification extends React.Component {
 }
 
 function TaskManager() {
-    let tasks = [];
+    const tasks = [];
     let is_running = false;
     let subscriber = null;
     let current_task = null;
 
     const ret = {
-        addTask: function (task) {
+        addTask: function(task) {
             current_task && current_task.cancel();
             tasks.push(task);
             if (tasks.length > 20) {
@@ -135,10 +135,10 @@ function TaskManager() {
                 ret._run();
             }
         },
-        before_run: function (fn) {
+        before_run: function(fn) {
             subscriber = fn;
         },
-        _run: function () {
+        _run: function() {
             current_task = tasks.shift();
             if (!current_task) {
                 is_running = false;
@@ -157,21 +157,21 @@ function Task(
     _runCallback,
     _finishCallback,
     wait_time_before_finish,
-    minimum_running_time
+    minimum_running_time,
 ) {
     let start_date = null;
     let done = null;
-    let promise = new Promise((_done) => {
+    const promise = new Promise((_done) => {
         done = _done;
     });
     let timeout = null;
 
     const ret = {
-        run: function (mode = "normal") {
+        run: function(mode = "normal") {
             const wait =
-                mode === "minimal"
-                    ? minimum_running_time
-                    : wait_time_before_finish;
+                mode === "minimal" ?
+                    minimum_running_time :
+                    wait_time_before_finish;
             start_date = new Date();
 
             new Promise((_done) => {
@@ -186,17 +186,17 @@ function Task(
                             timeout = window.setTimeout(() => {
                                 _done();
                             }, wait);
-                        })
+                        }),
                 )
                 .then(() => {
                     ret._complete();
                 });
             return promise;
         },
-        cancel: function () {
+        cancel: function() {
             window.clearTimeout(timeout);
             timeout = null;
-            let elapsed_time = new Date() - start_date;
+            const elapsed_time = new Date() - start_date;
 
             if (elapsed_time < minimum_running_time) {
                 window.setTimeout(() => {
@@ -207,7 +207,7 @@ function Task(
             }
             return promise;
         },
-        _complete: function () {
+        _complete: function() {
             if (done) {
                 _finishCallback();
                 done();

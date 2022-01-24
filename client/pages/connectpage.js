@@ -1,54 +1,54 @@
-import React from 'react';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import React from "react";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
-import './connectpage.scss';
-import { Session } from '../model/';
-import { Container, NgIf, NgShow, Loader, Notification, ErrorPage } from '../components/';
-import { ForkMe, PoweredByFilestash, Form } from './connectpage/';
-import { cache, notify, urlParams } from '../helpers/';
+import "./connectpage.scss";
+import { Session } from "../model/";
+import { Container, NgIf, NgShow, Loader, Notification, ErrorPage } from "../components/";
+import { ForkMe, PoweredByFilestash, Form } from "./connectpage/";
+import { cache, notify, urlParams } from "../helpers/";
 
-import { Alert } from '../components/';
+import { Alert } from "../components/";
 
 @ErrorPage
 export class ConnectPage extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             loading: true,
-            doing_a_third_party_login: false
+            doing_a_third_party_login: false,
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const urlData = urlParams();
         const get_params = Object.keys(urlData);
-        if(get_params.length === 0){
+        if (get_params.length === 0) {
             return;
-        }else if(get_params.length === 1 && !!urlData["next"]){
+        } else if (get_params.length === 1 && !!urlData["next"]) {
             return;
         }
 
-        if(!urlData.type){
+        if (!urlData.type) {
             urlData.type = urlData.state;
         }
         this.setState({
             doing_a_third_party_login: true,
-            loading: true
+            loading: true,
         }, () => this.authenticate(urlData));
     }
 
-    authenticate(params){
+    authenticate(params) {
         Session.authenticate(params)
             .then(Session.currentUser)
             .then((user) => {
-                if(location.search.indexOf("?next=") === 0){
+                if (location.search.indexOf("?next=") === 0) {
                     location = urlParams()["next"];
                 }
                 let url = "/files/";
                 let path = user.home;
-                if(path){
+                if (path) {
                     path = path.replace(/^\/?(.*?)\/?$/, "$1");
-                    if(path !== ""){
+                    if (path !== "") {
                         url += path + "/";
                     }
                 }
@@ -56,59 +56,59 @@ export class ConnectPage extends React.Component {
                 this.props.history.push(url);
             })
             .catch((err) => {
-                this.setState({loading: false});
+                this.setState({ loading: false });
                 notify.send(err, "error");
             });
     }
 
-    onFormSubmit(data){
-        if("oauth2" in data){
-            this.setState({loading: true});
+    onFormSubmit(data) {
+        if ("oauth2" in data) {
+            this.setState({ loading: true });
             Session.oauth2(data.oauth2).then((url) => {
                 window.location.href = url;
             });
             return;
         }
         this.setState({
-            loading: true
+            loading: true,
         }, () => this.authenticate(data));
     }
 
-    setLoading(value){
-        if(this.state.doing_a_third_party_login !== true){
-            this.setState({loading: value});
+    setLoading(value) {
+        if (this.state.doing_a_third_party_login !== true) {
+            this.setState({ loading: value });
         }
     }
 
-    onError(err){
+    onError(err) {
         this.props.error(err);
     }
 
     render() {
         return (
             <div className="component_page_connect">
-              <NgIf cond={window.CONFIG["fork_button"]}>
-                <ForkMe repo="https://github.com/mickael-kerjean/filestash" />
-              </NgIf>
-              <Container maxWidth="565px">
-                <NgIf cond={this.state.loading === true}>
-                  <Loader/>
+                <NgIf cond={window.CONFIG["fork_button"]}>
+                    <ForkMe repo="https://github.com/mickael-kerjean/filestash" />
                 </NgIf>
-                <NgShow cond={this.state.loading === false}>
-                  <TransitionGroup >
-                    <CSSTransition classNames="form" exit={false} enter={false} appear={true}>
-                        <Form onLoadingChange={this.setLoading.bind(this)}
-                            onError={this.onError.bind(this)}
-                            onSubmit={this.onFormSubmit.bind(this)} />
-                    </CSSTransition>
-                  </TransitionGroup>
-                  <TransitionGroup transitionName="remember" transitionLeave={false} transitionEnter={false} transitionAppear={true} transitionAppearTimeout={5000}>
-                    <CSSTransition classNames="remember" exit={false} enter={false} appear={true}>
-                        <PoweredByFilestash />
-                    </CSSTransition>
-                  </TransitionGroup>
-                </NgShow>
-              </Container>
+                <Container maxWidth="565px">
+                    <NgIf cond={this.state.loading === true}>
+                        <Loader/>
+                    </NgIf>
+                    <NgShow cond={this.state.loading === false}>
+                        <TransitionGroup >
+                            <CSSTransition classNames="form" exit={false} enter={false} appear={true}>
+                                <Form onLoadingChange={this.setLoading.bind(this)}
+                                    onError={this.onError.bind(this)}
+                                    onSubmit={this.onFormSubmit.bind(this)} />
+                            </CSSTransition>
+                        </TransitionGroup>
+                        <TransitionGroup transitionName="remember" transitionLeave={false} transitionEnter={false} transitionAppear={true} transitionAppearTimeout={5000}>
+                            <CSSTransition classNames="remember" exit={false} enter={false} appear={true}>
+                                <PoweredByFilestash />
+                            </CSSTransition>
+                        </TransitionGroup>
+                    </NgShow>
+                </Container>
             </div>
         );
     }

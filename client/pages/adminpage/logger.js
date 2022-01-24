@@ -12,14 +12,14 @@ export function LogPage({ isSaving = nop }) {
     const [config, setConfig] = useState({});
     const $log = useRef();
     const filename = () => {
-        const t = new Date().toISOString().substring(0,10).replace(/-/g, "");
+        const t = new Date().toISOString().substring(0, 10).replace(/-/g, "");
         return `access_${t}.log`;
     };
     const onChange = (r) => {
-        const c = Object.assign({}, config)
+        const c = Object.assign({}, config);
         c["log"] = r[""]["params"];
         c["connections"] = window.CONFIG.connections;
-        delete c["constant"]
+        delete c["constant"];
         isSaving(true);
         Config.save(c, true, () => {
             isSaving(false);
@@ -31,7 +31,7 @@ export function LogPage({ isSaving = nop }) {
     const fetchLogs = () => {
         Log.get(1024*100).then((log) => { // get only the last 100kb of log
             setLog(log + "\n\n\n\n\n");
-            if($log.current.scrollTop === 0) {
+            if ($log.current.scrollTop === 0) {
                 $log.current.scrollTop = $log.current.scrollHeight;
             }
         });
@@ -39,18 +39,18 @@ export function LogPage({ isSaving = nop }) {
 
     useEffect(() => {
         Config.all().then((config) => {
-            setForm({"":{"params":config["log"]}});
+            setForm({ "": { "params": config["log"] } });
             setConfig(FormObjToJSON(config));
         });
         fetchLogs();
         const id = setInterval(fetchLogs, 5000);
-        return () => clearInterval(id)
+        return () => clearInterval(id);
     }, []);
 
     return (
         <div className="component_logpage">
             <h2>Logging</h2>
-            <div style={{minHeight: "150px"}}>
+            <div style={{ minHeight: "150px" }}>
                 <FormBuilder
                     form={form}
                     onChange={onChange}
@@ -60,13 +60,13 @@ export function LogPage({ isSaving = nop }) {
                                 <span>
                                     { format(struct.label) }:
                                 </span>
-                                <div style={{width: "100%"}}>
+                                <div style={{ width: "100%" }}>
                                     { $input }
                                 </div>
                             </div>
                             <div>
                                 <span className="nothing"></span>
-                                <div style={{width: "100%"}}>
+                                <div style={{ width: "100%" }}>
                                     {
                                         struct.description ? (<div className="description">{struct.description}</div>) : null
                                     }
@@ -75,7 +75,7 @@ export function LogPage({ isSaving = nop }) {
                         </label>
                     )} />
             </div>
-            <pre style={{height: "350px"}} ref={$log}>
+            <pre style={{ height: "350px" }} ref={$log}>
                 { log === "" ? <Loader/> : log }
             </pre>
             <div>

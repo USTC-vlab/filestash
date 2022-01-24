@@ -24,15 +24,15 @@ export class BreadCrumb extends React.Component {
             paths.pop();
         }
         paths = paths.map((path, index) => {
-            let sub_path = paths.slice(0, index + 1).join("/"),
-                label = path === "" ? CONFIG.name || "Filestash" : path;
+            const sub_path = paths.slice(0, index + 1).join("/");
+            const label = path === "" ? CONFIG.name || "Filestash" : path;
             if (index === paths.length - 1) {
                 return { full: null, label: label };
             } else {
                 return {
                     full: sub_path + "/",
                     label: label,
-                    minify: (function () {
+                    minify: (function() {
                         if (index === 0) {
                             return false;
                         }
@@ -46,8 +46,9 @@ export class BreadCrumb extends React.Component {
                             index >
                             paths.length -
                                 (document.body.clientWidth > 1000 ? 4 : 3)
-                        )
+                        ) {
                             return false;
+                        }
                         return true;
                     })(),
                 };
@@ -57,8 +58,9 @@ export class BreadCrumb extends React.Component {
     }
 
     render(Element) {
-        if (new window.URL(location.href).searchParams.get("nav") === "false")
+        if (new window.URL(location.href).searchParams.get("nav") === "false") {
             return null;
+        }
 
         const Path = Element ? Element : PathElement;
         return (

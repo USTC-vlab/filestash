@@ -8,118 +8,118 @@ import { t } from "../locales/";
 import "./formbuilder.scss";
 
 export class FormBuilder extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 
-    section(struct, key, level = 0){
-        if(struct == null) struct = "";
-        const isALeaf = function(struct){
-            if("label" in struct && "type" in struct &&
-               "value" in struct && "default" in struct){
+    section(struct, key, level = 0) {
+        if (struct == null) struct = "";
+        const isALeaf = function(struct) {
+            if ("label" in struct && "type" in struct &&
+               "value" in struct && "default" in struct) {
                 return true;
             }
             return false;
         };
 
-        if(Array.isArray(struct)) return null;
-        else if(isALeaf(struct) === false){
-            const [normal, advanced] = function(s){
-                let _normal = [];
-                let _advanced = [];
-                for (let key in s){
-                    const tmp = {key: key, data: s[key]};
+        if (Array.isArray(struct)) return null;
+        else if (isALeaf(struct) === false) {
+            const [normal, advanced] = function(s) {
+                const _normal = [];
+                const _advanced = [];
+                for (const key in s) {
+                    const tmp = { key: key, data: s[key] };
                     "id" in s[key] ? _advanced.push(tmp) : _normal.push(tmp);
                 }
                 return [_normal, _advanced];
             }(struct);
-            if(level <= 1){
+            if (level <= 1) {
                 return (
                     <div className="formbuilder">
-                      {
-                          key ? <h2 className="no-select">{ format(key) }</h2> : ""
-                      }
-                      {
-                          normal.map((s, index) => {
-                              return (
-                                  <div key={s.key+"-"+index}>
-                                    { this.section(s.data, s.key, level + 1) }
-                                  </div>
-                              );
-                          })
-                      }
-                      <div className="advanced_form">
                         {
-                            advanced.map((s, index) => {
+                            key ? <h2 className="no-select">{ format(key) }</h2> : ""
+                        }
+                        {
+                            normal.map((s, index) => {
                                 return (
                                     <div key={s.key+"-"+index}>
-                                      { this.section(s.data, s.key, level + 1) }
+                                        { this.section(s.data, s.key, level + 1) }
                                     </div>
                                 );
                             })
                         }
-                      </div>
+                        <div className="advanced_form">
+                            {
+                                advanced.map((s, index) => {
+                                    return (
+                                        <div key={s.key+"-"+index}>
+                                            { this.section(s.data, s.key, level + 1) }
+                                        </div>
+                                    );
+                                })
+                            }
+                        </div>
                     </div>
                 );
             }
             return (
                 <div>
-                  <fieldset>
-                    <legend className="no-select">{ format(key) }</legend>
-                    {
-                        Object.keys(struct).map((key, index) => {
-                            return (
-                                <div key={key+"-"+index}>
-                                  { this.section(struct[key], key, level + 1) }
-                                </div>
-                            );
-                        })
-                    }
-                  </fieldset>
+                    <fieldset>
+                        <legend className="no-select">{ format(key) }</legend>
+                        {
+                            Object.keys(struct).map((key, index) => {
+                                return (
+                                    <div key={key+"-"+index}>
+                                        { this.section(struct[key], key, level + 1) }
+                                    </div>
+                                );
+                            })
+                        }
+                    </fieldset>
                 </div>
             );
         }
 
-        let id = {};
+        const id = {};
         let target = [];
-        if(struct.id !== undefined){
+        if (struct.id !== undefined) {
             id.id = this.props.idx === undefined ? struct.id : struct.id + "_" + this.props.idx;
         }
-        if(struct.type === "enable"){
+        if (struct.type === "enable") {
             target = struct.target.map((target) => {
                 return this.props.idx === undefined ? target : target + "_" + this.props.idx;
             });
         }
 
-        const onChange = function(e, fn){
+        const onChange = function(e, fn) {
             struct.value = e;
-            if(typeof fn === "function"){
+            if (typeof fn === "function") {
                 fn(struct);
             }
             this.props.onChange.call(
                 this,
-                FormObjToJSON(this.props.form)
+                FormObjToJSON(this.props.form),
             );
         };
 
         return ( <FormElement render={this.props.render} onChange={onChange.bind(this)} {...id} params={struct} target={target} name={ format(struct.label) } autoComplete={ this.props.autoComplete || "off" }/> );
     }
 
-    render(){
+    render() {
         return this.section(this.props.form || {});
     }
 }
 
 
 const FormElement = (props) => {
-    const id = props.id !== undefined ? {id: props.id} : {};
-    let struct = props.params;
-    let autoCompleteProp = props.autoComplete || "off"
+    const id = props.id !== undefined ? { id: props.id } : {};
+    const struct = props.params;
+    const autoCompleteProp = props.autoComplete || "off";
     let $input = ( <Input onChange={(e) => props.onChange(e.target.value)} {...id} name={struct.label} type="text" defaultValue={struct.value} placeholder={ t(struct.placeholder) } /> );
-    switch(props.params["type"]){
+    switch (props.params["type"]) {
     case "text": {
         const onTextChange = (value) => {
-            if(value === ""){
+            if (value === "") {
                 value = null;
             }
             props.onChange(value);
@@ -127,28 +127,28 @@ const FormElement = (props) => {
 
         const list_id = struct.datalist ? "list_"+Math.random() : null;
         $input = ( <Input list={list_id} onChange={(e) => onTextChange(e.target.value)} {...id} name={struct.label} type="text" value={struct.value || ""} placeholder={ t(struct.placeholder) } readOnly={struct.readonly} autoComplete={autoCompleteProp} autoCorrect="off" autoCapitalize="off" spellCheck="false" /> );
-        if(list_id != null){
-            const filtered = function(multi, datalist, currentValue){
-                if(multi !== true || currentValue == null) return datalist;
+        if (list_id != null) {
+            const filtered = function(multi, datalist, currentValue) {
+                if (multi !== true || currentValue == null) return datalist;
 
                 return autocomplete(
                     currentValue
                         .split(",")
                         .map((t) => t.trim())
                         .filter((t) => t),
-                    datalist
+                    datalist,
                 );
             };
             $input = (
                 <span>
-                  { $input }
-                  <datalist id={list_id}>
-                    {
-                        filtered(struct.multi, struct.datalist, struct.value).map((item,i) => {
-                            return ( <option key={i} value={item} /> );
-                        })
-                    }
-                  </datalist>
+                    { $input }
+                    <datalist id={list_id}>
+                        {
+                            filtered(struct.multi, struct.datalist, struct.value).map((item, i) => {
+                                return ( <option key={i} value={item} /> );
+                            })
+                        }
+                    </datalist>
                 </span>
             );
         }
@@ -164,7 +164,7 @@ const FormElement = (props) => {
     }
     case "password": {
         const onPasswordChange = (value) => {
-            if(value === ""){
+            if (value === "") {
                 value = null;
             }
             props.onChange(value);
@@ -174,13 +174,13 @@ const FormElement = (props) => {
     }
     case "long_password": {
         const onLongPasswordChange = (value) => {
-            if(value === ""){
+            if (value === "") {
                 value = null;
             }
             props.onChange(value);
         };
         $input = (
-            <Textarea {...id} disabledEnter={true} value={struct.value || ""} onChange={(e) => onLongPasswordChange(e.target.value)} type="text" rows="1" name={struct.label} placeholder={ t(struct.placeholder) }  autoComplete={autoCompleteProp} autoCorrect="off" autoCapitalize="off" spellCheck="false" />
+            <Textarea {...id} disabledEnter={true} value={struct.value || ""} onChange={(e) => onLongPasswordChange(e.target.value)} type="text" rows="1" name={struct.label} placeholder={ t(struct.placeholder) } autoComplete={autoCompleteProp} autoCorrect="off" autoCapitalize="off" spellCheck="false" />
         );
         break;
     }
@@ -189,7 +189,7 @@ const FormElement = (props) => {
         break;
     case "bcrypt": {
         const onBcryptChange = (value) => {
-            if(value === ""){
+            if (value === "") {
                 return props.onChange(null);
             }
             return import(/* webpackChunkName: "bcrypt" */"../helpers/bcrypt")
@@ -222,17 +222,17 @@ const FormElement = (props) => {
         $input = ( <img {...id} src={struct.value} /> );
         break;
     case "file": {
-        const getBase64 = function(file){
+        const getBase64 = function(file) {
             return new Promise((resolve, reject) => {
                 const reader = new window.FileReader();
                 reader.readAsDataURL(file);
                 reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
+                reader.onerror = (error) => reject(error);
             });
         };
         const onFileUpload = (e) => {
-            if(e.target.files.length !== 1) return;
-            if(e.target.files[0].size < 200000000){
+            if (e.target.files.length !== 1) return;
+            if (e.target.files[0].size < 200000000) {
                 getBase64(e.target.files[0]).then((a) => {
                     props.onChange(a);
                 }).catch(() => {});
@@ -242,9 +242,9 @@ const FormElement = (props) => {
         };
         $input = (
             <div className="fileupload-image">
-              <input onChange={(e) => onFileUpload(e)} type="file" {...id} name={struct.label} />
-                { struct.value.substring(0,10) === "data:image" ? <img src={struct.value} /> : null }
-                { struct.value.substring(0,20) === "data:application/pdf" ? <object data={struct.value} type="application/pdf" /> : null }
+                <input onChange={(e) => onFileUpload(e)} type="file" {...id} name={struct.label} />
+                { struct.value.substring(0, 10) === "data:image" ? <img src={struct.value} /> : null }
+                { struct.value.substring(0, 20) === "data:application/pdf" ? <object data={struct.value} type="application/pdf" /> : null }
             </div>
         );
         break;
@@ -258,5 +258,5 @@ const FormElement = (props) => {
 };
 
 FormElement.propTypes = {
-    render: PropTypes.func.isRequired
+    render: PropTypes.func.isRequired,
 };

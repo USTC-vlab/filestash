@@ -10,33 +10,33 @@ import { notify } from "../helpers/";
 import { HomePage, BackendPage, SettingsPage, LogPage, SetupPage, LoginPage } from "./adminpage/";
 import { t } from "../locales/";
 
-function AdminOnly(WrappedComponent){
+function AdminOnly(WrappedComponent) {
     let initIsAdmin = null;
     return function(props) {
         const [isAdmin, setIsAdmin] = useState(initIsAdmin);
 
         const refresh = () => {
             Admin.isAdmin().then((t) => {
-                initIsAdmin = t
-                setIsAdmin(t)
+                initIsAdmin = t;
+                setIsAdmin(t);
             }).catch((err) => {
-                notify.send("Error: " + (err && err.message) , "error");
+                notify.send("Error: " + (err && err.message), "error");
             });
-        }
+        };
         useEffect(() => {
-            refresh()
+            refresh();
             const timeout = window.setInterval(refresh, 5 * 1000);
             return () => clearInterval(timeout);
         }, []);
 
-        if(isAdmin === true) {
+        if (isAdmin === true) {
             return ( <WrappedComponent {...props} /> );
-        } else if(isAdmin === false) {
+        } else if (isAdmin === false) {
             return ( <LoginPage reload={refresh} /> );
         }
 
         return ( <LoadingPage /> );
-    }
+    };
 }
 
 export default AdminOnly((props) => {
@@ -64,14 +64,14 @@ function SideMenu(props) {
     return (
         <div className="component_menu_sidebar no-select">
             { props.isLoading ?
-              <div className="header">
-                  <Icon name="arrow_left" style={{"opacity": 0}}/>
-                  <Icon name="loading" />
-              </div> :
-              <NavLink to="/" className="header">
-                  <Icon name="arrow_left" />
-                  <img src="/assets/logo/android-chrome-512x512.png" />
-              </NavLink>
+                <div className="header">
+                    <Icon name="arrow_left" style={{ "opacity": 0 }}/>
+                    <Icon name="loading" />
+                </div> :
+                <NavLink to="/" className="header">
+                    <Icon name="arrow_left" />
+                    <img src="/assets/logo/android-chrome-512x512.png" />
+                </NavLink>
             }
             <h2>{ t("Admin console") }</h2>
             <ul>
@@ -93,4 +93,4 @@ function SideMenu(props) {
             </ul>
         </div>
     );
-};
+}

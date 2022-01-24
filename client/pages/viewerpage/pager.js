@@ -20,6 +20,8 @@ export class Pager extends React.Component {
         };
         this.onKeyPress = this.onKeyPress.bind(this);
         this.onSubmitDebounced = debounce(this.onFormSubmit.bind(this), 1000);
+        this.total = React.createRef();
+        this.page = React.createRef();
     }
 
     componentDidMount(){
@@ -47,9 +49,9 @@ export class Pager extends React.Component {
     }
 
     navigatePage(n){
-        if(this.state.files[n]){
+        if (this.state.files[n]) {
             const url = appendShareToUrl(this.state.files[n].link);
-            if(this.refs.$page) this.refs.$page.blur();
+            if (this.page.current) this.page.current.blur();
             let preload_index = (n >= this.state.n || (this.state.n === this.state.files.length - 1 && n === 0)) ? this.calculateNextPageNumber(n) : this.calculatePrevPageNumber(n);
             Files.url(this.state.files[preload_index].path)
                 .then((url) => this.props.emit("media::preload", url))
@@ -58,7 +60,7 @@ export class Pager extends React.Component {
         }
     }
     calculateNextPageNumber(n){
-        if(n + 1 >= this.state.files.length) return 0;
+        if (n + 1 >= this.state.files.length) return 0;
         return n + 1;
     }
     calculatePrevPageNumber(n){
@@ -146,10 +148,10 @@ export class Pager extends React.Component {
                   <Link to={prevLink()}><Icon name="arrow_left_white"/></Link>
                   <label className="pager">
                     <form onSubmit={this.onFormSubmit.bind(this)}>
-                      <input ref="$page" className="prevent" type="number" style={{width: inputWidth+"px"}} onChange={this.onFormInputChange.bind(this)} value={current_page_number} />
+                      <input ref={this.page} className="prevent" type="number" style={{width: inputWidth+"px"}} onChange={this.onFormInputChange.bind(this)} value={current_page_number} />
                     </form>
                     <span className="separator">/</span>
-                    <span ref="$total">{this.state.files.length}</span>
+                    <span ref={this.total}>{this.state.files.length}</span>
                   </label>
                   <Link to={nextLink()}><Icon name="arrow_right_white"/></Link>
                 </NgIf>

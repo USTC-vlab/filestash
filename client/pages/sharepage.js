@@ -18,12 +18,13 @@ export class SharePage extends React.Component {
             error: null,
             loading: false
         };
+        this.input = React.createRef();
     }
 
     componentDidMount(){
         this._proofQuery(this.props.match.params.id).then(() => {
-            if(this.refs.$input) {
-                this.refs.$input.ref.focus();
+            if(this.input) {
+                this.input.ref.focus();
             }
         });
     }
@@ -37,8 +38,8 @@ export class SharePage extends React.Component {
     _proofQuery(id, data = {}){
         this.setState({loading: true});
         return Share.proof(id, data).then((res) => {
-            if(this.refs.$input) {
-                this.refs.$input.ref.value = "";
+            if(this.input) {
+                this.input.ref.value = "";
             }
             let st = {
                 key: res.key,
@@ -95,8 +96,8 @@ export class SharePage extends React.Component {
         } else if(this.state.key === "code"){
             return (
                 <Container maxWidth="300px" className="sharepage_component">
-                  <form className={className} onSubmit={(e) => this.submitProof(e, "code", this.refs.$input.ref.value)} style={marginTop()}>
-                    <Input ref="$input" type="text" placeholder={ t("Code") } />
+                  <form className={className} onSubmit={(e) => this.submitProof(e, "code", this.input.ref.value)} style={marginTop()}>
+                    <Input ref={this.input} type="text" placeholder={ t("Code") } />
                     <Button theme="transparent">
                       <Icon name={this.state.loading ? "loading" : "arrow_right"}/>
                     </Button>
@@ -106,8 +107,8 @@ export class SharePage extends React.Component {
         } else if(this.state.key === "password"){
             return (
                 <Container maxWidth="300px" className="sharepage_component">
-                  <form className={className} onSubmit={(e) => this.submitProof(e, "password", this.refs.$input.ref.value)} style={marginTop()}>
-                    <Input ref="$input" type="password" placeholder={ t("Password") } />
+                  <form className={className} onSubmit={(e) => this.submitProof(e, "password", this.input.ref.value)} style={marginTop()}>
+                    <Input ref={this.input} type="password" placeholder={ t("Password") } />
                     <Button theme="transparent">
                       <Icon name={this.state.loading ? "loading" : "arrow_right"}/>
                     </Button>
@@ -117,8 +118,8 @@ export class SharePage extends React.Component {
         }else if(this.state.key === "email"){
             return (
                 <Container maxWidth="300px" className="sharepage_component">
-                  <form className={className} onSubmit={(e) => this.submitProof(e, "email", this.refs.$input.ref.value)} style={marginTop()}>
-                    <Input ref="$input" type="text" placeholder={ t("Your email address") } />
+                  <form className={className} onSubmit={(e) => this.submitProof(e, "email", this.input.ref.value)} style={marginTop()}>
+                    <Input ref={this.input} type="text" placeholder={ t("Your email address") } />
                     <Button theme="transparent">
                       <Icon name={this.state.loading ? "loading" : "arrow_right"}/>
                     </Button>

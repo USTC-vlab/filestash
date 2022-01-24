@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CSSTransitionGroup } from 'react-transition-group';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import { Card, NgIf, Icon, EventEmitter, Dropdown, DropdownButton, DropdownList, DropdownItem, Container } from '../../components/';
 import { pathBuilder, debounce, prompt } from '../../helpers/';
@@ -23,19 +23,21 @@ export class Submenu extends React.Component {
                     search_keyword: "",
                     search_input_visible: false
                 });
-                if(this.refs.$input) this.refs.$input.blur();
+                if(this.input) this.input.blur();
                 this.props.onSearch(null);
             }else if(e.ctrlKey && e.keyCode === 70){ // 'Ctrl F' shortcut to search
                 e.preventDefault();
                 this.setState({
                     search_input_visible: true
                 });
-                if(this.refs.$input) this.refs.$input.focus();
+                if(this.input.current) this.input.current.focus();
             }else if(e.altKey && (e.keyCode === 49 || e.keyCode === 50)){ // 'alt 1' 'alt 2' shortcut
                 e.preventDefault();
                 this.onViewChange();
             }
         };
+
+        this.input = React.createRef();
     }
 
     componentDidMount(){
@@ -82,7 +84,7 @@ export class Submenu extends React.Component {
             // avoid bluring event cancelling out the toogle
             return;
         }
-        this.refs.$input.focus();
+        this.input.current.focus();
         this.setState({search_input_visible: !this.state.search_input_visible}, () => {
             if(this.state.search_input_visible == false){
                 this.props.onSearch(null);
@@ -126,14 +128,18 @@ export class Submenu extends React.Component {
                     { window.innerWidth < 410 && t("New Directory").length > 10 ? t("New Directory", null, "NEW_DIRECTORY::SHORT") : t("New Directory") }
                   </NgIf>
                   <NgIf cond={this.props.selected.length > 0} type="inline" onMouseDown={this.onDownload.bind(this, this.props.selected)}>
-                    <CSSTransitionGroup transitionName="submenuwithSelection" transitionLeave={false} transitionEnter={false} transitionAppear={true} transitionAppearTimeout={10000}>
-                      <span>{ t("Download") }</span>
-                    </CSSTransitionGroup>
+                    <TransitionGroup>
+                      <CSSTransition classNames="submenuwithSelection" exit={false} enter={false} appear={true} timeout={{ appear: 10000 }}>
+                        <span>{ t("Download") }</span>
+                      </CSSTransition>
+                    </TransitionGroup>
                   </NgIf>
                   <NgIf cond={this.props.selected.length > 0} type="inline" onMouseDown={this.onDelete.bind(this, this.props.selected)}>
-                    <CSSTransitionGroup transitionName="submenuwithSelection" transitionLeave={false} transitionEnter={false} transitionAppear={true} transitionAppearTimeout={10000}>
-                      <span>{ t("Remove") }</span>
-                    </CSSTransitionGroup>
+                  <TransitionGroup>
+                      <CSSTransition classNames="submenuwithSelection" exit={false} enter={false} appear={true} timeout={{ appear: 10000 }}>
+                        <span>{ t("Remove") }</span>
+                      </CSSTransition>
+                    </TransitionGroup>
                   </NgIf>
 
                   <Dropdown className="view sort" onChange={this.onSortChange.bind(this)}>
@@ -158,7 +164,7 @@ export class Submenu extends React.Component {
                         </NgIf>
                       </label>
                       <NgIf cond={this.state.search_input_visible !== null} type="inline">
-                        <input ref="$input" onBlur={this.closeIfEmpty.bind(this, false)} style={{"width": this.state.search_input_visible ? "180px" : "0px"}} value={this.state.search_keyword} onChange={(e) => this.onSearchKeypress(e.target.value, true)} type="text" id="search" placeholder={ t("search") } name="search" autoComplete="off" />
+                        <input ref={this.input} onBlur={this.closeIfEmpty.bind(this, false)} style={{"width": this.state.search_input_visible ? "180px" : "0px"}} value={this.state.search_keyword} onChange={(e) => this.onSearchKeypress(e.target.value, true)} type="text" id="search" placeholder={ t("search") } name="search" autoComplete="off" />
                         <label htmlFor="search" className="hidden">{ t("search") }</label>
                       </NgIf>
                     </form>

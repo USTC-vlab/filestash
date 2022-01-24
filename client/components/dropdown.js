@@ -21,7 +21,7 @@ export class Dropdown extends React.Component {
     }
 
     componentDidMount(){
-        this.$dropdown = ReactDOM.findDOMNode(this).querySelector(".dropdown_button");
+        this.$dropdown = this.node.querySelector(".dropdown_button");
         // This is not really the "react" way of doing things but we needed to use both a
         // click on the button and on the body (to exit the dropdown). we had issues
         // that were impossible to solve the "react" way such as the dropdown button click
@@ -65,7 +65,7 @@ export class Dropdown extends React.Component {
         className += this.props.className ? this.props.className+" " : "";
         className += this.state.button ? " active" : "";
         return (
-            <div className={className}>
+            <div className={className} ref={node => this.node = node}>
               { button }
               { dropdown }
             </div>

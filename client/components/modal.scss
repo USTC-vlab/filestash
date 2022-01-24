@@ -45,15 +45,15 @@
 /***********************/
 /* LEAVING TRANSITION */
 // background
-.modal-leave > div{ opacity: 1; }
-.modal-leave.modal-leave-active > div{
+.modal-exit > div{ opacity: 1; }
+.modal-exit.modal-exit-active > div{
     opacity: 0;
     transition: opacity 0.2s ease-out;
     transition-delay: 0.1s;
 }
 // box
-.modal-leave > div > div { transform: translateY(0); opacity: 1;}
-.modal-leave.modal-leave-active > div > div{
+.modal-exit > div > div { transform: translateY(0); opacity: 1;}
+.modal-exit.modal-exit-active > div > div{
     transform: translateY(20px);
     opacity: 0;
     transition: all 0.2s ease-out;

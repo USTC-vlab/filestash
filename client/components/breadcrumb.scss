@@ -26,7 +26,7 @@
         display: inline-block;
         margin: 0 0px 0 5px;
         line-height: 25px;
-        padding: 7px 0;
+        // padding: 7px 0;
         a{display: block; vertical-align: middle;}
         .component_icon{
             height: 20px;
@@ -115,12 +115,12 @@ body.touch-yes{
 
 /* ANIMATION */
 .component_breadcrumb{
-    .breadcrumb-leave{
+    .breadcrumb-exit{
         display: inline-block;
         opacity: 1;
         transform: translateY(0px);
     }
-    .breadcrumb-leave.breadcrumb-leave-active{
+    .breadcrumb-exit.breadcrumb-exit-active{
         opacity: 0;
         transform: translateY(-10px);
         transition: all 0.15s ease-out;
@@ -141,10 +141,10 @@ body.touch-yes{
 
 
 
-    .saving_indicator-leave{
+    .saving_indicator-exit{
         opacity: 1;
     }
-    .saving_indicator-leave.saving_indicator-leave-active{
+    .saving_indicator-exit.saving_indicator-exit-active{
         opacity: 0;
         transition: all 0.2s ease-out;
     }

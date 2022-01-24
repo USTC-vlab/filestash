@@ -99,7 +99,7 @@ export class ShareComponent extends React.Component {
     }
 
     onRegisterLink(e){
-        this.copyLinkInClipboard(this.refs.$input.value);
+        this.copyLinkInClipboard(this.input.value);
 
         const link = {
             role: this.state.role,
@@ -182,12 +182,12 @@ export class ShareComponent extends React.Component {
         };
         const datify = function(str){
             if(!str) return str;
-            const d = new Date(str); 
+            const d = new Date(str);
 
             // old browser not implementing input[type=date] elements
             // may return invalid date,
             if(isNaN(d.getDate())) return str;
-            
+
             const pad2 = (a) => ("00"+a).slice(-2);
             const pad4 = (a) => ("0000"+a).slice(-4);
             return [pad4(d.getFullYear()), pad2(d.getMonth()+1), pad2(d.getDate())].join("-");

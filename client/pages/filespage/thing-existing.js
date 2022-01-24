@@ -107,6 +107,7 @@ export class ExistingThing extends React.Component {
             is_renaming: false,
             preview: null
         };
+        this.card = React.createRef();
     }
 
     shouldComponentUpdate(nextProps, nextState){
@@ -250,7 +251,7 @@ export class ExistingThing extends React.Component {
         return connectDragSource(connectDropNativeFile(connectDropFile(
             <div className={"component_thing view-"+this.props.view+(this.props.selected === true ? " selected" : " not-selected")}>
               <ToggleableLink onClick={this.onThingClick.bind(this)} to={fileLink + window.location.search} disabled={this.props.file.icon === "loading"}>
-                <Card ref="$card"className={this.state.hover} className={className}>
+                <Card ref={this.card} className={this.state.hover} className={className}>
                   <Image preview={this.state.preview}
                          icon={this.props.file.icon || this.props.file.type}
                          view={this.props.view}
@@ -466,6 +467,7 @@ class LazyLoadImage extends React.Component {
         };
         this.$scroll = document.querySelector(props.scroller);
         this.onScroll = debounce(this.onScroll.bind(this), 250);
+        this.el = React.createRef();
     }
 
     componentDidMount(){
@@ -478,8 +480,8 @@ class LazyLoadImage extends React.Component {
     }
 
     onScroll(){
-        if(!this.refs.$el) return this.componentWillUnmount();
-        const dim_el = this.refs.$el.getBoundingClientRect();
+        if(!this.el.current) return this.componentWillUnmount();
+        const dim_el = this.el.current.getBoundingClientRect();
         if(dim_el.top + dim_el.height > 0 && dim_el.top < window.innerHeight){
             this.componentWillUnmount();
             memory.set(this.props.src, true);
@@ -494,7 +496,7 @@ class LazyLoadImage extends React.Component {
     render(){
         if((this.props.preview || memory.get(this.props.src) === null) || this.state.error === true){
             return (
-                <img ref="$el" className={this.props.className} src={img_placeholder} />
+                <img ref={this.el} className={this.props.className} src={img_placeholder} />
             );
         }
         return (

@@ -1,6 +1,6 @@
 import React from 'react';
 import EXIF from 'exif-js';
-import { CSSTransitionGroup } from 'react-transition-group';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { withRouter } from 'react-router-dom';
 
 import { NgIf, Icon, EventReceiver, MapShot, Button } from '../../components/';
@@ -262,67 +262,83 @@ export class LargeExif extends Exif{
         const formatCameraHeadline = () => {
             if(!this.format('model') || !this.format('focal')){
                 return (
-                    <CSSTransitionGroup transitionName="placeholder" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={500} transitionAppearTimeout={500}>
-                      <span key={this.format('model')+this.format('model')}>-</span>
-                    </CSSTransitionGroup>
+                    <TransitionGroup>
+                      <CSSTransition classNames="placeholder" exit={false} enter={true} appear={true} timeout={{ enter: 500 }}>
+                        <span key={this.format('model')+this.format('model')}>-</span>
+                      </CSSTransition>
+                    </TransitionGroup>
                 );
             }
             return (
-                <CSSTransitionGroup transitionName="text" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={300} transitionAppearTimeout={300}>
-                  <span key={this.format('model')}>
-                    {this.format("model")} ({this.format("focal")})
-                  </span>
-                </CSSTransitionGroup>
+                <TransitionGroup>
+                  <CSSTransition classNames="text" exit={false} enter={true} appear={true} timeout={{ enter: 300 }}>
+                    <span key={this.format('model')}>
+                      {this.format("model")} ({this.format("focal")})
+                    </span>
+                  </CSSTransition>
+                </TransitionGroup>
             );
         };
         const formatCameraDescription = () => {
             if(!this.format('shutter') || !this.format('aperture') || !this.format('focal')){
                 return (
-                    <CSSTransitionGroup transitionName="placeholder" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={500} transitionAppearTimeout={500}>
-                      <span key={this.format('shutter')+this.format('aperture')+this.format('focal')}>-</span>
-                    </CSSTransitionGroup>
+                    <TransitionGroup>
+                      <CSSTransition classNames="placeholder" exit={false} enter={true} appear={true} timeout={{ enter: 500 }}>
+                        <span key={this.format('shutter')+this.format('aperture')+this.format('focal')}>-</span>
+                      </CSSTransition>
+                    </TransitionGroup>
                 );
             }
             return (
-                <CSSTransitionGroup transitionName="text" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={300} transitionAppearTimeout={300}>
-                  <span key={this.format('shutter')}>
-                    {this.format("aperture")} {this.format("shutter")} {this.format("iso")}
-                  </span>
-                </CSSTransitionGroup>
+                <TransitionGroup>
+                  <CSSTransition classNames="text" exit={false} enter={true} appear={true} timeout={{ enter: 300 }}>
+                    <span key={this.format('shutter')}>
+                      {this.format("aperture")} {this.format("shutter")} {this.format("iso")}
+                    </span>
+                  </CSSTransition>
+                </TransitionGroup>
             );
         };
 
         const formatCalendarHeadline = () => {
             if(!this.formatDate()){
                 return (
-                    <CSSTransitionGroup transitionName="placeholder" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={500} transitionAppearTimeout={500}>
-                      <span key={this.formatDate()}>-</span>
-                    </CSSTransitionGroup>
+                    <TransitionGroup>
+                      <CSSTransition classNames="placeholder" exit={false} enter={true} appear={true} timeout={{ enter: 500 }}>
+                        <span key={this.formatDate()}>-</span>
+                      </CSSTransition>
+                    </TransitionGroup>
                 );
             }
             return (
-                <CSSTransitionGroup transitionName="text" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={300} transitionAppearTimeout={300}>
-                  <span key={this.formatDate()}>
-                    {this.formatDate()}
-                  </span>
-                </CSSTransitionGroup>
+                <TransitionGroup>
+                  <CSSTransition classNames="text" exit={false} enter={true} appear={true} timeout={{ enter: 300 }}>
+                    <span key={this.formatDate()}>
+                        {this.formatDate()}
+                    </span>
+                  </CSSTransition>
+                </TransitionGroup>
             );
         };
 
         const formatCalendarDescription = () => {
             if(!this.formatTime()){
                 return (
-                    <CSSTransitionGroup transitionName="placeholder" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={500} transitionAppearTimeout={500}>
-                      <span key={this.formatTime()}>-</span>
-                    </CSSTransitionGroup>
+                    <TransitionGroup>
+                      <CSSTransition classNames="placeholder" exit={false} enter={true} appear={true} timeout={{ enter: 500 }}>
+                        <span key={this.formatTime()}>-</span>
+                      </CSSTransition>
+                    </TransitionGroup>
                 );
             }
             return (
-                <CSSTransitionGroup transitionName="text" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={300} transitionAppearTimeout={300}>
-                  <span key={this.formatTime()}>
-                    {this.formatTime()}
-                  </span>
-                </CSSTransitionGroup>
+                <TransitionGroup>
+                  <CSSTransition classNames="text" exit={false} enter={true} appear={true} timeout={{ enter: 300 }}>
+                    <span key={this.formatTime()}>
+                        {this.formatTime()}
+                    </span>
+                  </CSSTransition>
+                </TransitionGroup>
             );
         };
 
@@ -346,27 +362,33 @@ export class LargeExif extends Exif{
 
 
               <NgIf cond={this.state.location !== null}>
-                <CSSTransitionGroup transitionName="image" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={300} transitionAppearTimeout={300}>
-                  <div key={JSON.stringify(this.state.location)}>
-                    <MapShot
-                      lat={DMSToDD(this.state.location && this.state.location[0])}
-                      lng={DMSToDD(this.state.location && this.state.location[1])} />
-                  </div>
-                </CSSTransitionGroup>
+                <TransitionGroup>
+                  <CSSTransition classNames="image" exit={false} enter={true} appear={true} timeout={{ enter: 300 }}>
+                    <div key={JSON.stringify(this.state.location)}>
+                        <MapShot
+                        lat={DMSToDD(this.state.location && this.state.location[0])}
+                        lng={DMSToDD(this.state.location && this.state.location[1])} />
+                    </div>
+                  </CSSTransition>
+                </TransitionGroup>
               </NgIf>
 
               <NgIf cond={!!this.state.all} className="more">
-                <CSSTransitionGroup transitionName="image" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={300} transitionAppearTimeout={300}>
-                  <div key={this.state.all === null}>
-                    <Button onClick={() => this.setState({show_more: !this.state.show_more})} theme="primary">MORE</Button>
-                  </div>
-                </CSSTransitionGroup>
+                <TransitionGroup>
+                  <CSSTransition classNames="image" exit={false} enter={true} appear={true} timeout={{ enter: 300 }}>
+                    <div key={this.state.all === null}>
+                        <Button onClick={() => this.setState({show_more: !this.state.show_more})} theme="primary">MORE</Button>
+                    </div>
+                  </CSSTransition>
+                </TransitionGroup>
               </NgIf>
-              <CSSTransitionGroup transitionName="image" transitionLeave={false} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={300} transitionAppearTimeout={300}>
-                <NgIf className="more_container" key={this.state.show_more} cond={!!this.state.show_more}>
-                  { this.all_meta() }
-                </NgIf>
-              </CSSTransitionGroup>
+                <TransitionGroup>
+                  <CSSTransition classNames="image" exit={false} enter={true} appear={true} timeout={{ enter: 300 }}>
+                    <NgIf className="more_container" key={this.state.show_more} cond={!!this.state.show_more}>
+                    { this.all_meta() }
+                    </NgIf>
+                  </CSSTransition>
+                </TransitionGroup>
             </div>
         );
     }

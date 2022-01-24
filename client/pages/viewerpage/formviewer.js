@@ -1,5 +1,5 @@
 import React from "react";
-import { CSSTransitionGroup } from "react-transition-group";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import { MenuBar } from "./menubar";
 import { Container, FormBuilder, NgIf, Icon, Fab } from "../../components/";
@@ -87,16 +87,18 @@ export class FormViewer extends React.Component {
                     }}/>
                   </form>
                 </Container>
-                <CSSTransitionGroup transitionName="fab" transitionLeave={true} transitionEnter={true} transitionAppear={true} transitionAppearTimeout={400} transitionEnterTimeout={400} transitionLeaveTimeout={200}>
-                  <NgIf key={this.props.needSaving} cond={this.props.needSaving}>
-                    <NgIf cond={!this.props.isSaving}>
-                      <Fab onClick={this.save.bind(this)}><Icon name="save" style={{height: '100%', width: '100%'}}/></Fab>
+                <TransitionGroup>
+                  <CSSTransition classNames="fab" exit={true} enter={true} appear={true} timeout={{ enter: 400, exit: 200 }}>
+                    <NgIf key={this.props.needSaving} cond={this.props.needSaving}>
+                        <NgIf cond={!this.props.isSaving}>
+                        <Fab onClick={this.save.bind(this)}><Icon name="save" style={{height: '100%', width: '100%'}}/></Fab>
+                        </NgIf>
+                        <NgIf cond={this.props.isSaving}>
+                        <Fab><Icon name="loading" style={{height: '100%', width: '100%'}}/></Fab>
+                        </NgIf>
                     </NgIf>
-                    <NgIf cond={this.props.isSaving}>
-                      <Fab><Icon name="loading" style={{height: '100%', width: '100%'}}/></Fab>
-                    </NgIf>
-                  </NgIf>
-                </CSSTransitionGroup>
+                  </CSSTransition>
+                </TransitionGroup>
               </div>
             </div>
         );

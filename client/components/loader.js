@@ -4,7 +4,7 @@ import "./loader.scss";
 
 export const Loader = () => {
     return (
-        <CSSTransition transitionName="loader" transitionAppearTimeout={700}>
+        <CSSTransition classNames="loader" timeout={{ appear: 700 }}>
           <div className="component_loader">
             <svg width="120px" height="120px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
               <rect x="0" y="0" width="100" height="100" fill="none"></rect>

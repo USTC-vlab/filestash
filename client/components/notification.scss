@@ -59,10 +59,10 @@
 
 
 .component_notification{
-    .notification-leave{
+    .notification-exit{
         opacity: 1;
     }
-    .notification-leave.notification-leave-active{
+    .notification-exit.notification-exit-active{
         opacity: 0;
         transition: opacity 0.2s ease-out;
     }

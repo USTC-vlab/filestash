@@ -1,6 +1,6 @@
 import React from 'react';
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend-filedrop';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { SelectableGroup } from 'react-selectable';
 
 import './filespage.scss';
@@ -27,7 +27,6 @@ let LAST_PAGE_PARAMS = {
 @ErrorPage
 @LoggedInOnly
 @EventReceiver
-@DragDropContext(HTML5Backend)
 export class FilesPage extends React.Component {
     constructor(props){
         super(props);
@@ -51,6 +50,8 @@ export class FilesPage extends React.Component {
 
         this.observers = [];
         this.toggleHiddenFilesVisibilityonCtrlK = this.toggleHiddenFilesVisibilityonCtrlK.bind(this);
+
+        this.scroll = React.createRef();
     }
 
     componentDidMount(){
@@ -88,7 +89,7 @@ export class FilesPage extends React.Component {
         this._cleanupListeners();
 
         LAST_PAGE_PARAMS.path = this.state.path;
-        LAST_PAGE_PARAMS.scroll = this.refs.$scroll.scrollTop;
+        LAST_PAGE_PARAMS.scroll = this.scroll.scrollTop;
         LAST_PAGE_PARAMS.page_number = this.state.page_number;
     }
 
@@ -141,7 +142,7 @@ export class FilesPage extends React.Component {
                 }.bind(this)()
             }, () => {
                 if(this.state.path === LAST_PAGE_PARAMS.path){
-                    this.refs.$scroll.scrollTop = LAST_PAGE_PARAMS.scroll;
+                    this.scroll.current.scrollTop = LAST_PAGE_PARAMS.scroll;
                 }
             });
         }, (error) => this.props.error(error));
@@ -258,36 +259,38 @@ export class FilesPage extends React.Component {
             $moreLoading = null;
         }
         return (
-            <div className="component_page_filespage">
-              <BreadCrumb className="breadcrumb" path={this.state.path} currentSelection={this.state.selected} />
-              <SelectableGroup onSelection={this.handleMultiSelect.bind(this)} tolerance={2} onNonItemClick={this.handleMultiSelect.bind(this, [])} preventDefault={true} enabled={this.state.is_search === false} className="selectablegroup">
-                <div className="page_container">
-                  <div ref="$scroll" className="scroll-y">
-                    <InfiniteScroll pageStart={0} loader={$moreLoading} hasMore={this.state.files.length > 70}
-                                    initialLoad={false} useWindow={false} loadMore={this.loadMore.bind(this)} threshold={100}>
-                      <NgShow className="container" cond={!!this.state.is_search || !this.state.loading}>
-                        <NgIf cond={this.state.path === "/"}>
-                          <FrequentlyAccess files={this.state.frequents} />
+            <DndProvider backend={HTML5Backend}>
+                <div className="component_page_filespage">
+                <BreadCrumb className="breadcrumb" path={this.state.path} currentSelection={this.state.selected} />
+                <SelectableGroup onSelection={this.handleMultiSelect.bind(this)} tolerance={2} onNonItemClick={this.handleMultiSelect.bind(this, [])} preventDefault={true} enabled={this.state.is_search === false} className="selectablegroup">
+                    <div className="page_container">
+                    <div ref={this.scroll} className="scroll-y">
+                        <InfiniteScroll pageStart={0} loader={$moreLoading} hasMore={this.state.files.length > 70}
+                                        initialLoad={false} useWindow={false} loadMore={this.loadMore.bind(this)} threshold={100}>
+                        <NgShow className="container" cond={!!this.state.is_search || !this.state.loading}>
+                            <NgIf cond={this.state.path === "/"}>
+                            <FrequentlyAccess files={this.state.frequents} />
+                            </NgIf>
+                            <Submenu path={this.state.path} sort={this.state.sort} view={this.state.view} onSearch={this.onSearch.bind(this)} onViewUpdate={(value) => this.onView(value)} onSortUpdate={(value) => this.onSort(value)} accessRight={this.state.metadata || {}} selected={this.state.selected}></Submenu>
+                            <NgIf cond={!this.state.loading}>
+                            <FileSystem path={this.state.path} sort={this.state.sort} view={this.state.view} selected={this.state.selected}
+                                        files={this.state.files.slice(0, this.state.page_number * LOAD_PER_SCROLL)} isSearch={this.state.is_search}
+                                        metadata={this.state.metadata || {}} onSort={this.onSort.bind(this)} onView={this.onView.bind(this)} />
+                            </NgIf>
+                        </NgShow>
+                        </InfiniteScroll>
+                        <NgIf cond={this.state.loading === true}>
+                        <Loader/>
                         </NgIf>
-                        <Submenu path={this.state.path} sort={this.state.sort} view={this.state.view} onSearch={this.onSearch.bind(this)} onViewUpdate={(value) => this.onView(value)} onSortUpdate={(value) => this.onSort(value)} accessRight={this.state.metadata || {}} selected={this.state.selected}></Submenu>
-                        <NgIf cond={!this.state.loading}>
-                          <FileSystem path={this.state.path} sort={this.state.sort} view={this.state.view} selected={this.state.selected}
-                                      files={this.state.files.slice(0, this.state.page_number * LOAD_PER_SCROLL)} isSearch={this.state.is_search}
-                                      metadata={this.state.metadata || {}} onSort={this.onSort.bind(this)} onView={this.onView.bind(this)} />
-                        </NgIf>
-                      </NgShow>
-                    </InfiniteScroll>
-                    <NgIf cond={this.state.loading === true}>
-                      <Loader/>
-                    </NgIf>
-                    <MobileFileUpload path={this.state.path} />
-                  </div>
+                        <MobileFileUpload path={this.state.path} />
+                    </div>
+                    </div>
+                    <div className="upload-footer">
+                    <div className="bar"></div>
+                    </div>
+                </SelectableGroup>
                 </div>
-                <div className="upload-footer">
-                  <div className="bar"></div>
-                </div>
-              </SelectableGroup>
-            </div>
+            </DndProvider>
         );
     }
 }

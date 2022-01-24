@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CSSTransitionGroup } from 'react-transition-group';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { DropTarget } from 'react-dnd';
 
 import { EventEmitter, Icon }  from '../../components/';
@@ -48,16 +48,18 @@ export class MobileFileUpload extends React.Component{
         }
 
         return (
-            <CSSTransitionGroup transitionName="mobilefileupload" transitionLeave={false} transitionEnter={false} transitionAppear={true} transitionAppearTimeout={550}>
-              <div className="component_mobilefileupload">
-                <form>
-                  <input onChange={this.onUpload.bind(this)} type="file" name="file" id="mobilefileupload" multiple/>
-                  <label htmlFor="mobilefileupload">
-                    <Icon name="upload_white"/>
-                  </label>
-                </form>
-              </div>
-            </CSSTransitionGroup>
+            <TransitionGroup>
+              <CSSTransition classNames="mobilefileupload" exit={false} enter={false} appear={true}>
+                <div className="component_mobilefileupload">
+                    <form>
+                    <input onChange={this.onUpload.bind(this)} type="file" name="file" id="mobilefileupload" multiple/>
+                    <label htmlFor="mobilefileupload">
+                        <Icon name="upload_white"/>
+                    </label>
+                    </form>
+                </div>
+              </CSSTransition>
+            </TransitionGroup>
         );
     }
 }

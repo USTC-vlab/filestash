@@ -1,6 +1,6 @@
 import React from 'react';
 import path from 'path';
-import { CSSTransitionGroup } from 'react-transition-group';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import { MenuBar } from './menubar';
 import { Bundle, Icon, NgIf, Loader, EventEmitter, EventReceiver } from '../../components/';
@@ -39,6 +39,7 @@ export class ImageViewer extends React.Component{
             else if(e.keyCode === 73){ this.setState({show_exif: !this.state.show_exif}); }
         };
         this.refresh = () => { this.setState({"_": Math.random()}); };
+        this.container = React.createRef();
     }
 
     componentDidMount(){
@@ -77,9 +78,9 @@ export class ImageViewer extends React.Component{
 
     requestFullScreen(){
         if("webkitRequestFullscreen" in document.body){
-            this.refs.$container.webkitRequestFullscreen();
+            this.container.webkitRequestFullscreen();
         }else if("mozRequestFullScreen" in document.body){
-            this.refs.$container.mozRequestFullScreen();
+            this.container.mozRequestFullScreen();
         }
     }
 
@@ -99,7 +100,7 @@ export class ImageViewer extends React.Component{
                   <Icon name="fullscreen" onClick={this.requestFullScreen.bind(this)} />
                 </NgIf>
               </MenuBar>
-              <div ref="$container" className={"component_image_container "+(document.webkitIsFullScreen || document.mozFullScreen ? "fullscreen" : "")}>
+              <div ref={this.container} className={"component_image_container "+(document.webkitIsFullScreen || document.mozFullScreen ? "fullscreen" : "")}>
                 <div className="images_wrapper">
                   <ImageFancy draggable={this.state.draggable} onLoad={() => this.setState({is_loaded: true})} url={this.props.data} />
                 </div>
@@ -249,21 +250,23 @@ class ImageFancy extends React.Component {
             );
         }
         return (
-            <CSSTransitionGroup transitionName="image" transitionLeave={true} transitionEnter={true} transitionAppear={true} transitionEnterTimeout={5000} transitionAppearTimeout={5000} transitionLeaveTimeout={5000}>
-              <div key={this.props.url}>
-                <Img
-                  src={this.props.url}
-                  style={{transform: 'translateX('+this.state.drag_current.x+'px)'}}
-                  className={this.state.hasAction ? "photo": "photo idle"}
-                  onTouchStart={this.imageDragStart.bind(this)}
-                  onDragStart={this.imageDragStart.bind(this)}
-                  onDragEnd={this.imageDragEnd.bind(this)}
-                  onTouchEnd={this.imageDragEnd.bind(this)}
-                  onDrag={this.imageDrag.bind(this)}
-                  onTouchMove={this.imageDrag.bind(this)}
-                  draggable={this.props.draggable} />
-              </div>
-            </CSSTransitionGroup>
+            <TransitionGroup>
+              <CSSTransition classNames="image" exit={true} enter={true} appear={true} timeout={{ enter: 5000, exit: 5000 }}>
+                <div key={this.props.url}>
+                    <Img
+                    src={this.props.url}
+                    style={{transform: 'translateX('+this.state.drag_current.x+'px)'}}
+                    className={this.state.hasAction ? "photo": "photo idle"}
+                    onTouchStart={this.imageDragStart.bind(this)}
+                    onDragStart={this.imageDragStart.bind(this)}
+                    onDragEnd={this.imageDragEnd.bind(this)}
+                    onTouchEnd={this.imageDragEnd.bind(this)}
+                    onDrag={this.imageDrag.bind(this)}
+                    onTouchMove={this.imageDrag.bind(this)}
+                    draggable={this.props.draggable} />
+                </div>
+              </CSSTransition>
+            </TransitionGroup>
         );
     }
 }

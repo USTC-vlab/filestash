@@ -55,7 +55,7 @@ class OrgViewer extends React.Component {
         this.findResults = debounce(this.findResults.bind(this), 150);
     }
 
-    componentWillReceiveProps(props) {
+    UNSAFE_componentWillReceiveProps(props) {
         this.setState({
             headlines: this.buildHeadlines(props.headlines),
             content: props.content,

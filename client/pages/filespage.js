@@ -93,7 +93,7 @@ export class FilesPage extends React.Component {
         LAST_PAGE_PARAMS.page_number = this.state.page_number;
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         const new_path = function(path) {
             if (path === undefined) {
                 path = "/";

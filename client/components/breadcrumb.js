@@ -14,7 +14,7 @@ export class BreadCrumb extends React.Component {
         };
     }
 
-    componentWillReceiveProps(props) {
+    UNSAFE_componentWillReceiveProps(props) {
         this.setState({ path: this._formatPath(props.path) });
     }
 

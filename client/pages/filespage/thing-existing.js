@@ -130,7 +130,7 @@ export class ExistingThing extends React.Component {
         this.updateThumbnail(this.props);
     }
 
-    componentWillReceiveProps(props) {
+    UNSAFE_componentWillReceiveProps(props) {
         if (props.view !== this.props.view) {
             this.updateThumbnail(props);
         }

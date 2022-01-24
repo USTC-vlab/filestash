@@ -50,7 +50,7 @@ export class ViewerPage extends React.Component {
         this.props.subscribe("file.select", this.onPathUpdate.bind(this));
     }
 
-    componentWillReceiveProps(props) {
+    UNSAFE_componentWillReceiveProps(props) {
         this.setState({
             // path: props.match.url.replace("/view", "").replace(/%23/g, "#") + (location.hash || ""),
             path: decodeURIComponent(props.match.url.replace("/view", "")),

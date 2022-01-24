@@ -10,7 +10,7 @@ export class Bundle extends React.Component {
         this.load(this.props);
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.load !== this.props.load) {
             this.load(nextProps);
         }

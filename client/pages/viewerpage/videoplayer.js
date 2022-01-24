@@ -33,7 +33,7 @@ export class VideoPlayer extends React.Component {
         });
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (this.props.data === nextProps.data) {
             this.player = videojs(this.video.current, {
                 controls: true,

@@ -185,7 +185,7 @@ export class LargeExif extends Exif {
     componentDidMount() {
         this.refresh_handler(this.props);
     }
-    componentWillReceiveProps(props) {
+    UNSAFE_componentWillReceiveProps(props) {
         this.refresh_handler(props);
     }
 

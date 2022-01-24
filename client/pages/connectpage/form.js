@@ -171,7 +171,7 @@ export class FormOld extends React.Component {
         window.removeEventListener("resize", this.rerender);
     }
 
-    componentWillReceiveProps(props) {
+    UNSAFE_componentWillReceiveProps(props) {
         if (JSON.stringify(props.credentials) !== JSON.stringify(this.props.credentials)) {
             this.publishState(props);
         }

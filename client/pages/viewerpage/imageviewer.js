@@ -65,7 +65,7 @@ export class ImageViewer extends React.Component {
         document.removeEventListener("keydown", this.shortcut);
     }
 
-    componentWillReceiveProps(props) {
+    UNSAFE_componentWillReceiveProps(props) {
         if (props.data !== this.props.data) {
             this.setState({ is_loaded: false });
         }
@@ -151,7 +151,7 @@ class ImageFancy extends React.Component {
         this.img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
     }
 
-    componentWillReceiveProps(nextProp) {
+    UNSAFE_componentWillReceiveProps(nextProp) {
         if (nextProp.url !== this.props.url) {
             this.setState({
                 isLoading: true,

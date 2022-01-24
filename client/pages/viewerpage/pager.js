@@ -41,7 +41,7 @@ export class Pager extends React.Component {
         });
     }
 
-    componentWillReceiveProps(props) {
+    UNSAFE_componentWillReceiveProps(props) {
         if (props.path !== this.props.path) {
             this.setNavigation(props);
         }

@@ -156,6 +156,11 @@ func init() {
 			transform.Exif = true
 		}
 
+		// allow jpg, png, gif and tiff to be resized.
+		if mType != "image/jpeg" && mType != "image/png" && mType != "image/gif" && mType != "image/tiff" {
+			return reader, nil
+		}
+
 		/////////////////////////////
 		// Insert file in the fs
 		// => impedance matching with something usable by CGO
@@ -184,10 +189,6 @@ func init() {
 
 		/////////////////////////
 		// final stage: resizing
-		if mType != "image/jpeg" && mType != "image/png" && mType != "image/gif" && mType != "image/tiff" {
-			return reader, nil
-		}
-
 		return CreateThumbnail(transform)
 	})
 }

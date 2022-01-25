@@ -85,7 +85,8 @@ func SendErrorResult(res http.ResponseWriter, err error) {
 		if r == "" {
 			return r
 		}
-		return strings.ToUpper(string(r[0])) + string(r[1:])
+		utf8ErrorMsg := []rune(r)
+		return strings.ToUpper(string(utf8ErrorMsg[0])) + string(utf8ErrorMsg[1:])
 	}(err.Error())
 	encoder.Encode(APIErrorMessage{"error", m})
 }

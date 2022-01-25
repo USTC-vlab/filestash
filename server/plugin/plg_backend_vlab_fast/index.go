@@ -1,4 +1,4 @@
-package plg_backend_vlab
+package plg_backend_vlab_fast
 
 import (
 	"errors"
@@ -21,7 +21,7 @@ type Sftp struct {
 }
 
 func init() {
-	Backend.Register("vlab", Sftp{})
+	Backend.Register("vlab-fast", Sftp{})
 
 	SftpCache = NewAppCache()
 	SftpCache.OnEvict(func(key string, value interface{}) {
@@ -37,6 +37,10 @@ func (s Sftp) Init(params map[string]string, app *App) (IBackend, error) {
 	}{
 		params["username"],
 		params["password"],
+	}
+
+	if params["vlab_sessionid"] == "" {
+		return nil, errors.New("未登录管理页面，请先前往 vlab.ustc.edu.cn/vm 登录。")
 	}
 
 	hostname := "vlab.ustc.edu.cn"
@@ -55,9 +59,13 @@ func (s Sftp) Init(params map[string]string, app *App) (IBackend, error) {
 		answers = make([]string, len(questions))
 		for i, q := range questions {
 			if strings.Contains(q, "Vlab username") {
-				answers[i] = params["vlab_username"]
+				if params["vlab_vmid"] != "" {
+					answers[i] = ":" + params["vlab_vmid"]
+				} else {
+					answers[i] = ""
+				}
 			} else if strings.Contains(q, "Vlab password") {
-				answers[i] = params["vlab_password"]
+				answers[i] = params["vlab_sessionid"]
 			} else if strings.Contains(q, "Unix password") {
 				answers[i] = p.password
 			} else {
@@ -65,7 +73,6 @@ func (s Sftp) Init(params map[string]string, app *App) (IBackend, error) {
 				return nil, errors.New("unsupported challenge")
 			}
 		}
-
 		return answers, nil
 	}
 
@@ -108,17 +115,18 @@ func (b Sftp) LoginForm() Form {
 			FormElement{
 				Name:  "type",
 				Type:  "hidden",
-				Value: "vlab",
+				Value: "vlab 快速登录",
 			},
 			FormElement{
-				Name:        "vlab_username",
-				Type:        "text",
-				Placeholder: "学号或工号",
+				Name:        "vlab_vmid",
+				Type:        "number",
+				Placeholder: "虚拟机 ID（可选，如果仅有一台虚拟机则不需要填写）",
 			},
 			FormElement{
-				Name:        "vlab_password",
+				Name:        "vlab_sessionid",
 				Type:        "password",
-				Placeholder: "Vlab 平台密码",
+				Placeholder: "Vlab SESSION ID（不可见）",
+				Opts:        []string{"hidden"},
 			},
 			FormElement{
 				Name:        "username",

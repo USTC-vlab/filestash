@@ -115,7 +115,16 @@ const FormElement = (props) => {
     const id = props.id !== undefined ? { id: props.id } : {};
     const struct = props.params;
     const autoCompleteProp = props.autoComplete || "off";
-    let $input = ( <Input onChange={(e) => props.onChange(e.target.value)} {...id} name={struct.label} type="text" defaultValue={struct.value} placeholder={ t(struct.placeholder) } /> );
+    const style = {};
+    if (props.params["options"]) {
+        for (let i = 0; i < props.params["options"].length; i++) {
+            if (props.params["options"] == "hidden") {
+                style["display"] = "none";
+            }
+        }
+    }
+    let $input = ( <Input onChange={(e) => props.onChange(e.target.value)} {...id} name={struct.label}
+        type="text" defaultValue={struct.value} placeholder={ t(struct.placeholder) } style={style}/> );
     switch (props.params["type"]) {
     case "text": {
         const onTextChange = (value) => {
@@ -126,7 +135,11 @@ const FormElement = (props) => {
         };
 
         const list_id = struct.datalist ? "list_"+Math.random() : null;
-        $input = ( <Input list={list_id} onChange={(e) => onTextChange(e.target.value)} {...id} name={struct.label} type="text" value={struct.value || ""} placeholder={ t(struct.placeholder) } readOnly={struct.readonly} autoComplete={autoCompleteProp} autoCorrect="off" autoCapitalize="off" spellCheck="false" /> );
+        $input = ( <Input list={list_id} onChange={(e) => onTextChange(e.target.value)} {...id} name={struct.label}
+            type="text" value={struct.value || ""} placeholder={ t(struct.placeholder) }
+            readOnly={struct.readonly}
+            autoComplete={autoCompleteProp} autoCorrect="off" autoCapitalize="off"
+            spellCheck="false" style={style}/> );
         if (list_id != null) {
             const filtered = function(multi, datalist, currentValue) {
                 if (multi !== true || currentValue == null) return datalist;
@@ -159,7 +172,9 @@ const FormElement = (props) => {
             value = value === "" ? null : parseInt(value);
             props.onChange(value);
         };
-        $input = ( <Input onChange={(e) => onNumberChange(e.target.value)} {...id} name={struct.label} type="number" value={struct.value === null ? "" : struct.value} placeholder={ t(struct.placeholder) } /> );
+        $input = ( <Input onChange={(e) => onNumberChange(e.target.value)} {...id} name={struct.label}
+            type="number" value={struct.value === null ? "" : struct.value}
+            placeholder={ t(struct.placeholder) } style={style} /> );
         break;
     }
     case "password": {
@@ -169,7 +184,9 @@ const FormElement = (props) => {
             }
             props.onChange(value);
         };
-        $input = ( <Input onChange={(e) => onPasswordChange(e.target.value)} {...id} name={struct.label} type="password" value={struct.value || ""} placeholder={ t(struct.placeholder) } autoComplete={autoCompleteProp} autoCorrect="off" autoCapitalize="off" spellCheck="false"/> );
+        $input = ( <Input onChange={(e) => onPasswordChange(e.target.value)} {...id} name={struct.label}
+            type="password" value={struct.value || ""} placeholder={ t(struct.placeholder) }
+            autoComplete={autoCompleteProp} autoCorrect="off" autoCapitalize="off" spellCheck="false" style={style}/> );
         break;
     }
     case "long_password": {
@@ -180,12 +197,19 @@ const FormElement = (props) => {
             props.onChange(value);
         };
         $input = (
-            <Textarea {...id} disabledEnter={true} value={struct.value || ""} onChange={(e) => onLongPasswordChange(e.target.value)} type="text" rows="1" name={struct.label} placeholder={ t(struct.placeholder) } autoComplete={autoCompleteProp} autoCorrect="off" autoCapitalize="off" spellCheck="false" />
+            <Textarea {...id} disabledEnter={true} value={struct.value || ""}
+                onChange={(e) => onLongPasswordChange(e.target.value)} type="text"
+                rows="1" name={struct.label} placeholder={ t(struct.placeholder) }
+                autoComplete={autoCompleteProp} autoCorrect="off"
+                autoCapitalize="off" spellCheck="false" style={style} />
         );
         break;
     }
     case "long_text":
-        $input = ( <Textarea {...id} disabledEnter={true} value={struct.value || ""} onChange={(e) => props.onChange(e.target.value)} type="text" rows="3" name={struct.label} placeholder={ t(struct.placeholder) } autoComplete={autoCompleteProp} autoCorrect="off" autoCapitalize="off" spellCheck="false" /> );
+        $input = ( <Textarea {...id} disabledEnter={true} value={struct.value || ""}
+            onChange={(e) => props.onChange(e.target.value)} type="text" rows="3"
+            name={struct.label} placeholder={ t(struct.placeholder) } autoComplete={autoCompleteProp}
+            autoCorrect="off" autoCapitalize="off" spellCheck="false" style={style} /> );
         break;
     case "bcrypt": {
         const onBcryptChange = (value) => {
@@ -197,29 +221,41 @@ const FormElement = (props) => {
                 .then((bcrypt) => bcrypt.bcrypt_password(value))
                 .then((hash) => props.onChange(hash));
         };
-        $input = ( <Input onChange={(e) => onBcryptChange(e.target.value)} {...id} name={struct.label} type="password" defaultValue={struct.value || ""} placeholder={ t(struct.placeholder) } /> );
+        $input = ( <Input onChange={(e) => onBcryptChange(e.target.value)} {...id}
+            name={struct.label} type="password" defaultValue={struct.value || ""}
+            placeholder={ t(struct.placeholder) } style={style} /> );
         break;
     }
     case "hidden":
         $input = ( <Input name={struct.label} type="hidden" defaultValue={struct.value} /> );
         break;
     case "boolean":
-        $input = ( <Input onChange={(e) => props.onChange(e.target.checked)} {...id} name={struct.label} type="checkbox" checked={struct.value === null ? !!struct.default : struct.value} /> );
+        $input = ( <Input onChange={(e) => props.onChange(e.target.checked)} {...id}
+            name={struct.label} type="checkbox"
+            checked={struct.value === null ? !!struct.default : struct.value} style={style} /> );
         break;
     case "select":
-        $input = ( <Select onChange={(e) => props.onChange(e.target.value)} {...id} name={struct.label} choices={struct.options} value={struct.value === null ? struct.default : struct.value} placeholder={ t(struct.placeholder) } />);
+        $input = ( <Select onChange={(e) => props.onChange(e.target.value)} {...id}
+            name={struct.label} choices={struct.options} value={struct.value === null ? struct.default : struct.value}
+            placeholder={ t(struct.placeholder) } style={style} />);
         break;
     case "enable":
-        $input = ( <Enabler onChange={(e) => props.onChange(e.target.checked)} {...id} name={struct.label} target={props.target} defaultValue={struct.value === null ? struct.default : struct.value} /> );
+        $input = ( <Enabler onChange={(e) => props.onChange(e.target.checked)} {...id}
+            name={struct.label} target={props.target}
+            defaultValue={struct.value === null ? struct.default : struct.value} style={style} /> );
         break;
     case "date":
-        $input = ( <Input onChange={(e) => props.onChange(e.target.value)} {...id} name={struct.label} type="date" defaultValue={struct.value || ""} placeholder={ t(struct.placeholder) } /> );
+        $input = ( <Input onChange={(e) => props.onChange(e.target.value)} {...id}
+            name={struct.label} type="date" defaultValue={struct.value || ""}
+            placeholder={ t(struct.placeholder) } style={style} /> );
         break;
     case "datetime":
-        $input = ( <Input onChange={(e) => props.onChange(e.target.value)} {...id} name={struct.label} type="datetime-local" defaultValue={struct.value || ""} placeholder={ t(struct.placeholder) } /> );
+        $input = ( <Input onChange={(e) => props.onChange(e.target.value)} {...id}
+            name={struct.label} type="datetime-local" defaultValue={struct.value || ""}
+            placeholder={ t(struct.placeholder) } style={style} /> );
         break;
     case "image":
-        $input = ( <img {...id} src={struct.value} /> );
+        $input = ( <img {...id} src={struct.value} style={style} /> );
         break;
     case "file": {
         const getBase64 = function(file) {
@@ -241,10 +277,11 @@ const FormElement = (props) => {
             notify.send("File is too large", "WARNING");
         };
         $input = (
-            <div className="fileupload-image">
+            <div className="fileupload-image" style={style}>
                 <input onChange={(e) => onFileUpload(e)} type="file" {...id} name={struct.label} />
                 { struct.value.substring(0, 10) === "data:image" ? <img src={struct.value} /> : null }
-                { struct.value.substring(0, 20) === "data:application/pdf" ? <object data={struct.value} type="application/pdf" /> : null }
+                { struct.value.substring(0, 20) === "data:application/pdf" ?
+                    <object data={struct.value} type="application/pdf" /> : null }
             </div>
         );
         break;

@@ -95,15 +95,15 @@ export class ConnectPage extends React.Component {
                         <Loader/>
                     </NgIf>
                     <NgShow cond={this.state.loading === false}>
-                        <TransitionGroup >
-                            <CSSTransition classNames="form" exit={false} enter={false} appear={true}>
+                        <TransitionGroup>
+                            <CSSTransition classNames="form" exit={false} enter={false} appear={true} timeout={{ appear: 5000 }}>
                                 <Form onLoadingChange={this.setLoading.bind(this)}
                                     onError={this.onError.bind(this)}
                                     onSubmit={this.onFormSubmit.bind(this)} />
                             </CSSTransition>
                         </TransitionGroup>
-                        <TransitionGroup transitionName="remember" transitionLeave={false} transitionEnter={false} transitionAppear={true} transitionAppearTimeout={5000}>
-                            <CSSTransition classNames="remember" exit={false} enter={false} appear={true}>
+                        <TransitionGroup>
+                            <CSSTransition classNames="remember" exit={false} enter={false} appear={true} timeout={{ appear: 5000 }}>
                                 <PoweredByFilestash />
                             </CSSTransition>
                         </TransitionGroup>

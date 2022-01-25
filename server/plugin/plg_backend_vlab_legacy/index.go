@@ -1,10 +1,13 @@
-package plg_backend_vlab
+package plg_backend_vlab_legacy
 
 import (
-	"errors"
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net"
+	"net/http"
 	"os"
 	"strings"
 
@@ -12,6 +15,8 @@ import (
 	"github.com/pkg/sftp"
 	"golang.org/x/crypto/ssh"
 )
+
+const APIPath string = "http://127.0.0.1:8000/vm/vnc/"
 
 var SftpCache AppCache
 
@@ -21,7 +26,7 @@ type Sftp struct {
 }
 
 func init() {
-	Backend.Register("vlab", Sftp{})
+	Backend.Register("vlab-legacy", Sftp{})
 
 	SftpCache = NewAppCache()
 	SftpCache.OnEvict(func(key string, value interface{}) {
@@ -32,15 +37,56 @@ func init() {
 
 func (s Sftp) Init(params map[string]string, app *App) (IBackend, error) {
 	p := struct {
-		username string
-		password string
-	}{
-		params["username"],
-		params["password"],
+		hostname   string
+		port       string
+		username   string
+		password   string
+		passphrase string
+	}{}
+
+	type Request struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+	request := Request{
+		Username: params["vlab_username"],
+		Password: params["vlab_password"],
+	}
+	jsonData, err := json.Marshal(request)
+	if err != nil {
+		return nil, err
+	}
+	res, err := http.Post(APIPath, "application/json", bytes.NewBuffer(jsonData))
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return nil, err
+	}
+	type Response struct {
+		Status  string `json:"status"`
+		IP      string `json:"ip"`
+		Message string `json:"msg,omitempty"`
+	}
+	var response Response
+	err = json.Unmarshal(body, &response)
+	if err != nil {
+		return nil, err
+	}
+	if response.Status != "ok" {
+		return nil, NewError(response.Message, 403)
 	}
 
-	hostname := "vlab.ustc.edu.cn"
-	port := "22"
+	p.hostname = response.IP
+	p.port = "22"
+	p.username = params["username"]
+	p.password = params["password"]
+
+	if p.port == "" {
+		p.port = "22"
+	}
 
 	c := SftpCache.Get(params)
 	if c != nil {
@@ -48,28 +94,23 @@ func (s Sftp) Init(params map[string]string, app *App) (IBackend, error) {
 		return d, nil
 	}
 
-	addr := hostname + ":" + port
+	addr := p.hostname + ":" + p.port
 	var auth []ssh.AuthMethod
-
-	challenge := func(user, instruction string, questions []string, echos []bool) (answers []string, err error) {
-		answers = make([]string, len(questions))
-		for i, q := range questions {
-			if strings.Contains(q, "Vlab username") {
-				answers[i] = params["vlab_username"]
-			} else if strings.Contains(q, "Vlab password") {
-				answers[i] = params["vlab_password"]
-			} else if strings.Contains(q, "Unix password") {
-				answers[i] = p.password
-			} else {
-				fmt.Println(q)
-				return nil, errors.New("unsupported challenge")
-			}
+	isPrivateKey := func(pass string) bool {
+		if len(pass) > 1000 && strings.HasPrefix(pass, "-----") {
+			return true
 		}
-
-		return answers, nil
+		return false
 	}
 
-	auth = []ssh.AuthMethod{ssh.KeyboardInteractive(challenge)}
+	if isPrivateKey(p.password) {
+		signer, err := ssh.ParsePrivateKeyWithPassphrase([]byte(p.password), []byte(p.passphrase))
+		if err == nil {
+			auth = []ssh.AuthMethod{ssh.PublicKeys(signer)}
+		}
+	} else {
+		auth = []ssh.AuthMethod{ssh.Password(p.password)}
+	}
 
 	config := &ssh.ClientConfig{
 		User: p.username,
@@ -85,17 +126,16 @@ func (s Sftp) Init(params map[string]string, app *App) (IBackend, error) {
 			return ssh.FixedHostKey(hostKey)(hostname, remote, key)
 		},
 	}
-
 	client, err := ssh.Dial("tcp", addr, config)
 	if err != nil {
-		fmt.Println(err)
-		return &s, ErrAuthenticationFailed
+		fmt.Println(err.Error())
+		return &s, NewError("Connection denied", 502)
 	}
 	s.SSHClient = client
 
 	session, err := sftp.NewClient(s.SSHClient)
 	if err != nil {
-		return &s, err
+		return &s, NewError("Can't establish connection", 502)
 	}
 	s.SFTPClient = session
 	SftpCache.Set(params, &s)
@@ -108,7 +148,7 @@ func (b Sftp) LoginForm() Form {
 			FormElement{
 				Name:  "type",
 				Type:  "hidden",
-				Value: "vlab",
+				Value: "vlab-legacy",
 			},
 			FormElement{
 				Name:        "vlab_username",
@@ -126,15 +166,8 @@ func (b Sftp) LoginForm() Form {
 				Placeholder: "Linux 用户名",
 			},
 			FormElement{
-				Name:        "advanced",
-				Type:        "enable",
-				Placeholder: "若无法使用无密码登录，请选择此项",
-				Target:      []string{"password"},
-			},
-			FormElement{
-				Id:          "password",
 				Name:        "password",
-				Type:        "password",
+				Type:        "long_password",
 				Placeholder: "Linux 密码",
 			},
 		},

@@ -106,7 +106,7 @@ export function Form({
                                             return (
                                                 <label style={{ color: "rgba(0,0,0,0.4)" }}>
                                                     { $input }
-                                                    { t("Advanced") }
+                                                    { struct.placeholder }
                                                 </label>
                                             );
                                         }
@@ -263,7 +263,7 @@ export class FormOld extends React.Component {
                                                 return (
                                                     <label style={{ color: "rgba(0,0,0,0.4)" }}>
                                                         { $input }
-                                                        { t("Advanced") }
+                                                        { struct.placeholder }
                                                     </label>
                                                 );
                                             }

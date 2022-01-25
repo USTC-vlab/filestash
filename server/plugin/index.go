@@ -9,6 +9,7 @@ import (
 	// _ "github.com/mickael-kerjean/filestash/server/plugin/plg_backend_mysql"
 	_ "github.com/mickael-kerjean/filestash/server/plugin/plg_backend_local"
 	_ "github.com/mickael-kerjean/filestash/server/plugin/plg_backend_vlab"
+	_ "github.com/mickael-kerjean/filestash/server/plugin/plg_backend_vlab_legacy"
 	_ "github.com/mickael-kerjean/filestash/server/plugin/plg_editor_onlyoffice"
 	_ "github.com/mickael-kerjean/filestash/server/plugin/plg_handler_console"
 

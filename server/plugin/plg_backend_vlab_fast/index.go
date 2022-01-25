@@ -123,6 +123,7 @@ func (b Sftp) LoginForm() Form {
 				Placeholder: "虚拟机 ID（可选，如果仅有一台虚拟机则不需要填写）",
 			},
 			FormElement{
+				Id:          "vlab_sessionid",
 				Name:        "vlab_sessionid",
 				Type:        "password",
 				Placeholder: "Vlab SESSION ID（不可见）",

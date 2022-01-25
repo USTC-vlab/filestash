@@ -61,6 +61,28 @@ export function Form({
         delete dataToBeSubmitted.image;
         delete dataToBeSubmitted.label;
         delete dataToBeSubmitted.advanced;
+
+        // specially treatment of vlab_sessionid
+        const readCookie = (name, defaultValue) => {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(";");
+
+            for (let i = 0; i < ca.length; i += 1) {
+                let c = ca[i];
+                while (c.charAt(0) === " ") {
+                    c = c.substring(1, c.length);
+                }
+                if (c.indexOf(nameEQ) === 0) {
+                    return c.substring(nameEQ.length, c.length);
+                }
+            }
+
+            return (typeof defaultValue !== "undefined") ? defaultValue : null;
+        };
+
+        if (dataToBeSubmitted.vlab_sessionid === null) {
+            dataToBeSubmitted.vlab_sessionid = readCookie("sessionid");
+        }
         onSubmit(dataToBeSubmitted);
     };
     const onTypeChange = (tabn) => {

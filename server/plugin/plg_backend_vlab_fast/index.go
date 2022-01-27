@@ -114,6 +114,8 @@ func (s Sftp) Init(params map[string]string, app *App) (IBackend, error) {
 	return &s, nil
 }
 
+var descriptionStr = "Vlab 文件管理快速登录。需要先登录管理页面 (https://vlab.ustc.edu.cn/vm) 才可使用。"
+
 func (b Sftp) LoginForm() Form {
 	return Form{
 		Elmnts: []FormElement{
@@ -123,9 +125,10 @@ func (b Sftp) LoginForm() Form {
 				Value: "vlab 快速登录",
 			},
 			FormElement{
-				Name:  "description",
-				Type:  "description",
-				Value: "Vlab 文件管理快速登录。需要先登录管理页面 (https://vlab.ustc.edu.cn/vm) 才可使用。",
+				Name:    "description",
+				Type:    "description",
+				Value:   descriptionStr,
+				Default: descriptionStr,
 			},
 			FormElement{
 				Name:        "vlab_vmid",

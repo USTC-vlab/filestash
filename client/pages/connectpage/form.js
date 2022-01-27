@@ -107,7 +107,8 @@ export function Form({
                 </div>
             </NgIf>
             <div>
-                <form onSubmit={(e) => onSubmitForm(e)} autoComplete="off" autoCapitalize="off" spellCheck="false" autoCorrect="off">
+                <form onSubmit={(e) => onSubmitForm(e)} autoComplete="off" autoCapitalize="off"
+                    spellCheck="false" autoCorrect="off">
                     {
                         enabledBackends.map((form, i) => {
                             const key = Object.keys(form)[0];

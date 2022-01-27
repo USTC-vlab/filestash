@@ -2,17 +2,18 @@ package main
 
 import (
 	"fmt"
-	"github.com/gorilla/mux"
-	. "github.com/mickael-kerjean/filestash/server/common"
-	. "github.com/mickael-kerjean/filestash/server/ctrl"
-	. "github.com/mickael-kerjean/filestash/server/middleware"
-	_ "github.com/mickael-kerjean/filestash/server/plugin"
 	"net/http"
 	"net/http/pprof"
 	"os"
 	"runtime"
 	"runtime/debug"
 	"strconv"
+
+	"github.com/gorilla/mux"
+	. "github.com/mickael-kerjean/filestash/server/common"
+	. "github.com/mickael-kerjean/filestash/server/ctrl"
+	. "github.com/mickael-kerjean/filestash/server/middleware"
+	_ "github.com/mickael-kerjean/filestash/server/plugin"
 )
 
 func main() {
@@ -77,11 +78,12 @@ func Init(a *App) {
 	middlewares = []Middleware{ApiHeaders, SecureHeaders, SecureAjax, BodyParser, CanManageShare}
 	share.HandleFunc("/{share}", NewMiddlewareChain(ShareUpsert, middlewares, *a)).Methods("POST")
 
+	// We don't need Webdav feature.
 	// Webdav server / Shared Link
-	middlewares = []Middleware{IndexHeaders, SecureHeaders}
-	r.HandleFunc("/s/{share}", NewMiddlewareChain(IndexHandler(FILE_INDEX), middlewares, *a)).Methods("GET")
-	middlewares = []Middleware{WebdavBlacklist, SessionStart}
-	r.PathPrefix("/s/{share}").Handler(NewMiddlewareChain(WebdavHandler, middlewares, *a))
+	// middlewares = []Middleware{IndexHeaders, SecureHeaders}
+	// r.HandleFunc("/s/{share}", NewMiddlewareChain(IndexHandler(FILE_INDEX), middlewares, *a)).Methods("GET")
+	// middlewares = []Middleware{WebdavBlacklist, SessionStart}
+	// r.PathPrefix("/s/{share}").Handler(NewMiddlewareChain(WebdavHandler, middlewares, *a))
 
 	// Application Resources
 	middlewares = []Middleware{ApiHeaders}

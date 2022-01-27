@@ -11,32 +11,17 @@
     },
     "connections": [
         {
-            "type": "webdav",
-            "label": "WebDav"
+            "description": "Vlab 文件管理快速登录。需要先登录管理页面 (https://vlab.ustc.edu.cn/vm) 才可使用。",
+            "label": "VLAB-FAST",
+            "type": "vlab-fast"
         },
         {
-            "type": "ftp",
-            "label": "FTP"
+            "label": "VLAB",
+            "type": "vlab"
         },
         {
-            "type": "sftp",
-            "label": "SFTP"
-        },
-        {
-            "type": "git",
-            "label": "GIT"
-        },
-        {
-            "type": "s3",
-            "label": "S3"
-        },
-        {
-            "type": "dropbox",
-            "label": "Dropbox"
-        },
-        {
-            "type": "gdrive",
-            "label": "Drive"
+            "label": "LOCAL",
+            "type": "local"
         }
     ]
 }

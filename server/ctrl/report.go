@@ -2,10 +2,11 @@ package ctrl
 
 import (
 	"fmt"
-	. "github.com/mickael-kerjean/filestash/server/common"
 	"net/http"
 	"os"
 	"path/filepath"
+
+	. "github.com/mickael-kerjean/filestash/server/common"
 )
 
 func ReportHandler(ctx App, res http.ResponseWriter, req *http.Request) {
@@ -17,8 +18,10 @@ func ReportHandler(ctx App, res http.ResponseWriter, req *http.Request) {
 func WellKnownSecurityHandler(ctx App, res http.ResponseWriter, req *http.Request) {
 	res.WriteHeader(http.StatusOK)
 	res.Write([]byte("# If you would like to report a security issue\n"))
-	res.Write([]byte("# you may report it to me via email\n"))
-	res.Write([]byte("Contact: mickael@kerjean.me"))
+	res.Write([]byte("# you may report it to us via email\n"))
+	res.Write([]byte("USTC Vlab maintainer email: vlab AT ustc.edu.cn\n"))
+	res.Write([]byte("If you are sure that this security issue also exists in original Filestash\n"))
+	res.Write([]byte("Please also contact: mickael@kerjean.me"))
 }
 
 func HealthHandler(ctx App, res http.ResponseWriter, req *http.Request) {

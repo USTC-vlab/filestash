@@ -47,6 +47,8 @@ export function createFormBackend(backend_available, backend_data) {
             template[key].enabled = true;
         } else if (key === "advanced") {
             template[key].enabled = true;
+        } else if (key === "description") {
+            template[key].enabled = false;
         }
     }
 

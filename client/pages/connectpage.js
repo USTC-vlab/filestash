@@ -87,23 +87,25 @@ export class ConnectPage extends React.Component {
     render() {
         return (
             <div className="component_page_connect">
-                <NgIf cond={window.CONFIG["fork_button"]}>
+                {/* <NgIf cond={window.CONFIG["fork_button"]}>
                     <ForkMe repo="https://github.com/mickael-kerjean/filestash" />
-                </NgIf>
+                </NgIf> */}
                 <Container maxWidth="565px">
                     <NgIf cond={this.state.loading === true}>
                         <Loader/>
                     </NgIf>
                     <NgShow cond={this.state.loading === false}>
                         <TransitionGroup>
-                            <CSSTransition classNames="form" exit={false} enter={false} appear={true} timeout={{ appear: 5000 }}>
+                            <CSSTransition classNames="form" exit={false} enter={false}
+                                appear={true} timeout={{ appear: 5000 }}>
                                 <Form onLoadingChange={this.setLoading.bind(this)}
                                     onError={this.onError.bind(this)}
                                     onSubmit={this.onFormSubmit.bind(this)} />
                             </CSSTransition>
                         </TransitionGroup>
                         <TransitionGroup>
-                            <CSSTransition classNames="remember" exit={false} enter={false} appear={true} timeout={{ appear: 5000 }}>
+                            <CSSTransition classNames="remember" exit={false} enter={false}
+                                appear={true} timeout={{ appear: 5000 }}>
                                 <PoweredByFilestash />
                             </CSSTransition>
                         </TransitionGroup>

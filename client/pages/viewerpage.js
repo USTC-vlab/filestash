@@ -77,26 +77,54 @@ export class ViewerPage extends React.Component {
             });
         };
         const data_fetch = (app) => {
-            if (app === "editor" || app === "form") {
-                return Promise.all([
-                    Files.cat(this.state.path),
-                    Files.options(this.state.path),
-                ]).then((d) => {
-                    const [content, options] = d;
-                    this.setState({
-                        content: content,
-                        loading: false,
-                        acl: options["allow"],
-                    });
-                }).catch((err) => {
-                    if (err && err.code === "BINARY_FILE") {
-                        this.setState({ opener: "download", loading: false });
+            return new Promise((done, err) => {
+                Files.options(this.state.path).then((options) => {
+                    this.setState({ acl: options["allow"] });
+                    // Allow following logic if file size < 16 MiB
+                    if (!options["x-filestash-filesize"] || options["x-filestash-filesize"] < 16 * 1024 * 1024) {
+                        if (app === "editor" || app === "form") {
+                            return Promise.all([
+                                Files.cat(this.state.path),
+                            ]).then((d) => {
+                                const [content] = d;
+                                this.setState({
+                                    content: content,
+                                    loading: false,
+                                });
+                            }).catch((err) => {
+                                if (err && err.code === "BINARY_FILE") {
+                                    this.setState({ opener: "download", loading: false });
+                                } else {
+                                    this.props.error(err);
+                                }
+                            });
+                        }
                     } else {
-                        this.props.error(err);
+                        console.log("File size larger than 16 MiB. Show download button only instead.");
+                        this.setState({ opener: "download", loading: false });
                     }
                 });
-            }
-            this.setState({ loading: false });
+            });
+            // if (app === "editor" || app === "form") {
+            //     return Promise.all([
+            //         Files.cat(this.state.path),
+            //         Files.options(this.state.path),
+            //     ]).then((d) => {
+            //         const [content, options] = d;
+            //         this.setState({
+            //             content: content,
+            //             loading: false,
+            //             acl: options["allow"],
+            //         });
+            //     }).catch((err) => {
+            //         if (err && err.code === "BINARY_FILE") {
+            //             this.setState({ opener: "download", loading: false });
+            //         } else {
+            //             this.props.error(err);
+            //         }
+            //     });
+            // }
+            // this.setState({ loading: false });
         };
         return metadata().then(data_fetch);
     }

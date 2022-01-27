@@ -276,17 +276,30 @@ func FileCat(ctx App, res http.ResponseWriter, req *http.Request) {
 
 func FileAccess(ctx App, res http.ResponseWriter, req *http.Request) {
 	allowed := []string{}
+	var fileSize int64 = 0
+	path, err := PathBuilder(ctx, req.URL.Query().Get("path"))
+	if err != nil {
+		SendErrorResult(res, err)
+		return
+	}
 	if model.CanRead(&ctx) {
 		allowed = append(allowed, "GET")
-	}
-	if model.CanEdit(&ctx) {
-		allowed = append(allowed, "PUT")
-	}
-	if model.CanUpload(&ctx) {
-		allowed = append(allowed, "POST")
+		fileInfo, err := ctx.Backend.Stat(path)
+		if err != nil {
+			fileSize = -1
+		} else {
+			fileSize = fileInfo.Size()
+		}
+		if model.CanEdit(&ctx) {
+			allowed = append(allowed, "PUT")
+		}
+		if model.CanUpload(&ctx) {
+			allowed = append(allowed, "POST")
+		}
 	}
 	header := res.Header()
 	header.Set("Allow", strings.Join(allowed, ", "))
+	header.Set("X-Filestash-FileSize", strconv.FormatInt(fileSize, 10))
 	SendSuccessResult(res, nil)
 }
 

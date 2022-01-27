@@ -1,7 +1,6 @@
 import React from "react";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { withRouter } from "react-router";
-import { Prompt } from "react-router-dom";
 import { Subject } from "rxjs/Subject";
 
 import { NgIf, Fab, Icon, Dropdown, DropdownButton, DropdownList, DropdownItem } from "../../components/";
@@ -143,7 +142,8 @@ export class IDE extends React.Component {
                 </MenuBar>
 
                 <TransitionGroup className="editor_container">
-                    <CSSTransition classNames="editor" appear={true} enter={false} exit={false}>
+                    <CSSTransition classNames="editor" appear={true} enter={false}
+                        exit={false} timeout={{ appear: 300 }}>
                         <Editor onSave={this.save.bind(this)} filename={this.props.filename}
                             content={this.state.contentToSave}
                             readonly={/PUT/.test(this.props.acl)}
@@ -155,10 +155,12 @@ export class IDE extends React.Component {
                 </TransitionGroup>
 
                 <TransitionGroup>
-                    <CSSTransition classNames="fab" exit={true} enter={true} appear={true} timeout={{ enter: 400, exit: 200 }}>
+                    <CSSTransition classNames="fab" exit={true} enter={true}
+                        appear={true} timeout={{ enter: 400, exit: 200 }}>
                         <NgIf key={this.props.needSaving} cond={this.props.needSaving}>
                             <NgIf cond={!this.props.isSaving}>
-                                <Fab onClick={this.save.bind(this)}><Icon name="save" style={{ height: "100%", width: "100%" }}/></Fab>
+                                <Fab onClick={this.save.bind(this)}><Icon name="save"
+                                    style={{ height: "100%", width: "100%" }}/></Fab>
                             </NgIf>
                             <NgIf cond={this.props.isSaving}>
                                 <Fab><Icon name="loading" style={{ height: "100%", width: "100%" }}/></Fab>

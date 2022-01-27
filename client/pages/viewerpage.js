@@ -99,6 +99,7 @@ export class ViewerPage extends React.Component {
                                 }
                             });
                         }
+                        this.setState({ loading: false });
                     } else {
                         console.log("File size larger than 16 MiB. Show download button only instead.");
                         this.setState({ opener: "download", loading: false });

@@ -123,6 +123,11 @@ func (b Sftp) LoginForm() Form {
 				Value: "vlab 快速登录",
 			},
 			FormElement{
+				Name:  "description",
+				Type:  "description",
+				Value: "Vlab 文件管理快速登录。需要先登录管理页面 (https://vlab.ustc.edu.cn/vm) 才可使用。",
+			},
+			FormElement{
 				Name:        "vlab_vmid",
 				Type:        "number",
 				Placeholder: "虚拟机 ID（可选，如果仅有一台虚拟机则不需要填写）",

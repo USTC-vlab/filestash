@@ -102,7 +102,9 @@ export class FormBuilder extends React.Component {
             );
         };
 
-        return ( <FormElement render={this.props.render} onChange={onChange.bind(this)} {...id} params={struct} target={target} name={ format(struct.label) } autoComplete={ this.props.autoComplete || "off" }/> );
+        return ( <FormElement render={this.props.render} onChange={onChange.bind(this)}
+            {...id} params={struct} target={target} name={ format(struct.label) }
+            autoComplete={ this.props.autoComplete || "off" }/> );
     }
 
     render() {
@@ -288,6 +290,9 @@ const FormElement = (props) => {
     }
     case "oauth2":
         $input = null;
+        break;
+    case "description":
+        $input = ( <span {...id} style={style}>{struct.value}</span> );
         break;
     }
 

@@ -22,7 +22,9 @@ WORKDIR /app
 COPY . /app
 
 # Build!
-RUN npm install && make build_init && make build_frontend && make build_backend
+RUN npm install && make build_init && \
+    mkdir -p ./dist/data/state && cp -R config ./dist/data/state && \
+    make build_frontend && make build_backend
 
 # Pack image
 RUN mv dist filestash && tar czf /filestash.tar.gz ./filestash

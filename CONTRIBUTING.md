@@ -17,6 +17,8 @@ As the copyright owner, you agree to license your contributions under an irrevoc
 
 *Prerequisites*: Git, Make, Node, Go, Glib 2.0
 
+*Optional deps*: Libvips (If you use `plg_image_light` plugin for image thumbnail processing)
+
 ```
 # Download the source
 git clone https://github.com/mickael-kerjean/filestash

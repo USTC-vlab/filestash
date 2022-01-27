@@ -24,7 +24,7 @@ var (
 	ErrFilesystemError            = NewError("Can't use filesystem", 503)
 	ErrMissingDependency          = NewError("Missing dependency", 424)
 	ErrNotAuthorized              = NewError("Not authorised", 401)
-	ErrAuthenticationFailed       = NewError("Invalid account", 400)
+	ErrAuthenticationFailed       = NewError("Authentication failed", 400)
 	ErrCongestion                 = NewError("Traffic congestion, try again later", 500)
 	ErrTimeout                    = NewError("Timeout", 500)
 )

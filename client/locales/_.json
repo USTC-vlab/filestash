@@ -49,7 +49,7 @@
     "INFO": "",
     "INTERNAL_ERROR_CANT_CREATE_A_{{VALUE}}": "",
     "INVALID_PASSWORD": "",
-    "INVALID_ACCOUNT": "",
+    "AUTHENTICATION_FAILED": "",
     "LOCATION": "",
     "MISSING_DEPENDENCY": "",
     "NAVIGATE": "",

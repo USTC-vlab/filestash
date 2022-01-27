@@ -89,3 +89,7 @@ func (this Local) Touch(path string) error {
 	}
 	return f.Close()
 }
+
+func (this Local) Stat(path string) (os.FileInfo, error) {
+	return os.Stat(path)
+}

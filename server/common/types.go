@@ -16,6 +16,7 @@ type IBackend interface {
 	Mv(from string, to string) error
 	Save(path string, file io.Reader) error
 	Touch(path string) error
+	Stat(path string) (os.FileInfo, error)
 	LoginForm() Form
 }
 

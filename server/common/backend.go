@@ -66,6 +66,9 @@ func (b Nothing) Touch(path string) error {
 func (b Nothing) Save(path string, file io.Reader) error {
 	return NewError("", 401)
 }
+func (b Nothing) Stat(path string) (os.FileInfo, error) {
+	return nil, NewError("", 401)
+}
 func (b Nothing) LoginForm() Form {
 	return Form{}
 }

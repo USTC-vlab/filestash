@@ -2,6 +2,12 @@ package backend
 
 import (
 	"fmt"
+	"io"
+	"os"
+	"path/filepath"
+	"strings"
+	"time"
+
 	. "github.com/mickael-kerjean/filestash/server/common"
 	"golang.org/x/crypto/ssh"
 	"gopkg.in/src-d/go-git.v4"
@@ -10,11 +16,6 @@ import (
 	"gopkg.in/src-d/go-git.v4/plumbing/transport"
 	"gopkg.in/src-d/go-git.v4/plumbing/transport/http"
 	sshgit "gopkg.in/src-d/go-git.v4/plumbing/transport/ssh"
-	"io"
-	"os"
-	"path/filepath"
-	"strings"
-	"time"
 )
 
 const GitCachePath = "data/cache/git/"
@@ -297,6 +298,14 @@ func (g Git) Save(path string, file io.Reader) error {
 
 func (g Git) Close() error {
 	return os.RemoveAll(g.git.params.basePath)
+}
+
+func (g Git) Stat(path string) (os.FileInfo, error) {
+	p, err := g.path(path)
+	if err != nil {
+		return nil, NewError(err.Error(), 403)
+	}
+	return os.Stat(p)
 }
 
 func (g Git) path(path string) (string, error) {

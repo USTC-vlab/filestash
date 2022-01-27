@@ -15,7 +15,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const $loader = document.querySelector("#n-lder");
 
     function render() {
-        ReactDOM.render(<React.StrictMode><Router/></React.StrictMode>, document.querySelector("div[role='main']"));
+        ReactDOM.render(<Router/>, document.querySelector("div[role='main']"));
         return Promise.resolve();
     }
     function waitFor(n) {
@@ -73,7 +73,9 @@ function $error(msg) {
 
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", function() {
-        if (navigator.userAgent.indexOf("Mozilla/") !== -1 && navigator.userAgent.indexOf("Firefox/") !== -1 && navigator.userAgent.indexOf("Gecko/") !== -1) {
+        if (navigator.userAgent.indexOf("Mozilla/") !== -1 &&
+            navigator.userAgent.indexOf("Firefox/") !== -1 &&
+            navigator.userAgent.indexOf("Gecko/") !== -1) {
             // Firefox was acting weird with service worker so we disabled it
             // see: https://github.com/mickael-kerjean/filestash/issues/255
             return;
@@ -98,10 +100,7 @@ function setup_xdg_open() {
 function translation() {
     const userLanguage = navigator.language.split("-")[0];
     const selectedLanguage = [
-        "az", "be", "bg", "ca", "cs", "da", "de", "el", "es", "et",
-        "eu", "fi", "fr", "gl", "hr", "hu", "id", "is", "it", "ja",
-        "ka", "ko", "lt", "lv", "mn", "nb", "nl", "pl", "pt", "ro",
-        "ru", "sk", "sl", "sr", "sv", "th", "tr", "uk", "vi", "zh",
+        "zh",
     ].indexOf(userLanguage) === -1 ? "en" : userLanguage;
 
     if (selectedLanguage === "en") {

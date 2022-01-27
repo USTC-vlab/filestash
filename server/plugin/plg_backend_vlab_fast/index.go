@@ -39,6 +39,11 @@ func (s Sftp) Init(params map[string]string, app *App) (IBackend, error) {
 		params["password"],
 	}
 
+	// Set default Linux username
+	if p.username == "" {
+		p.username = "ubuntu"
+	}
+
 	if params["vlab_sessionid"] == "" {
 		return nil, errors.New("未登录管理页面，请先前往 vlab.ustc.edu.cn/vm 登录。")
 	}
@@ -132,7 +137,7 @@ func (b Sftp) LoginForm() Form {
 			FormElement{
 				Name:        "username",
 				Type:        "text",
-				Placeholder: "Linux 用户名",
+				Placeholder: "Linux 用户名（默认为 ubuntu）",
 			},
 			FormElement{
 				Name:        "advanced",

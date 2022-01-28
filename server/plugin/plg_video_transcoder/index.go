@@ -4,9 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/gorilla/mux"
-	. "github.com/mickael-kerjean/filestash/server/common"
-	. "github.com/mickael-kerjean/filestash/server/middleware"
 	"io"
 	"math"
 	"net/http"
@@ -16,6 +13,10 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/gorilla/mux"
+	. "github.com/mickael-kerjean/filestash/server/common"
+	. "github.com/mickael-kerjean/filestash/server/middleware"
 )
 
 const (
@@ -167,11 +168,17 @@ func hls_playlist(reader io.ReadCloser, ctx *App, res *http.ResponseWriter, req 
 func hls_transcode(ctx App, res http.ResponseWriter, req *http.Request) {
 	segmentNumber, err := strconv.Atoi(mux.Vars(req)["segment"])
 	if err != nil {
-		Log.Info("[plugin hls] invalid segment request '%s'", mux.Vars(req)["segment"])
+		Log.Info("[plugin hls] invalid segment request %q", mux.Vars(req)["segment"])
 		res.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	startTime := segmentNumber * HLS_SEGMENT_LENGTH
+	userPath := req.URL.Query().Get("path")
+	if strings.Contains(userPath, "..") {
+		Log.Info("[plugin hls] user path (%q) contains illegal characters", userPath)
+		res.WriteHeader(http.StatusBadRequest)
+		return
+	}
 	cachePath := filepath.Join(
 		GetCurrentDir(),
 		VideoCachePath,

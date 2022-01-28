@@ -182,7 +182,7 @@ func hls_transcode(ctx App, res http.ResponseWriter, req *http.Request) {
 	cachePath := filepath.Join(
 		GetCurrentDir(),
 		VideoCachePath,
-		req.URL.Query().Get("path"),
+		userPath,
 	)
 	if _, err := os.Stat(cachePath); os.IsNotExist(err) {
 		Log.Info("[plugin hls]: invalid video")

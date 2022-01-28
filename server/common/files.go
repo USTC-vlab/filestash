@@ -35,6 +35,7 @@ func IsDirectory(path string) bool {
  */
 func JoinPath(base, file string) string {
 	filePath := filepath.Join(base, file)
+	// sanitize user-given path (file), thus this is a safe function.
 	if strings.HasPrefix(filePath, base) == false {
 		return base
 	}

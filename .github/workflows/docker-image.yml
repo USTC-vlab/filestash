@@ -1,8 +1,7 @@
 name: Docker Image CI
 
 on:
-  push:
-    branches: [ '*' ]
+  workflow_dispatch:
   pull_request:
     branches: [ 'vlab' ]
 
@@ -18,9 +17,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: satackey/action-docker-layer-caching@v0.0.11
-      # Ignore the failure of a step and avoid terminating the job.
-      continue-on-error: true
     - name: Extract metadata
       uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
       if: github.ref == 'refs/heads/vlab'

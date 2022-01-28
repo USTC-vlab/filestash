@@ -98,7 +98,8 @@ export function Form({
                             const key = Object.keys(backend)[0];
                             if (!backend[key]) return null;
                             return (
-                                <Button key={"menu-"+i} className={i === selectedTab ? "active primary" : ""} onClick={() => onTypeChange(i)}>
+                                <Button key={"menu-"+i} className={i !== selectedTab ? "primary" : ""}
+                                    onClick={() => onTypeChange(i)}>
                                     { backend[key].label.value }
                                 </Button>
                             );

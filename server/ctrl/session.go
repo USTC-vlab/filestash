@@ -3,11 +3,12 @@ package ctrl
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
+	"time"
+
 	"github.com/gorilla/mux"
 	. "github.com/mickael-kerjean/filestash/server/common"
 	"github.com/mickael-kerjean/filestash/server/model"
-	"net/http"
-	"time"
 )
 
 type Session struct {
@@ -44,6 +45,9 @@ func SessionAuthenticate(ctx App, res http.ResponseWriter, req *http.Request) {
 		SendErrorResult(res, err)
 		return
 	}
+
+	Log.Info("[session auth] Login trial: RemoteAddr %s, X-Forwarded-For %s, User-Agent %s",
+		req.RemoteAddr, req.Header.Get("X-Forwarded-For"), req.Header.Get("User-Agent"))
 
 	if obj, ok := backend.(interface {
 		OAuthToken(*map[string]interface{}) error

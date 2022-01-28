@@ -2,7 +2,6 @@ package plg_backend_vlab_fast
 
 import (
 	"errors"
-	"fmt"
 	"io"
 	"net"
 	"os"
@@ -74,7 +73,7 @@ func (s Sftp) Init(params map[string]string, app *App) (IBackend, error) {
 			} else if strings.Contains(q, "Unix password") {
 				answers[i] = p.password
 			} else {
-				fmt.Println(q)
+				Log.Warning("[vlab-fast] received unknown question: %s", q)
 				return nil, errors.New("unsupported challenge")
 			}
 		}
@@ -100,7 +99,7 @@ func (s Sftp) Init(params map[string]string, app *App) (IBackend, error) {
 
 	client, err := ssh.Dial("tcp", addr, config)
 	if err != nil {
-		fmt.Println(err)
+		Log.Warning("[vlab-fast] auth failed: %v", err)
 		return &s, ErrAuthenticationFailed
 	}
 	s.SSHClient = client

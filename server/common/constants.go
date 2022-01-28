@@ -24,11 +24,26 @@ const (
 )
 
 func init() {
-	os.MkdirAll(filepath.Join(GetCurrentDir(), LOG_PATH), os.ModePerm)
-	os.MkdirAll(filepath.Join(GetCurrentDir(), FTS_PATH), os.ModePerm)
-	os.MkdirAll(filepath.Join(GetCurrentDir(), CONFIG_PATH), os.ModePerm)
-	os.RemoveAll(filepath.Join(GetCurrentDir(), TMP_PATH))
-	os.MkdirAll(filepath.Join(GetCurrentDir(), TMP_PATH), os.ModePerm)
+	err := os.MkdirAll(filepath.Join(GetCurrentDir(), LOG_PATH), os.ModePerm)
+	if err != nil {
+		Log.Warning("[common/constants/init] log path mkdir: %v", err)
+	}
+	err = os.MkdirAll(filepath.Join(GetCurrentDir(), FTS_PATH), os.ModePerm)
+	if err != nil {
+		Log.Warning("[common/constants/init] fts path mkdir: %v", err)
+	}
+	err = os.MkdirAll(filepath.Join(GetCurrentDir(), CONFIG_PATH), os.ModePerm)
+	if err != nil {
+		Log.Warning("[common/constants/init] config path mkdir: %v", err)
+	}
+	err = os.RemoveAll(filepath.Join(GetCurrentDir(), TMP_PATH))
+	if err != nil {
+		Log.Warning("[common/constants/init] tmp path rm: %v", err)
+	}
+	err = os.MkdirAll(filepath.Join(GetCurrentDir(), TMP_PATH), os.ModePerm)
+	if err != nil {
+		Log.Warning("[common/constants/init] tmp path mkdir: %v", err)
+	}
 }
 
 var (

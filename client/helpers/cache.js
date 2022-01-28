@@ -77,7 +77,7 @@ DataFromMemory.prototype.get = function(type, key) {
     if (data === null) {
         return Promise.resolve(null);
     }
-    const value = data[key.join("_")] || null;
+    const value = data[key.join("-")] || null;
     if (value === null) {
         return Promise.resolve(null);
     }
@@ -119,7 +119,7 @@ DataFromMemory.prototype.update = function(type, key, fn, exact = true) {
         return Promise.resolve(null);
     }
 
-    const k = key.join("_");
+    const k = key.join("-");
     if (exact === true) {
         if (this.data[type][k] !== undefined) this.data[type][k] = fn(data[k]);
     } else {
@@ -159,7 +159,7 @@ DataFromMemory.prototype.upsert = function(type, key, fn) {
     if (db === null) {
         this.data[type] = {};
     }
-    const k = key.join("_");
+    const k = key.join("-");
     const new_data = fn(this.data[type][k]);
     this.data[type][k] = fn(new_data);
     return Promise.resolve(new_data);
@@ -184,7 +184,7 @@ DataFromMemory.prototype.add = function(type, key, data) {
     if (this.data[type] === undefined) {
         this.data[type] = {};
     }
-    this.data[type][key.join("_")] = data;
+    this.data[type][key.join("-")] = data;
     return Promise.resolve(data);
 };
 
@@ -228,7 +228,7 @@ DataFromMemory.prototype.remove = function(type, key, exact = true) {
     if (data === null) {
         return Promise.resolve();
     }
-    const k = key.join("_");
+    const k = key.join("-");
     if (exact === true) {
         delete data[k];
     }
@@ -277,7 +277,7 @@ DataFromMemory.prototype.fetchAll = function(fn, type = FILE_PATH, key) {
     if (data === null) {
         return Promise.resolve();
     }
-    const k = key.join("_");
+    const k = key.join("-");
     for (const _k in data) {
         if (_k.indexOf(k) === 0) {
             const ret = fn(data[_k]);

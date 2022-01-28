@@ -81,7 +81,7 @@ export function Form({
         };
 
         if (dataToBeSubmitted.vlab_sessionid === null) {
-            dataToBeSubmitted.vlab_sessionid = readCookie("sessionid");
+            dataToBeSubmitted.vlab_sessionid = readCookie("vlab_sessionid");
         }
         onSubmit(dataToBeSubmitted);
     };

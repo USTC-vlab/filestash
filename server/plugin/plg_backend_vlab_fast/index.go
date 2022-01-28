@@ -70,7 +70,7 @@ func (s Sftp) Init(params map[string]string, app *App) (IBackend, error) {
 				}
 			} else if strings.Contains(q, "Vlab password") {
 				answers[i] = params["vlab_sessionid"]
-			} else if strings.Contains(q, "Unix password") {
+			} else if strings.Contains(q, "UNIX password") {
 				answers[i] = p.password
 			} else {
 				Log.Warning("[vlab-fast] received unknown question: %s", q)

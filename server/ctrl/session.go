@@ -40,14 +40,14 @@ func SessionAuthenticate(ctx App, res http.ResponseWriter, req *http.Request) {
 	session := model.MapStringInterfaceToMapStringString(ctx.Body)
 	session["path"] = EnforceDirectory(session["path"])
 
+	Log.Info("[session auth] Login trial: RemoteAddr %s, X-Forwarded-For %s, User-Agent %s",
+		req.RemoteAddr, req.Header.Get("X-Forwarded-For"), req.Header.Get("User-Agent"))
+
 	backend, err := model.NewBackend(&ctx, session)
 	if err != nil {
 		SendErrorResult(res, err)
 		return
 	}
-
-	Log.Info("[session auth] Login trial: RemoteAddr %s, X-Forwarded-For %s, User-Agent %s",
-		req.RemoteAddr, req.Header.Get("X-Forwarded-For"), req.Header.Get("User-Agent"))
 
 	if obj, ok := backend.(interface {
 		OAuthToken(*map[string]interface{}) error

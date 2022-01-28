@@ -57,7 +57,7 @@ func (s Sftp) Init(params map[string]string, app *App) (IBackend, error) {
 				answers[i] = params["vlab_username"]
 			} else if strings.Contains(q, "Vlab password") {
 				answers[i] = params["vlab_password"]
-			} else if strings.Contains(q, "Unix password") {
+			} else if strings.Contains(q, "UNIX password") {
 				answers[i] = p.password
 			} else {
 				Log.Warning("[vlab] received unknown question: %s", q)
@@ -87,7 +87,7 @@ func (s Sftp) Init(params map[string]string, app *App) (IBackend, error) {
 
 	client, err := ssh.Dial("tcp", addr, config)
 	if err != nil {
-		Log.Warning("[vlab-fast] auth failed: %v", err)
+		Log.Warning("[vlab] auth failed: %v", err)
 		return &s, ErrAuthenticationFailed
 	}
 	s.SSHClient = client

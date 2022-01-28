@@ -33,5 +33,10 @@ RUN mv dist filestash && tar czf /filestash.tar.gz ./filestash
 FROM debian:bullseye-slim
 LABEL MAINTAINER="Keyu Tao <taoky@mail.ustc.edu.cn>"
 COPY --from=builder /filestash.tar.gz /
-RUN tar -C / -xzf /filestash.tar.gz
+RUN apt update && apt install --no-install-recommends -y libvips && \
+    tar -C / -xzf /filestash.tar.gz && useradd filestash && \
+    chown -R filestash:filestash /filestash && \
+    rm -f /filestash.tar.gz
+USER filestash
+EXPOSE 8334
 CMD ["/filestash/filestash"]

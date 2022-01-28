@@ -146,7 +146,7 @@ func init() {
 			(*res).Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", thumb_caching()))
 		} else if query.Get("size") != "" {
 			(*res).Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", image_caching()))
-			size, err := strconv.ParseInt(query.Get("size"), 10, 64)
+			size, err := strconv.ParseInt(query.Get("size"), 10, 32)
 			if err != nil {
 				return reader, nil
 			}

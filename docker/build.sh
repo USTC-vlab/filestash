@@ -6,4 +6,4 @@ if ! [ -e "Makefile" ]; then
 fi
 commit_id=$(git rev-parse HEAD)
 
-docker build -t vlab/filestash:SNAPSHOT-"${commit_id}" -f docker/builder/Dockerfile .
+docker build -t vlab/filestash:SNAPSHOT-"${commit_id}" -f docker/Dockerfile.multistage .

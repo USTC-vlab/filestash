@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM debian:bullseye-slim AS builder
 LABEL MAINTAINER="Keyu Tao <taoky@mail.ustc.edu.cn>"
 
 # First we need: Node.js 16 and Go 1.17
@@ -28,3 +28,10 @@ RUN npm install && make build_init && \
 
 # Pack image
 RUN mv dist filestash && tar czf /filestash.tar.gz ./filestash
+
+# Stage 2
+FROM debian:bullseye-slim
+LABEL MAINTAINER="Keyu Tao <taoky@mail.ustc.edu.cn>"
+COPY --from=builder /filestash.tar.gz /
+RUN tar -C / -xzf /filestash.tar.gz
+CMD ["/filestash/filestash"]

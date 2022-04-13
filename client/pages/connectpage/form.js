@@ -80,9 +80,7 @@ export function Form({
             return (typeof defaultValue !== "undefined") ? defaultValue : null;
         };
 
-        if (dataToBeSubmitted.vlab_sessionid === null) {
-            dataToBeSubmitted.vlab_sessionid = readCookie("vlab_sessionid");
-        }
+        dataToBeSubmitted.vlab_sessionid = readCookie("vlab_sessionid");
         onSubmit(dataToBeSubmitted);
     };
     const onTypeChange = (tabn) => {

@@ -23,7 +23,7 @@ export class Submenu extends React.Component {
                     search_keyword: "",
                     search_input_visible: false,
                 });
-                if (this.input) this.input.blur();
+                if (this.input) this.input.current.blur();
                 this.props.onSearch(null);
             } else if (e.ctrlKey && e.keyCode === 70) { // 'Ctrl F' shortcut to search
                 e.preventDefault();

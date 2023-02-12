@@ -1,4 +1,4 @@
-import { http_get, http_post, http_delete, debounce } from "../helpers/";
+import { http_get, http_post, debounce } from "../helpers/";
 
 class ConfigModel {
     constructor() {}
@@ -17,7 +17,7 @@ class ConfigModel {
                         if (typeof fn_ok === "function") return fn_ok();
                         return Promise.resolve(a);
                     }).catch((err) => {
-                        if (typeof fn_err === "function") return fn_err();
+                        if (typeof fn_err === "function") return fn_err(err);
                         return Promise.reject(err);
                     });
                 }, 1000);

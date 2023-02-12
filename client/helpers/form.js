@@ -98,6 +98,6 @@ export function autocomplete(values, list) {
         return candidates_input[0]
             .concat(candidate)
             .join(", ")
-            .replace(/\,\s?$/, "");
+            .replace(/,\s?$/, "");
     });
 }

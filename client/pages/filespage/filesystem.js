@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { DropTarget } from "react-dnd";
 
-import Path from "path";
-
 import "./filesystem.scss";
 import { Container, NgIf, Icon } from "../../components/";
 import { NewThing } from "./thing-new";

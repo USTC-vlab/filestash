@@ -1,7 +1,7 @@
 "use strict";
 
 import { http_get, http_post, http_options, prepare, basename, dirname, pathBuilder } from "../helpers/";
-import { filetype, currentShare, appendShareToUrl } from "../helpers/";
+import { currentShare, appendShareToUrl } from "../helpers/";
 
 import { Observable } from "rxjs/Observable";
 import { cache } from "../helpers/";

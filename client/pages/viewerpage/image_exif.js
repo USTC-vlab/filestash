@@ -3,7 +3,7 @@ import EXIF from "exif-js";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { withRouter } from "react-router-dom";
 
-import { NgIf, Icon, EventReceiver, MapShot, Button } from "../../components/";
+import { NgIf, Icon, EventReceiver, Button } from "../../components/";
 import { t } from "../../locales/";
 import "./image_exif.scss";
 
@@ -27,7 +27,7 @@ class Exif extends React.Component {
 
     formatDate(def = null) {
         if (!this.state.date) return def;
-        return this.state.date.toLocaleDateString(navigator.language, { day: "numeric", year: "numeric", month: "short", day: "numeric" });
+        return this.state.date.toLocaleDateString(navigator.language, { day: "numeric", year: "numeric", month: "short" });
     }
     formatTime() {
         if (!this.state.date) return null;
@@ -130,7 +130,12 @@ export class SmallExif extends Exif {
                 return "1/"+parseInt(nearestPow2(1/n)).toString()+"s";
             }
             function nearestPow2(n) {
-                const refs = [1, 2, 3, 4, 5, 6, 8, 10, 13, 15, 20, 25, 30, 40, 45, 50, 60, 80, 90, 100, 125, 160, 180, 200, 250, 320, 350, 400, 500, 640, 750, 800, 1000, 1250, 1500, 1600, 2000, 2500, 3000, 3200, 4000, 5000, 6000, 6400, 8000, 12000, 16000, 32000, 50000];
+                const refs = [
+                    1, 2, 3, 4, 5, 6, 8, 10, 13, 15, 20, 25, 30, 40, 45, 50, 60, 80, 90, 100,
+                    125, 160, 180, 200, 250, 320, 350, 400, 500, 640, 750, 800, 1000, 1250,
+                    1500, 1600, 2000, 2500, 3000, 3200, 4000, 5000, 6000, 6400, 8000, 12000,
+                    16000, 32000, 50000,
+                ];
                 for (let i=0, l=refs.length; i<l; i++) {
                     if (refs[i] <= n) continue;
                     return refs[i] - n < refs[i-1] - n ? refs[i] : refs[i-1];
@@ -146,10 +151,10 @@ export class SmallExif extends Exif {
             text += location[1][0]+"°"+location[1][1]+"'"+location[1][2]+"''"+location[1][3];
             return text;
         };
-        const display_dimension = (dim) => {
-            if (!dim || dim.length !== 2) return "-";
-            return dim[0]+"x"+dim[1];
-        };
+        // const display_dimension = (dim) => {
+        //     if (!dim || dim.length !== 2) return "-";
+        //     return dim[0]+"x"+dim[1];
+        // };
         return (
             <div className="component_metadata">
                 <div>
@@ -158,7 +163,9 @@ export class SmallExif extends Exif {
                 </div>
                 <div>
                     <span className="label no-select">{ t("Location") }: </span>
-                    <span className="value small"><a href={"https://www.google.com/maps/search/?api=1&query="+display_location(this.state.location)}>{display_location(this.state.location)}</a></span>
+                    <span className="value small">
+                        {display_location(this.state.location)}
+                    </span>
                 </div>
                 <div>
                     <span className="label no-select">{ t("Settings") }: </span>
@@ -210,8 +217,11 @@ export class LargeExif extends Exif {
                 return parseInt(this.state.all[str]*100)/100;
             } else if (this.state.all[str].denominator !== undefined && this.state.all[str].numerator !== undefined) {
                 if (this.state.all[str].denominator === 1) return this.state.all[str].numerator;
-                else if (this.state.all[str].numerator > this.state.all[str].denominator) return parseInt(this.state.all[str].numerator * 10 / this.state.all[str].denominator) / 10;
-                else return this.state.all[str].numerator+"/"+this.state.all[str].denominator;
+                else if (this.state.all[str].numerator > this.state.all[str].denominator) {
+                    return parseInt(this.state.all[str].numerator * 10 / this.state.all[str].denominator) / 10;
+                } else {
+                    return this.state.all[str].numerator+"/"+this.state.all[str].denominator;
+                }
             } else if (typeof this.state.all[str] === "string") {
                 return this.state.all[str];
             } else if (Array.isArray(this.state.all[str])) {
@@ -252,12 +262,12 @@ export class LargeExif extends Exif {
     }
 
     render() {
-        const DMSToDD = (d) => {
-            if (!d || d.length !== 4) return null;
-            const [degrees, minutes, seconds, direction] = d;
-            const dd = degrees + minutes/60 + seconds/(60*60);
-            return direction == "S" || direction == "W" ? -dd : dd;
-        };
+        // const DMSToDD = (d) => {
+        //     if (!d || d.length !== 4) return null;
+        //     const [degrees, minutes, seconds, direction] = d;
+        //     const dd = degrees + minutes/60 + seconds/(60*60);
+        //     return direction == "S" || direction == "W" ? -dd : dd;
+        // };
 
         const formatCameraHeadline = () => {
             if (!this.format("model") || !this.format("focal")) {
@@ -359,19 +369,6 @@ export class LargeExif extends Exif {
                         { formatCameraDescription() }
                     </div>
                 </div>
-
-
-                <NgIf cond={this.state.location !== null}>
-                    <TransitionGroup>
-                        <CSSTransition classNames="image" exit={false} enter={true} appear={true} timeout={{ enter: 300 }}>
-                            <div key={JSON.stringify(this.state.location)}>
-                                <MapShot
-                                    lat={DMSToDD(this.state.location && this.state.location[0])}
-                                    lng={DMSToDD(this.state.location && this.state.location[1])} />
-                            </div>
-                        </CSSTransition>
-                    </TransitionGroup>
-                </NgIf>
 
                 <NgIf cond={!!this.state.all} className="more">
                     <TransitionGroup>

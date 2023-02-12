@@ -1,5 +1,3 @@
-import React from "react";
-import PropTypes from "prop-types";
 import { DropTarget } from "react-dnd";
 
 import { EventEmitter, BreadCrumb, PathElement } from "../../components/";

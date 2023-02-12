@@ -8,7 +8,7 @@ import "./error.scss";
 import { Files } from "../model/";
 import { sort, onCreate, onRename, onMultiRename, onDelete, onMultiDelete, onMultiDownload, onUpload, onSearch } from "./filespage.helper";
 import { NgIf, NgShow, Loader, EventReceiver, LoggedInOnly, ErrorPage } from "../components/";
-import { notify, debounce, goToFiles, goToViewer, event, settings_get, settings_put } from "../helpers/";
+import { notify, settings_get, settings_put } from "../helpers/";
 import { BreadCrumb, FileSystem, FrequentlyAccess, Submenu } from "./filespage/";
 import { MobileFileUpload } from "./filespage/filezone";
 import InfiniteScroll from "react-infinite-scroller";
@@ -58,8 +58,8 @@ export class FilesPage extends React.Component {
         this.onRefresh(this.state.path, "directory");
 
         // subscriptions
-        this.props.subscribe("file.create", function() {
-            return onCreate.apply(this, arguments).then(() => {
+        this.props.subscribe("file.create", function(...args) {
+            return onCreate.apply(this, args).then(() => {
                 if (this.state.metadata && this.state.metadata.refresh_on_create === true) {
                     this.onRefresh(this.state.path, "directory");
                 }
@@ -268,7 +268,9 @@ export class FilesPage extends React.Component {
             <DndProvider backend={HTML5Backend}>
                 <div className="component_page_filespage">
                     <BreadCrumb className="breadcrumb" path={this.state.path} currentSelection={this.state.selected} />
-                    <SelectableGroup onSelection={this.handleMultiSelect.bind(this)} tolerance={2} onNonItemClick={this.handleMultiSelect.bind(this, [])} preventDefault={true} enabled={this.state.is_search === false} className="selectablegroup">
+                    <SelectableGroup onSelection={this.handleMultiSelect.bind(this)} tolerance={2}
+                        onNonItemClick={this.handleMultiSelect.bind(this, [])} preventDefault={true}
+                        enabled={this.state.is_search === false} className="selectablegroup">
                         <div className="page_container">
                             <div ref={this.scroll} className="scroll-y">
                                 <InfiniteScroll pageStart={0} loader={$moreLoading} hasMore={this.state.files.length > 70}
@@ -277,7 +279,10 @@ export class FilesPage extends React.Component {
                                         <NgIf cond={this.state.path === "/"}>
                                             <FrequentlyAccess files={this.state.frequents} />
                                         </NgIf>
-                                        <Submenu path={this.state.path} sort={this.state.sort} view={this.state.view} onSearch={this.onSearch.bind(this)} onViewUpdate={(value) => this.onView(value)} onSortUpdate={(value) => this.onSort(value)} accessRight={this.state.metadata || {}} selected={this.state.selected}></Submenu>
+                                        <Submenu path={this.state.path} sort={this.state.sort} view={this.state.view}
+                                            onSearch={this.onSearch.bind(this)} onViewUpdate={(value) => this.onView(value)}
+                                            onSortUpdate={(value) => this.onSort(value)} accessRight={this.state.metadata || {}}
+                                            selected={this.state.selected}></Submenu>
                                         <NgIf cond={!this.state.loading}>
                                             <FileSystem path={this.state.path} sort={this.state.sort} view={this.state.view} selected={this.state.selected}
                                                 files={this.state.files.slice(0, this.state.page_number * LOAD_PER_SCROLL)} isSearch={this.state.is_search}

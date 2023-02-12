@@ -4,7 +4,6 @@
  * as there's just no reason for doing that.
  */
 import React from "react";
-import ReactDOM from "react-dom";
 
 import { Icon, NgIf } from "./";
 import "./dropdown.scss";

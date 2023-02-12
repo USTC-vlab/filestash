@@ -16,6 +16,12 @@ let config = {
         filename: 'assets/js/[name]_[chunkhash].js',
         chunkFilename: "assets/js/chunk_[name]_[id]_[chunkhash].js"
     },
+    // https://github.com/webpack-contrib/css-loader/issues/1136
+    // resolve: {
+    //     alias: {
+    //         '/assets': path.resolve(__dirname, "client/assets"),
+    //     }
+    // },
     module: {
         rules: [
             {
@@ -29,7 +35,7 @@ let config = {
             },
             {
                 test: /\.woff2$/,
-                loader: 'woff-loader'
+                loader: 'file-loader'
             },
             {
                 test: /\.scss$/,
@@ -65,18 +71,21 @@ let config = {
                 minifyCSS: true,
             }
         }),
-        new CopyWebpackPlugin([
-            { from: "locales/*.json", to: "assets/" },
-            { from: "manifest.json", to: "assets/" },
-            { from: "worker/*.js", to: "assets/" },
-            { from: "assets/logo/*" },
-            { from: "assets/icons/*" },
-            { from: "assets/fonts/*" },
-        ], { context: path.join(__dirname, 'client') }),
-        new CopyWebpackPlugin([
-            { from: "node_modules/pdfjs-dist/", to: "assets/vendor/pdfjs/2.6.347/"}
-        ]),
-        //new BundleAnalyzerPlugin()
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: "locales/*.json", to: "assets/", context: path.join(__dirname, 'client') },
+                { from: "manifest.json", to: "assets/", context: path.join(__dirname, 'client') },
+                { from: "worker/*.js", to: "assets/", context: path.join(__dirname, 'client') },
+                { from: "assets/logo/*", context: path.join(__dirname, 'client') },
+                { from: "assets/icons/*", context: path.join(__dirname, 'client') },
+                { from: "assets/fonts/*", context: path.join(__dirname, 'client') },
+            ],
+        }),
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: "node_modules/pdfjs-dist/", to: "assets/vendor/pdfjs/2.6.347/" }
+            ]
+        }),
     ]
 };
 
@@ -102,8 +111,11 @@ if (process.env.NODE_ENV === 'production') {
     }));
     config.mode = "production";
 } else {
-    config.devtool = '#inline-source-map';
+    config.devtool = 'source-map';
     config.mode = "development";
+}
+if (process.env.BUNDLE_ANALYZE) {
+    config.plugins.push(new BundleAnalyzerPlugin());
 }
 
 module.exports = config;

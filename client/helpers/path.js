@@ -25,7 +25,7 @@ export function filetype(path) {
 
 export function absoluteToRelative(from, to) {
     // remove any trace of file that would be interpreted by the path lib as a folder
-    from = from.replace(/\/[^\/]+$/, "/");
+    from = from.replace(/\/[^/]+$/, "/");
     let r = Path.relative(from, to);
     if (r.substring(0, 3) !== "../") {
         r = "./"+r;

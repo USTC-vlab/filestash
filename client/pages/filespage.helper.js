@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Files } from "../model/";
 import { notify, upload } from "../helpers/";
 import Path from "path";
@@ -235,7 +233,8 @@ export const onUpload = function(path, e) {
                 return detectType(_file)
                     .then(transform);
                 function detectType(_f) {
-                    // the 4096 is an heuristic I've observed and taken from: https://stackoverflow.com/questions/25016442/how-to-distinguish-if-a-file-or-folder-is-being-dragged-prior-to-it-being-droppe
+                    // the 4096 is an heuristic I've observed and taken from:
+                    // https://stackoverflow.com/questions/25016442/how-to-distinguish-if-a-file-or-folder-is-being-dragged-prior-to-it-being-droppe
                     // however the proposed answer is just wrong as it doesn't consider folder with name such as: test.png
                     // and as Stackoverflow favor consanguinity with their point system, I couldn't rectify the proposed answer.
                     // The following code is actually working as expected

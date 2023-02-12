@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 import { Session } from "../model/";
 import { Container, Loader, Icon } from "../components/";
@@ -11,7 +10,7 @@ import "../pages/error.scss";
 export function LoggedInOnly(WrappedComponent) {
     memory.set("user::authenticated", false);
 
-    return class extends React.Component {
+    return class DecoratedLoggedInOnly extends React.Component {
         constructor(props) {
             super(props);
             this.state = {
@@ -46,35 +45,22 @@ export function LoggedInOnly(WrappedComponent) {
         }
     };
 }
-
 export function ErrorPage(WrappedComponent) {
-    return class extends React.Component {
+    return class DecoratedErrorPage extends React.Component {
         constructor(props) {
             super(props);
             this.state = {
                 error: null,
-                has_back_button: false,
+                trace: null,
+                showTrace: false,
             };
-            this.unlisten = this.props.history.listen(() => {
-                // this.setState({has_back_button: false});
-                this.state.has_back_button = false;
-                this.unlisten();
-            });
-        }
-
-        componentWillUnmount() {
-            if (this.unlisten) this.unlisten();
         }
 
         update(obj) {
-            this.setState({ error: obj });
-        }
-
-        navigate(e) {
-            if (this.state.has_back_button) {
-                e.preventDefault();
-                this.props.history.goBack();
-            }
+            this.setState({
+                error: obj,
+                trace: new URLSearchParams(location.search).get("trace") || null,
+            });
         }
 
         render() {
@@ -82,13 +68,15 @@ export function ErrorPage(WrappedComponent) {
                 const message = this.state.error.message || t("There is nothing in here");
                 return (
                     <div>
-                        <Link onClick={this.navigate.bind(this)} to={`/${window.location.search}`} className="backnav">
-                            <Icon name="arrow_left" />{ this.state.has_back_button ? "back" : "home" }
-                        </Link>
+                        <a href="/" className="backnav"><Icon name="arrow_left" />home</a>
                         <Container>
-                            <div className="error-page">
+                            <div
+                                className="error-page"
+                                onClick={() => this.setState({ showTrace: true })}>
                                 <h1>{ t("Oops!") }</h1>
-                                <h2>{ message }</h2>
+                                <h2>{ t(message) }</h2>
+                                { this.state.showTrace && this.state.trace &&
+                                  <code> { this.state.trace }</code> }
                             </div>
                         </Container>
                     </div>

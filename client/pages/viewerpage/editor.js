@@ -152,7 +152,7 @@ export class Editor extends React.Component {
         // remove emacs mark when a file is opened
         ext = ext
             .replace(/~$/, "")
-            .replace(/\#$/, "");
+            .replace(/#$/, "");
 
         if (ext === "org" || ext === "org_archive") {
             mode = "orgmode";

@@ -18,7 +18,6 @@ export { Notification } from "./notification";
 export { Audio } from "./audio";
 export { Video } from "./video";
 export { Dropdown, DropdownButton, DropdownList, DropdownItem } from "./dropdown";
-export { MapShot } from "./mapshot";
 export { LoggedInOnly, ErrorPage, LoadingPage } from "./decorator";
 export { FormBuilder } from "./formbuilder";
 export { UploadQueue } from "./upload_queue";

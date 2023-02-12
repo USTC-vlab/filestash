@@ -82,10 +82,12 @@ export class ImageViewer extends React.Component {
     }
 
     requestFullScreen() {
-        if ("webkitRequestFullscreen" in document.body) {
-            this.container.webkitRequestFullscreen();
+        if ("requestFullscreen" in document.body) {
+            this.container.current.requestFullscreen();
+        } else if ("webkitRequestFullscreen" in document.body) {
+            this.container.current.webkitRequestFullscreen();
         } else if ("mozRequestFullScreen" in document.body) {
-            this.container.mozRequestFullScreen();
+            this.container.current.mozRequestFullScreen();
         }
     }
 
@@ -188,7 +190,7 @@ class ImageFancy extends React.Component {
     imageDragEnd(e) {
         const drag_end = {
             x: function(dragX, touch) {
-                const t = new Date();
+                // const t = new Date();
                 if (dragX !== null) return dragX;
                 if (touch && touch[0]) {
                     return touch[0].clientX;

@@ -3,7 +3,7 @@ import { Redirect } from "react-router";
 
 import { Share } from "../model/";
 import { notify, basename, filetype, findParams } from "../helpers/";
-import { Loader, Input, Button, Container, ErrorPage, Icon, NgIf } from "../components/";
+import { Loader, Input, Button, Container, ErrorPage, Icon } from "../components/";
 import { t } from "../locales/";
 import "./error.scss";
 import "./sharepage.scss";

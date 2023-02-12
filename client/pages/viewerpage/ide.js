@@ -86,13 +86,15 @@ export class IDE extends React.Component {
 
     download() {
         document.cookie = "download=yes; path=/; max-age=120;";
-        this.setState({ random: Math.random() });
-        this.state.id = window.setInterval(() => {
-            if (/download=yes/.test(document.cookie) === false) {
-                window.clearInterval(this.state.id);
-                this.setState({ random: Math.random() });
-            }
-        }, 100);
+        this.setState({
+            refresh: Date.now(),
+            id: window.setInterval(() => {
+                if (/download=yes/.test(document.cookie) === false) {
+                    window.clearInterval(this.state.id);
+                    this.setState({ refresh: Date.now() });
+                }
+            }, 100),
+        });
     }
 
     render() {
@@ -120,15 +122,58 @@ export class IDE extends React.Component {
                                 <Icon name={/download=yes/.test(document.cookie) ? "loading_white" : "download_white"}/>
                             </DropdownButton>
                             <DropdownList>
-                                <DropdownItem name="na"><a download={this.props.filename} href={this.props.url}>{ t("Save current file") }</a></DropdownItem>
-                                <DropdownItem name="na"><a target={this.props.needSaving ? "_blank" : "_self"} href={"/api/export/"+(currentShare() || "private")+"/text/html"+this.props.path} rel="noreferrer">{ t("Export as {{VALUE}}", "HTML") }</a></DropdownItem>
-                                <DropdownItem name="na"><a target={this.props.needSaving ? "_blank" : "_self"} href={"/api/export/"+(currentShare() || "private")+"/application/pdf"+this.props.path} rel="noreferrer">{ t("Export as {{VALUE}}", "PDF") }</a></DropdownItem>
-                                <DropdownItem name="na"><a target={this.props.needSaving ? "_blank" : "_self"} href={"/api/export/"+(currentShare() || "private")+"/text/markdown"+this.props.path} rel="noreferrer">{ t("Export as {{VALUE}}", "Markdown") }</a></DropdownItem>
-                                <DropdownItem name="na"><a target={this.props.needSaving ? "_blank" : "_self"} href={"/api/export/"+(currentShare() || "private")+"/text/plain"+this.props.path} rel="noreferrer">{ t("Export as {{VALUE}}", "TXT") }</a></DropdownItem>
-                                <DropdownItem name="na"><a target={this.props.needSaving ? "_blank" : "_self"} download={changeExt(this.props.filename, "tex")} href={"/api/export/"+(currentShare() || "private")+"/text/x-latex"+this.props.path} rel="noreferrer">{ t("Export as {{VALUE}}", "Latex") }</a></DropdownItem>
-                                <DropdownItem name="na"><a target={this.props.needSaving ? "_blank" : "_self"} download={changeExt(this.props.filename, "ics")} href={"/api/export/"+(currentShare() || "private")+"/text/calendar"+this.props.path} rel="noreferrer">{ t("Export as {{VALUE}}", "ical") }</a></DropdownItem>
-                                <DropdownItem name="na"><a target={this.props.needSaving ? "_blank" : "_self"} download={changeExt(this.props.filename, "odt")} href={"/api/export/"+(currentShare() || "private")+"/application/vnd.oasis.opendocument.text"+this.props.path} rel="noreferrer">{ t("Export as {{VALUE}}", "Open office") }</a></DropdownItem>
-                                <DropdownItem name="na"><a target={this.props.needSaving ? "_blank" : "_self"} download={changeExt(this.props.filename, "pdf")} href={"/api/export/"+(currentShare() || "private")+"/application/pdf"+this.props.path+"?mode=beamer"} rel="noreferrer">{ t("Export as {{VALUE}}", "Beamer") }</a></DropdownItem>
+                                <DropdownItem name="na">
+                                    <a download={this.props.filename} href={this.props.url}>{ t("Save current file") }</a>
+                                </DropdownItem>
+                                <DropdownItem name="na">
+                                    <a target={this.props.needSaving ? "_blank" : "_self"}
+                                        href={"/api/export/"+(currentShare() || "private")+"/text/html"+this.props.path} rel="noreferrer">
+                                        { t("Export as {{VALUE}}", "HTML") }
+                                    </a>
+                                </DropdownItem>
+                                <DropdownItem name="na">
+                                    <a target={this.props.needSaving ? "_blank" : "_self"}
+                                        href={"/api/export/"+(currentShare() || "private")+"/application/pdf"+this.props.path} rel="noreferrer">
+                                        { t("Export as {{VALUE}}", "PDF") }
+                                    </a>
+                                </DropdownItem>
+                                <DropdownItem name="na">
+                                    <a target={this.props.needSaving ? "_blank" : "_self"}
+                                        href={"/api/export/"+(currentShare() || "private")+"/text/markdown"+this.props.path} rel="noreferrer">
+                                        { t("Export as {{VALUE}}", "Markdown") }
+                                    </a>
+                                </DropdownItem>
+                                <DropdownItem name="na">
+                                    <a target={this.props.needSaving ? "_blank" : "_self"}
+                                        href={"/api/export/"+(currentShare() || "private")+"/text/plain"+this.props.path} rel="noreferrer">
+                                        { t("Export as {{VALUE}}", "TXT") }
+                                    </a>
+                                </DropdownItem>
+                                <DropdownItem name="na">
+                                    <a target={this.props.needSaving ? "_blank" : "_self"} download={changeExt(this.props.filename, "tex")}
+                                        href={"/api/export/"+(currentShare() || "private")+"/text/x-latex"+this.props.path} rel="noreferrer">
+                                        { t("Export as {{VALUE}}", "Latex") }
+                                    </a>
+                                </DropdownItem>
+                                <DropdownItem name="na">
+                                    <a target={this.props.needSaving ? "_blank" : "_self"} download={changeExt(this.props.filename, "ics")}
+                                        href={"/api/export/"+(currentShare() || "private")+"/text/calendar"+this.props.path} rel="noreferrer">
+                                        { t("Export as {{VALUE}}", "ical") }
+                                    </a>
+                                </DropdownItem>
+                                <DropdownItem name="na">
+                                    <a target={this.props.needSaving ? "_blank" : "_self"} download={changeExt(this.props.filename, "odt")}
+                                        href={"/api/export/"+(currentShare() || "private")+"/application/vnd.oasis.opendocument.text"+this.props.path}
+                                        rel="noreferrer">
+                                        { t("Export as {{VALUE}}", "Open office") }
+                                    </a>
+                                </DropdownItem>
+                                <DropdownItem name="na">
+                                    <a target={this.props.needSaving ? "_blank" : "_self"} download={changeExt(this.props.filename, "pdf")}
+                                        href={"/api/export/"+(currentShare() || "private")+"/application/pdf"+this.props.path+"?mode=beamer"} rel="noreferrer">
+                                        { t("Export as {{VALUE}}", "Beamer") }
+                                    </a>
+                                </DropdownItem>
                             </DropdownList>
                         </Dropdown>
 

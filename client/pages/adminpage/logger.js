@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { FormBuilder, Loader, Button, Icon } from "../../components/";
+import { FormBuilder, Loader, Button } from "../../components/";
 import { Config, Log } from "../../model/";
 import { FormObjToJSON, notify, format, nop } from "../../helpers/";
 import { t } from "../../locales/";
@@ -23,7 +23,7 @@ export function LogPage({ isSaving = nop }) {
         isSaving(true);
         Config.save(c, true, () => {
             isSaving(false);
-        }, () => {
+        }, (err) => {
             isSaving(false);
             notify.send(err && err.message || t("Oops"), "error");
         });

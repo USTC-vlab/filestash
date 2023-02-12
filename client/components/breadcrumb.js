@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { NgIf, Icon, EventEmitter, EventReceiver } from "./";
+import { NgIf, Icon, EventEmitter } from "./";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import "./breadcrumb.scss";
@@ -153,6 +153,7 @@ const Saving = (props) => {
 
 const Separator = (props) => {
     return (
+        /* eslint-disable max-len */
         <div className="component_separator">
             <img
                 alt="path_separator"
@@ -161,6 +162,7 @@ const Separator = (props) => {
                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAA30lEQVQ4T63T7Q2CMBAG4OuVPdQNcAPdBCYwDdclCAQ3ACfRDXQDZQMHgNRcAoYApfWjv0jIPX3b3gn4wxJjI03TUAhRBkGwV0o9ffaYIEVRrJumuQHA3ReaILxzl+bCkNZ660ozi/QQIl4BoCKieAmyIlyU53lkjCld0CIyhIwxSmt9nEvkRLgoyzIuPggh4iRJqjHkhXTQAwBWUsqNUoq/38sL+TlJf7lf38ngdU5EFNme2adPFgGGrR2LiGcAqIko/LhjeXbatuVOraWUO58hnJ1iRKx8AetxXPHH/1+y62USursaSgAAAABJRU5ErkJggg=="
             />
         </div>
+        /* eslint-enable max-len */
     );
 };
 
@@ -195,7 +197,7 @@ export class PathElementWrapper extends React.Component {
 
         let href = "/files" + (this.props.path.full || "");
         href = href
-            .replace(/\%/g, "%2525") // Hack to get the Link Component to work
+            .replace(/%/g, "%2525") // Hack to get the Link Component to work
             // See ExistingThing in 'thing-existing.js'
             .replace(/#/g, "%23")
             .replace(/\?/g, "%3F");

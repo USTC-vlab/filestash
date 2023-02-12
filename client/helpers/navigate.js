@@ -19,7 +19,7 @@ export function goToViewer(history, path, state) {
 
 export const URL_LOGIN = "/login";
 export function goToLogin(history) {
-    history.push(URL_EDIT);
+    // history.push(URL_EDIT);
     return Promise.resolve("ok");
 }
 
@@ -48,7 +48,7 @@ export function prepare(path) {
 export function urlParams() {
     let p = "";
     if (window.location.hash) {
-        p += window.location.hash.replace(/^\#/, "");
+        p += window.location.hash.replace(/^#/, "");
     }
     if (window.location.search) {
         if (p !== "") p += "&";

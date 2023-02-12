@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
-import Path from "path";
-import { Route, Switch, Link, NavLink, useRouteMatch } from "react-router-dom";
+import { Route, Switch, NavLink, useRouteMatch } from "react-router-dom";
 
 import "./error.scss";
 import "./adminpage.scss";
 import { Icon, LoadingPage, CSSTransition } from "../components/";
-import { Config, Admin } from "../model";
+import { Admin } from "../model";
 import { notify } from "../helpers/";
 import { HomePage, BackendPage, SettingsPage, LogPage, SetupPage, LoginPage } from "./adminpage/";
 import { t } from "../locales/";
 
 function AdminOnly(WrappedComponent) {
     let initIsAdmin = null;
-    return function(props) {
+    return function(props) { // eslint-disable-line react/display-name
         const [isAdmin, setIsAdmin] = useState(initIsAdmin);
 
         const refresh = () => {

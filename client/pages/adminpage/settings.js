@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FormBuilder } from "../../components/";
 import { Config } from "../../model/";
-import { format, notify, nop } from "../../helpers";
+import { notify, nop } from "../../helpers";
 import { t } from "../../locales/";
 
 export function SettingsPage({ isSaving = nop }) {
@@ -32,7 +32,7 @@ export function SettingsPage({ isSaving = nop }) {
             notify.send(err && err.message || t("Oops"), "error");
         });
     };
-    const [_, refresh] = useState(null);
+    const [, refresh] = useState(null);
 
     useEffect(() => {
         Config.all().then((c) => {

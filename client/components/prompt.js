@@ -35,7 +35,8 @@ export class ModalPrompt extends Popup {
             <div>
                 {this.state.text }
                 <form onSubmit={this.onSubmit.bind(this)} style={{ marginTop: "10px" }}>
-                    <Input autoFocus={true} value={this.state.value} type={this.state.type} autoComplete="new-password" onChange={(e) => this.setState({ value: e.target.value })} />
+                    <Input autoFocus={true} value={this.state.value} type={this.state.type}
+                        autoComplete="new-password" onChange={(e) => this.setState({ value: e.target.value })} />
                     <div className="modal-error-message">{this.state.error}&nbsp;</div>
                 </form>
             </div>

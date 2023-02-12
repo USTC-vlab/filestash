@@ -158,7 +158,7 @@ export function parse(content) {
 
 
 function parse_header(text, line) {
-    const match = text.match(/^(\*+)\s(?:([A-Z]{4,})\s){0,1}(?:\[\#([A-C])\]\s){0,1}(.*?)(?:\s+\:((?:[a-z]+\:){1,})){0,1}$/);
+    const match = text.match(/^(\*+)\s(?:([A-Z]{4,})\s){0,1}(?:\[#([A-C])\]\s){0,1}(.*?)(?:\s+:((?:[a-z]+:){1,})){0,1}$/);
     if (!match) return null;
     return {
         line: line,
@@ -176,7 +176,7 @@ function parse_header(text, line) {
 
 
 function parse_subtask(text, line) {
-    const match = text.match(/(?:-|\d+[\.\)])\s\[([X\s-])\]\s(.*)/);
+    const match = text.match(/(?:-|\d+[.)])\s\[([X\s-])\]\s(.*)/);
     if (!match) return null;
     return {
         line: line,
@@ -191,6 +191,7 @@ function parse_subtask(text, line) {
 
 
 function parse_timestamp(text, line, _memory) {
+    // eslint-disable-next-line max-len, no-useless-escape
     const reg = /(?:([A-Z]+)\:\s){0,1}([<\[])(\d{4}-\d{2}-\d{2})[^>](?:[A-Z][a-z]{1,2})(?:\s([0-9]{2}\:[0-9]{2})){0,1}(?:\-([0-9]{2}\:[0-9]{2})){0,1}(?:\s(\+{1,2}[0-9]+[dwmy])){0,1}[\>\]](?:--[<\[](\d{4}-\d{2}-\d{2})\s[A-Z][a-z]{1,2}\s(\d{2}:\d{2}){0,1}[>\]]){0,1}/;
     const match = text.match(reg);
     if (!match) return _memory || null;
@@ -239,13 +240,13 @@ function _is_overdue(status, timestamp) {
     }).length > 0 ? true : false;
 }
 
-function _date_label(date) {
-    date.setHours(0);
-    date.setMinutes(0);
-    date.setSeconds(0);
-    date.setMilliseconds(0);
-    return window.Intl.DateTimeFormat().format(date);
-}
+// function _date_label(date) {
+//     date.setHours(0);
+//     date.setMinutes(0);
+//     date.setSeconds(0);
+//     date.setMilliseconds(0);
+//     return window.Intl.DateTimeFormat().format(date);
+// }
 
 function _normalise(date) {
     date.setHours(0);

@@ -36,7 +36,7 @@ export class FormViewer extends React.Component {
     }
 
     simpleMarkdown(text) {
-        const regLink = /\[([^\]]*)\]\(([^\)]+)\)/g;
+        const regLink = /\[([^\]]*)\]\(([^)]+)\)/g;
         return text
             .replace(regLink, function(str) {
                 const label = str.replace(regLink, "$1");
@@ -79,7 +79,10 @@ export class FormViewer extends React.Component {
                                         <div>
                                             <span className="nothing"></span>
                                             <div style={{ width: "100%" }}>
-                                                { struct.description ? (<div className="description" dangerouslySetInnerHTML={{ __html: this.simpleMarkdown(struct.description) }} />) : null }
+                                                { struct.description ? (<div
+                                                    className="description"
+                                                    dangerouslySetInnerHTML={{ __html: this.simpleMarkdown(struct.description) }}
+                                                />) : null }
                                             </div>
                                         </div>
                                     </label>

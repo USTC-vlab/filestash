@@ -1,15 +1,13 @@
 import React from "react";
 import path from "path";
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { DragSource, DropTarget } from "react-dnd";
 import { createSelectable } from "react-selectable";
 
 import "./thing.scss";
-import { Card, NgIf, Icon, EventEmitter, Button, img_placeholder } from "../../components/";
+import { Card, NgIf, Icon, EventEmitter, img_placeholder } from "../../components/";
 import { pathBuilder, basename, filetype, prompt, alert, leftPad, getMimeType, debounce, memory } from "../../helpers/";
 import { Files } from "../../model/";
-import { ShareComponent } from "./share";
 import { t } from "../../locales/";
 
 const fileSource = {
@@ -36,7 +34,7 @@ const fileSource = {
             } else if (result.action === "rename.multiple") {
                 props.emit.call(component, "file.rename.multiple", result.args);
             } else {
-                throw "unknown action";
+                throw new Error("unknown action");
             }
         }
     },
@@ -203,7 +201,7 @@ export class ExistingThing extends React.Component {
 
     onShareRequest(filename) {
         alert.now(
-            <ShareComponent path={this.props.file.path} type={this.props.file.type} />,
+            <p>Implementation removed</p>,
             (ok) => {},
         );
     }
@@ -244,14 +242,14 @@ export class ExistingThing extends React.Component {
 
         const fileLink = this.props.file.link
             .replace(/%2F/g, "/")
-            .replace(/\%/g, "%2525") // Hack to get the Link Component to work
+            .replace(/%/g, "%2525") // Hack to get the Link Component to work
             .replace(/\?/g, "%3F")
-            .replace(/\#/g, "%23");
+            .replace(/#/g, "%23");
 
         return connectDragSource(connectDropNativeFile(connectDropFile(
             <div className={"component_thing view-"+this.props.view+(this.props.selected === true ? " selected" : " not-selected")}>
                 <ToggleableLink onClick={this.onThingClick.bind(this)} to={fileLink + window.location.search} disabled={this.props.file.icon === "loading"}>
-                    <Card ref={this.card} className={this.state.hover} className={className}>
+                    <Card ref={this.card} className={[this.state.hover, className].join(" ")}>
                         <Image preview={this.state.preview}
                             icon={this.props.file.icon || this.props.file.type}
                             view={this.props.view}
@@ -265,8 +263,10 @@ export class ExistingThing extends React.Component {
                             is_renaming={this.state.is_renaming}
                             onRenameCancel={this.onRenameRequest.bind(this, false)}/>
                         <DateTime show={this.state.icon !== "loading"} timestamp={this.props.file.time} />
-                        <ActionButton onClickRename={this.onRenameRequest.bind(this)} onClickDelete={this.onDeleteRequest.bind(this)} onClickShare={this.onShareRequest.bind(this)} is_renaming={this.state.is_renaming}
-                            can_rename={this.props.metadata.can_rename !== false} can_delete={this.props.metadata.can_delete !== false} can_share={this.props.metadata.can_share !== false && window.CONFIG.enable_share === true} />
+                        <ActionButton onClickRename={this.onRenameRequest.bind(this)}
+                            onClickDelete={this.onDeleteRequest.bind(this)} onClickShare={this.onShareRequest.bind(this)} is_renaming={this.state.is_renaming}
+                            can_rename={this.props.metadata.can_rename !== false} can_delete={this.props.metadata.can_delete !== false}
+                            can_share={this.props.metadata.can_share !== false && window.CONFIG.enable_share === true} />
                         <div className="selectionOverlay"></div>
                     </Card>
                 </ToggleableLink>
@@ -334,7 +334,9 @@ class Filename extends React.Component {
                     </NgIf>
                     <NgIf cond={this.props.is_renaming === true} type='inline'>
                         <form onClick={this.preventSelect} onSubmit={this.onRename.bind(this)}>
-                            <input value={this.state.filename} onChange={(e) => this.setState({ filename: e.target.value })} onBlur={this.onCancel.bind(this)} onFocus={this.onInputFocus.bind(this)} autoFocus />
+                            <input value={this.state.filename}
+                                onChange={(e) => this.setState({ filename: e.target.value })}
+                                onBlur={this.onCancel.bind(this)} onFocus={this.onInputFocus.bind(this)} autoFocus />
                         </form>
                     </NgIf>
                 </span>
@@ -420,13 +422,13 @@ const FileSize = (props) => {
     );
 };
 
-const Message = (props) => {
-    return (
-        <NgIf cond={props.message !== null} className="component_message" type="inline">
-          - {props.message}
-        </NgIf>
-    );
-};
+// const Message = (props) => {
+//     return (
+//         <NgIf cond={props.message !== null} className="component_message" type="inline">
+//           - {props.message}
+//         </NgIf>
+//     );
+// };
 
 
 class Image extends React.Component {
@@ -445,7 +447,7 @@ class Image extends React.Component {
         }
 
         const ext = path.extname(this.props.path).replace(/^\./, "");
-        const img = this.props.icon === "file" ? "file" : "folder";
+        // const img = this.props.icon === "file" ? "file" : "folder";
         return (
             <span>
                 <Icon name={this.props.icon} />
@@ -472,7 +474,7 @@ class LazyLoadImage extends React.Component {
 
     componentDidMount() {
         if (!this.$scroll) {
-            throw ("No scroll detected on LazyLoadImage");
+            throw new Error("No scroll detected on LazyLoadImage");
         }
         this.$scroll.addEventListener("scroll", this.onScroll, { passive: true });
         this.onScroll();

@@ -75,16 +75,18 @@ class OrgViewer extends React.Component {
 
 
     onChange(i, j, state) {
-        this.state.headlines[Object.keys(this.state.headlines)[i]][j].status = state;
+        const headlines = { ...this.state.headlines };
+        headlines[Object.keys(this.state.headlines)[i]][j].status = state;
 
         this.setState({
-            headlines: this.state.headlines,
+            headlines,
         });
     }
 
     onTaskUpdate(type, line, value) {
         const content = this.state.content.split("\n");
         let head_line; let item_line; let head_status; let deadline_line; let scheduled_line; let insertion_line;
+        const headlines = { ...this.state.headlines };
         switch (type) {
         case "status":
             content[line] = content[line].replace(/^(\*+\s)[A-Z]{3,}(\s.*)$/, "$1"+value+"$2");
@@ -99,7 +101,8 @@ class OrgViewer extends React.Component {
         case "existing_scheduled":
             [head_line, head_status, item_line] = line;
             content[item_line] = content[item_line].replace(/SCHEDULED: <.*?>\s*/, value ? "SCHEDULED: "+orgdate(value)+" " : "");
-            this.state.headlines[head_status] = this.state.headlines[head_status]
+
+            headlines[head_status] = this.state.headlines[head_status]
                 .map((todo) => {
                     if (todo.line === head_line) {
                         if (value) todo.scheduled.timestamp = new Date(value).toISOString();
@@ -107,12 +110,13 @@ class OrgViewer extends React.Component {
                     }
                     return todo;
                 });
-            this.setState({ headlines: this.state.headlines });
+            this.setState({ headlines });
             break;
         case "existing_deadline":
             [head_line, head_status, item_line] = line;
             content[item_line] = content[item_line].replace(/DEADLINE: <.*?>\s*/, value ? "DEADLINE: "+orgdate(value) : "");
-            this.state.headlines[head_status] = this.state.headlines[head_status]
+
+            headlines[head_status] = this.state.headlines[head_status]
                 .map((todo) => {
                     if (todo.line === head_line) {
                         if (value) todo.deadline.timestamp = new Date(value).toISOString();
@@ -120,7 +124,7 @@ class OrgViewer extends React.Component {
                     }
                     return todo;
                 });
-            this.setState({ headlines: this.state.headlines });
+            this.setState({ headlines });
             break;
         case "new_scheduled":
             [head_line, head_status, deadline_line] = line;
@@ -139,7 +143,7 @@ class OrgViewer extends React.Component {
                     );
                 }
             }
-            this.state.headlines[head_status] = this.state.headlines[head_status]
+            headlines[head_status] = this.state.headlines[head_status]
                 .map((todo) => {
                     if (todo.line === head_line) {
                         todo.scheduled = {
@@ -153,7 +157,7 @@ class OrgViewer extends React.Component {
                     }
                     return todo;
                 });
-            this.setState({ headlines: this.state.headlines });
+            this.setState({ headlines });
             break;
         case "new_deadline":
             [head_line, head_status, scheduled_line] = line;
@@ -171,7 +175,7 @@ class OrgViewer extends React.Component {
                         "DEADLINE: "+orgdate(value),
                     );
                 }
-                this.state.headlines[head_status] = this.state.headlines[head_status]
+                headlines[head_status] = this.state.headlines[head_status]
                     .map((todo) => {
                         if (todo.line === head_line) {
                             todo.deadline = {
@@ -185,7 +189,7 @@ class OrgViewer extends React.Component {
                         }
                         return todo;
                     });
-                this.setState({ headlines: this.state.headlines });
+                this.setState({ headlines });
             }
             break;
         }
@@ -279,7 +283,10 @@ class OrgViewer extends React.Component {
                                             {
                                                 ({ style }) => {
                                                     return (
-                                                        <div className="sticky_header no-select" style={{ ...style, overflow: "auto", background: "white", zIndex: 4 }}>
+                                                        <div
+                                                            className="sticky_header no-select"
+                                                            style={{ ...style, overflow: "auto", background: "white", zIndex: 4 }}
+                                                        >
                                                             <h2>{list} <span>{this.state.headlines[list].length}</span></h2>
                                                         </div>
                                                     );

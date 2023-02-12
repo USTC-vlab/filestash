@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import { Redirect } from "react-router";
 
 import { Input, Button, Container, Icon } from "../../components/";
 import { Admin } from "../../model/";

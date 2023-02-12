@@ -39,7 +39,7 @@ function emit(event, payload) {
 export function EventReceiver(WrappedComponent) {
     const id = Math.random().toString();
 
-    return class extends React.Component {
+    return class extends React.Component { // eslint-disable-line react/display-name
         subscribe(event, callback) {
             subscribe(id, event, callback);
         }
@@ -55,9 +55,10 @@ export function EventReceiver(WrappedComponent) {
 }
 
 export function EventEmitter(WrappedComponent) {
-    return class extends React.Component {
+    return class extends React.Component { // eslint-disable-line react/display-name
         emit() {
             // reconstruct arguments
+            // eslint-disable-next-line prefer-rest-params
             const args = Array.prototype.slice.call(arguments);
             const event = args.shift();
             const payload = args;

@@ -139,7 +139,9 @@ function handle_error_response(xhr, err) {
         let message = content;
         try {
             message = JSON.parse(content);
-        } catch (err) {}
+        } catch (err) {
+            // ...
+        }
         return message || {};
     })(xhr.responseText);
 
@@ -154,14 +156,14 @@ function handle_error_response(xhr, err) {
     } else if (xhr.status === 401) {
         err({ message: message || "Authentication error", code: "Unauthorized" });
     } else if (xhr.status === 403) {
-        err({ message: message || "You can\'t do that", code: "Forbidden" });
+        err({ message: message || "You can't do that", code: "Forbidden" });
     } else if (xhr.status === 413) {
         err({ message: message || "Payload too large", code: "PAYLOAD_TOO_LARGE" });
     } else if (xhr.status === 502) {
         err({ message: message || "The destination is acting weird", code: "BAD_GATEWAY" });
     } else if (xhr.status === 409) {
         if (response["error_summary"]) { // dropbox way to say doesn't exist
-            err({ message: "Doesn\'t exist", code: "UNKNOWN_PATH" });
+            err({ message: "Doesn't exist", code: "UNKNOWN_PATH" });
         } else {
             err({ message: message || "Oups you just ran into a conflict", code: "CONFLICT" });
         }

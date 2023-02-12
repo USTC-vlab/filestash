@@ -1,6 +1,5 @@
 // taken from https://reacttraining.com/react-router/web/guides/code-splitting
 import React from "react";
-import Path from "path";
 import load from "little-loader";
 
 export class Bundle extends React.Component {

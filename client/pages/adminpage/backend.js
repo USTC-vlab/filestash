@@ -108,9 +108,9 @@ export class BackendPage extends React.Component {
                 .indexOf(backend_key) !== -1;
         };
 
-        const isActiveAuth = (auth_key) => {
-            return auth_key === this.state.auth_enabled;
-        };
+        // const isActiveAuth = (auth_key) => {
+        //     return auth_key === this.state.auth_enabled;
+        // };
 
         return (
             <div className="component_dashboard">

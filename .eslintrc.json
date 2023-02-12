@@ -19,13 +19,24 @@
     "plugins": [
         "react"
     ],
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
+    "ignorePatterns": [
+        "client/pages/viewerpage/editor/*.js"
+    ],
+    "globals": {
+        "CONFIG": "readonly"
+    },
     "rules": {
         "indent": [2, 4],
         "quotes": [2, "double"],
         "object-curly-spacing": [2, "always"],
         "require-jsdoc": [0],
         "camelcase": [0],
-        "max-len": ["error", 120],
+        "max-len": ["error", 160],
         "prefer-promise-reject-errors": [0],
         "guard-for-in": [0],
         "react/prop-types": [0],
@@ -34,7 +45,7 @@
 
         "no-throw-literal": [1],
         "react/no-find-dom-node": [1],
-        "no-invalid-this": [1],
+        "no-invalid-this": [0],
         "react/no-string-refs": [1],
         "react/display-name": [1],
         "prefer-rest-params": [1],

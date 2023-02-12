@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
-import { Card, NgIf, Icon, EventEmitter, Dropdown, DropdownButton, DropdownList, DropdownItem, Container } from "../../components/";
-import { pathBuilder, debounce, prompt } from "../../helpers/";
+import { NgIf, Icon, EventEmitter, Dropdown, DropdownButton, DropdownList, DropdownItem, Container } from "../../components/";
+import { debounce, prompt } from "../../helpers/";
 import { t } from "../../locales/";
 import "./submenu.scss";
 
@@ -121,11 +121,14 @@ export class Submenu extends React.Component {
             <div className="component_submenu">
                 <Container>
                     <div className={"menubar no-select "+(this.state.search_input_visible ? "search_focus" : "")}>
-                        <NgIf cond={this.props.accessRight.can_create_file !== false && this.props.selected.length === 0} onClick={this.onNew.bind(this, "file")} type="inline">
+                        <NgIf cond={this.props.accessRight.can_create_file !== false && this.props.selected.length === 0}
+                            onClick={this.onNew.bind(this, "file")} type="inline">
                             { window.innerWidth < 410 && t("New File").length > 10 ? t("New File", null, "NEW_FILE::SHORT") : t("New File") }
                         </NgIf>
-                        <NgIf cond={this.props.accessRight.can_create_directory !== false && this.props.selected.length === 0} onClick={this.onNew.bind(this, "directory")} type="inline">
-                            { window.innerWidth < 410 && t("New Directory").length > 10 ? t("New Directory", null, "NEW_DIRECTORY::SHORT") : t("New Directory") }
+                        <NgIf cond={this.props.accessRight.can_create_directory !== false && this.props.selected.length === 0}
+                            onClick={this.onNew.bind(this, "directory")} type="inline">
+                            { window.innerWidth < 410 && t("New Directory").length > 10 ?
+                                t("New Directory", null, "NEW_DIRECTORY::SHORT") : t("New Directory") }
                         </NgIf>
                         <NgIf cond={this.props.selected.length > 0} type="inline" onMouseDown={this.onDownload.bind(this, this.props.selected)}>
                             <TransitionGroup>
@@ -164,7 +167,10 @@ export class Submenu extends React.Component {
                                     </NgIf>
                                 </label>
                                 <NgIf cond={this.state.search_input_visible !== null} type="inline">
-                                    <input ref={this.input} onBlur={this.closeIfEmpty.bind(this, false)} style={{ "width": this.state.search_input_visible ? "180px" : "0px" }} value={this.state.search_keyword} onChange={(e) => this.onSearchKeypress(e.target.value, true)} type="text" id="search" placeholder={ t("search") } name="search" autoComplete="off" />
+                                    <input ref={this.input} onBlur={this.closeIfEmpty.bind(this, false)}
+                                        style={{ "width": this.state.search_input_visible ? "180px" : "0px" }}
+                                        value={this.state.search_keyword} onChange={(e) => this.onSearchKeypress(e.target.value, true)}
+                                        type="text" id="search" placeholder={ t("search") } name="search" autoComplete="off" />
                                     <label htmlFor="search" className="hidden">{ t("search") }</label>
                                 </NgIf>
                             </form>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import PropTypes from "prop-types";
 
 import { NgIf } from "./";
 import { debounce, nop } from "../helpers/";

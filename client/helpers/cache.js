@@ -63,7 +63,7 @@ DataFromIndexedDB.prototype.get = function(type, key) {
         const query = store.get(key);
         return new Promise((done, error) => {
             query.onsuccess = (e) => {
-                const data = query.result;
+                // const data = query.result;
                 done(query.result || null);
             };
             query.onerror = () => done();

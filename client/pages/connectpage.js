@@ -3,11 +3,10 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import "./connectpage.scss";
 import { Session } from "../model/";
-import { Container, NgIf, NgShow, Loader, Notification, ErrorPage } from "../components/";
-import { ForkMe, PoweredByFilestash, Form } from "./connectpage/";
+import { Container, NgIf, NgShow, Loader, ErrorPage } from "../components/";
+import { PoweredByFilestash, Form } from "./connectpage/";
 import { cache, notify, urlParams } from "../helpers/";
 
-import { Alert } from "../components/";
 
 @ErrorPage
 export class ConnectPage extends React.Component {
@@ -87,9 +86,6 @@ export class ConnectPage extends React.Component {
     render() {
         return (
             <div className="component_page_connect">
-                {/* <NgIf cond={window.CONFIG["fork_button"]}>
-                    <ForkMe repo="https://github.com/mickael-kerjean/filestash" />
-                </NgIf> */}
                 <Container maxWidth="565px">
                     <NgIf cond={this.state.loading === true}>
                         <Loader/>

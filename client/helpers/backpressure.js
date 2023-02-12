@@ -1,7 +1,7 @@
 export function debounce(func, wait, immediate) {
     let timeout;
-    return function() {
-        const context = this; const args = arguments;
+    return function(...args) {
+        const context = this;
         const later = function() {
             timeout = null;
             if (!immediate) func.apply(context, args);
@@ -24,12 +24,11 @@ export function throttle(func, wait, options) {
         result = func.apply(context, args);
         if (!timeout) context = args = null;
     };
-    return function() {
+    return function(...args) {
         const now = Date.now();
         if (!previous && options.leading === false) previous = now;
         const remaining = wait - (now - previous);
         context = this;
-        args = arguments;
         if (remaining <= 0 || remaining > wait) {
             if (timeout) {
                 clearTimeout(timeout);

@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
  * Facebook got away from it and things haven't stayed backward compatible at the point where I got
  * to realise it would be easier to write this simpler wrapper than migrate things over
  */
+
 export function CSSTransition({ transitionName = "animate", children = null, transitionAppearTimeout = 300 }) {
     const [className, setClassName] = useState(`${transitionName} ${transitionName}-appear`);
 

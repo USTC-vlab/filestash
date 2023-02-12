@@ -18,7 +18,11 @@ export function HomePage() {
     }, []);
 
     if (!redirection) {
-        return ( <div> <Loader /> </div> );
+        return ( <div> <Loader /> <p className="center"><a onClick={() => {
+            Session.logout().then((res) => {
+                window.location.reload();
+            });
+        }}>点击退出当前登录状态</a></p> </div> );
     }
     return ( <Redirect to={redirection} /> );
 }

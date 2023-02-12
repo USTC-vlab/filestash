@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
@@ -22,6 +21,12 @@ let config = {
     //         '/assets': path.resolve(__dirname, "client/assets"),
     //     }
     // },
+    resolve: {
+        fallback: {
+            crypto: false,
+            path: require.resolve("path-browserify")
+        }
+    },
     module: {
         rules: [
             {
@@ -39,11 +44,11 @@ let config = {
             },
             {
                 test: /\.scss$/,
-                loaders: ['style-loader', 'css-loader', 'sass-loader']
+                use: ['style-loader', 'css-loader', 'sass-loader']
             },
             {
                 test: /\.css$/,
-                loaders: ['style-loader', 'css-loader']
+                use: ['style-loader', 'css-loader']
             },
             {
                 test: /\.(pdf|jpg|png|gif|svg|ico|woff|woff2|eot|ttf)$/,
@@ -60,7 +65,6 @@ let config = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
         }),
-        new webpack.optimize.OccurrenceOrderPlugin(),
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'client', 'index.html'),
             inject: true,
@@ -91,19 +95,18 @@ let config = {
 
 
 if (process.env.NODE_ENV === 'production') {
-    config.plugins.push(new UglifyJSPlugin({
-        sourceMap: false,
-        extractComments: true,
-    }));
+    config.optimization = {
+        minimize: true
+    };
     config.plugins.push(new CompressionPlugin({
-        asset: "[path].gz[query]",
+        filename: "[path][base].gz[query]",
         algorithm: "gzip",
         test: /\.js$|\.json$|\.html$|\.svg|\.ico$/,
         threshold: 0,
         minRatio: 0.8
     }));
     config.plugins.push(new CompressionPlugin({
-        asset: "[path].br[query]",
+        filename: "[path][base].br[query]",
         algorithm: "brotliCompress",
         test: /\.js$|\.json$|\.html$|\.svg|\.ico$/,
         threshold: 0,

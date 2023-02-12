@@ -418,7 +418,7 @@ class FileSystem {
 
     _refresh(origin_path, destination_path) {
         if (this.current_path === dirname(origin_path) ||
-           this.current_path === dirname(destination_path)) {
+           (destination_path && this.current_path === dirname(destination_path))) {
             return this._ls_from_cache(this.current_path);
         }
         return Promise.resolve();

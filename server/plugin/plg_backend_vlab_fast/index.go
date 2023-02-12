@@ -113,7 +113,7 @@ func (s Sftp) Init(params map[string]string, app *App) (IBackend, error) {
 	return &s, nil
 }
 
-var descriptionStr = "Vlab 文件管理快速登录。需要先登录管理页面 (https://vlab.ustc.edu.cn/vm) 才可使用。"
+var descriptionStr = "Vlab 文件管理快速登录。需要先登录管理页面 (https://vlab.ustc.edu.cn/vm) 才可使用。以下选项如果不知道填写什么，请留空。"
 
 func (b Sftp) LoginForm() Form {
 	return Form{

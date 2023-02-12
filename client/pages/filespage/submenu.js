@@ -130,6 +130,9 @@ export class Submenu extends React.Component {
                             { window.innerWidth < 410 && t("New Directory").length > 10 ?
                                 t("New Directory", null, "NEW_DIRECTORY::SHORT") : t("New Directory") }
                         </NgIf>
+                        <NgIf cond={this.props.selected.length === 0} type="inline">
+                            {t("Drag & Drop to upload")}
+                        </NgIf>
                         <NgIf cond={this.props.selected.length > 0} type="inline" onMouseDown={this.onDownload.bind(this, this.props.selected)}>
                             <TransitionGroup>
                                 <CSSTransition classNames="submenuwithSelection" exit={false} enter={false} appear={true} timeout={{ appear: 10000 }}>

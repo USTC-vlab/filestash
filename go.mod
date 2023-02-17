@@ -1,6 +1,6 @@
 module github.com/mickael-kerjean/filestash
 
-go 1.13
+go 1.16
 
 require (
 	github.com/cretz/bine v0.1.0

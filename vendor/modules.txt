@@ -1,4 +1,5 @@
 # github.com/creack/pty v1.1.7
+## explicit
 github.com/creack/pty
 # github.com/cretz/bine v0.1.0
 ## explicit
@@ -9,9 +10,10 @@ github.com/cretz/bine/torutil
 github.com/cretz/bine/torutil/ed25519
 github.com/cretz/bine/torutil/ed25519/internal/edwards25519
 # github.com/davidbyttow/govips/v2 v2.10.0
-## explicit
+## explicit; go 1.15
 github.com/davidbyttow/govips/v2/vips
 # github.com/emirpasic/gods v1.12.0
+## explicit
 github.com/emirpasic/gods/containers
 github.com/emirpasic/gods/lists
 github.com/emirpasic/gods/lists/arraylist
@@ -22,19 +24,22 @@ github.com/emirpasic/gods/utils
 ## explicit
 github.com/gorilla/mux
 # github.com/gorilla/websocket v1.4.1
-## explicit
+## explicit; go 1.12
 github.com/gorilla/websocket
 # github.com/h2non/bimg v1.1.5
 ## explicit
 github.com/h2non/bimg
 # github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99
+## explicit
 github.com/jbenet/go-context/io
 # github.com/kevinburke/ssh_config v0.0.0-20190725054713-01f96b0aa0cd
+## explicit
 github.com/kevinburke/ssh_config
 # github.com/kr/fs v0.1.0
+## explicit
 github.com/kr/fs
 # github.com/kr/pty v1.1.8
-## explicit
+## explicit; go 1.12
 github.com/kr/pty
 # github.com/mattn/go-sqlite3 v2.0.2+incompatible
 ## explicit
@@ -44,6 +49,7 @@ github.com/mattn/go-sqlite3
 github.com/mickael-kerjean/net/webdav
 github.com/mickael-kerjean/net/webdav/internal/xml
 # github.com/mitchellh/go-homedir v1.1.0
+## explicit
 github.com/mitchellh/go-homedir
 # github.com/mitchellh/hashstructure v1.0.0
 ## explicit
@@ -52,30 +58,35 @@ github.com/mitchellh/hashstructure
 ## explicit
 github.com/patrickmn/go-cache
 # github.com/pkg/sftp v1.13.5
-## explicit
+## explicit; go 1.15
 github.com/pkg/sftp
 github.com/pkg/sftp/internal/encoding/ssh/filexfer
 # github.com/sergi/go-diff v1.0.0
+## explicit
 github.com/sergi/go-diff/diffmatchpatch
 # github.com/src-d/gcfg v1.4.0
+## explicit
 github.com/src-d/gcfg
 github.com/src-d/gcfg/scanner
 github.com/src-d/gcfg/token
 github.com/src-d/gcfg/types
 # github.com/tidwall/gjson v1.9.3
-## explicit
+## explicit; go 1.12
 github.com/tidwall/gjson
 # github.com/tidwall/match v1.1.1
+## explicit; go 1.15
 github.com/tidwall/match
 # github.com/tidwall/pretty v1.2.0
+## explicit; go 1.16
 github.com/tidwall/pretty
 # github.com/tidwall/sjson v1.0.4
 ## explicit
 github.com/tidwall/sjson
 # github.com/xanzy/ssh-agent v0.2.1
+## explicit
 github.com/xanzy/ssh-agent
 # golang.org/x/crypto v0.0.0-20211215153901-e495a2d5b3d3
-## explicit
+## explicit; go 1.17
 golang.org/x/crypto/acme
 golang.org/x/crypto/acme/autocert
 golang.org/x/crypto/bcrypt
@@ -100,12 +111,12 @@ golang.org/x/crypto/ssh/agent
 golang.org/x/crypto/ssh/internal/bcrypt_pbkdf
 golang.org/x/crypto/ssh/knownhosts
 # golang.org/x/image v0.0.0-20211028202545-6944b10bf410
-## explicit
+## explicit; go 1.12
 golang.org/x/image/bmp
 golang.org/x/image/draw
 golang.org/x/image/math/f64
 # golang.org/x/net v0.0.0-20220121210141-e204ce36a2ba
-## explicit
+## explicit; go 1.17
 golang.org/x/net/context
 golang.org/x/net/html
 golang.org/x/net/html/atom
@@ -117,11 +128,13 @@ golang.org/x/net/proxy
 ## explicit
 golang.org/x/sync/semaphore
 # golang.org/x/sys v0.0.0-20211216021012-1d35b9e2eb4e
+## explicit; go 1.17
 golang.org/x/sys/cpu
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
 golang.org/x/sys/windows
 # golang.org/x/text v0.3.7
+## explicit; go 1.17
 golang.org/x/text/encoding
 golang.org/x/text/encoding/charmap
 golang.org/x/text/encoding/htmlindex
@@ -149,6 +162,7 @@ gopkg.in/alexcesaro/quotedprintable.v3
 ## explicit
 gopkg.in/gomail.v2
 # gopkg.in/src-d/go-billy.v4 v4.3.2
+## explicit
 gopkg.in/src-d/go-billy.v4
 gopkg.in/src-d/go-billy.v4/helper/chroot
 gopkg.in/src-d/go-billy.v4/helper/polyfill
@@ -198,4 +212,5 @@ gopkg.in/src-d/go-git.v4/utils/merkletrie/index
 gopkg.in/src-d/go-git.v4/utils/merkletrie/internal/frame
 gopkg.in/src-d/go-git.v4/utils/merkletrie/noder
 # gopkg.in/warnings.v0 v0.1.2
+## explicit
 gopkg.in/warnings.v0

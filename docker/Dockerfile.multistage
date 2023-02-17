@@ -1,9 +1,9 @@
 FROM debian:bullseye-slim AS builder
 LABEL MAINTAINER="Keyu Tao <taoky@mail.ustc.edu.cn>"
 
-# First we need: Node.js 16 and Go 1.17
+# First we need: Node.js 16 and Go 1.18
 ENV NODE_VERSION 16.13.2
-ENV GO_VERSION 1.17.6
+ENV GO_VERSION 1.18.10
 ENV NVM_VERSION 0.39.1
 ENV NVM_DIR /usr/local/nvm
 ENV PATH /usr/local/go/bin:${NVM_DIR}/versions/node/v${NODE_VERSION}/bin:$PATH

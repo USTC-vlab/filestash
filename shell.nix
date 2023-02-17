@@ -3,7 +3,7 @@
 with pkgs; mkShell {
     buildInputs = [
         nodejs-16_x
-        go
+        go_1_18
         vips  # image processing support
         pkg-config
     ];

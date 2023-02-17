@@ -16,3 +16,4 @@ pkg/
 *.swo
 .tern-port
 .tern-project.js
+!vendor/**/*

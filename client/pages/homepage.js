@@ -3,6 +3,7 @@ import { Redirect } from "react-router";
 
 import { Session } from "../model/";
 import { Loader } from "../components/";
+import { cache } from "../helpers/";
 
 export function HomePage() {
     const [redirection, setRedirection] = useState(null);
@@ -19,10 +20,9 @@ export function HomePage() {
 
     if (!redirection) {
         return ( <div> <Loader /> <p className="center"><a onClick={() => {
-            Session.logout().then((res) => {
-                window.location.reload();
-            });
-        }}>点击退出当前登录状态</a></p> </div> );
+            cache.destroy();
+            setRedirection("/login");
+        }}>点击强制跳转到登录页</a></p> </div> );
     }
     return ( <Redirect to={redirection} /> );
 }

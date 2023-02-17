@@ -13,10 +13,10 @@ require (
 	github.com/mickael-kerjean/net v0.0.0-20191120063050-2457c043ba06
 	github.com/mitchellh/hashstructure v1.0.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
-	github.com/pkg/sftp v1.11.0
+	github.com/pkg/sftp v1.13.5
 	github.com/tidwall/gjson v1.9.3
 	github.com/tidwall/sjson v1.0.4
-	golang.org/x/crypto v0.0.0-20200728195943-123391ffb6de
+	golang.org/x/crypto v0.0.0-20211215153901-e495a2d5b3d3
 	golang.org/x/image v0.0.0-20211028202545-6944b10bf410
 	golang.org/x/net v0.0.0-20220121210141-e204ce36a2ba // indirect
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e

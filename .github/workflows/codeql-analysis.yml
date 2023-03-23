@@ -55,7 +55,7 @@ jobs:
     - name: Install libvips for go
       if: matrix.language == 'go'
       run: |
-        sudo apt install libvips-dev
+        sudo apt update && sudo apt install -y libvips-dev
     - name: Autobuild
       uses: github/codeql-action/autobuild@v2
 

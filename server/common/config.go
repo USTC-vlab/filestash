@@ -80,7 +80,7 @@ func NewConfiguration() Configuration {
 					FormElement{Name: "display_hidden", Type: "boolean", Default: false, Description: "Should files starting with a dot be visible by default?"},
 					FormElement{Name: "refresh_after_upload", Type: "boolean", Default: false, Description: "Refresh directory listing after upload"},
 					FormElement{Name: "auto_connect", Type: "boolean", Default: false, Description: "User don't have to click on the login button if an admin is prefilling a unique backend"},
-					FormElement{Name: "upload_button", Type: "boolean", Default: false, Description: "Display the upload button on any device"},
+					FormElement{Name: "upload_button", Type: "boolean", Default: true, Description: "Display the upload button on any device"},
 					FormElement{Name: "upload_pool_size", Type: "number", Default: 15, Description: "Maximum number of files upload in parallel (Default: 15)"},
 					FormElement{Name: "custom_css", Type: "long_text", Default: "", Description: "Set custom css code for your instance"},
 				},

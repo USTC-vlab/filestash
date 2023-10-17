@@ -57,7 +57,7 @@
     "babelify": "^9.0.0",
     "compression-webpack-plugin": "^10.0.0",
     "copy-webpack-plugin": "^11.0.0",
-    "css-loader": "^3.6.0",
+    "css-loader": "^6.8.1",
     "dart-sass-variable-loader": "^0.2.0",
     "eslint": "^8.5.0",
     "eslint-config-google": "^0.14.0",

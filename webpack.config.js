@@ -44,11 +44,22 @@ let config = {
             },
             {
                 test: /\.scss$/,
-                use: ['style-loader', 'css-loader', 'sass-loader']
+                use: ['style-loader', {
+                    loader: 'css-loader',
+                    options: {
+                        // Don't know why but esModule true fails to load css
+                        esModule: false,
+                    }
+                }, 'sass-loader'],
             },
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                use: ['style-loader', {
+                    loader: 'css-loader',
+                    options: {
+                        esModule: false,
+                    }
+                }],
             },
             {
                 test: /\.(pdf|jpg|png|gif|svg|ico|woff|woff2|eot|ttf)$/,

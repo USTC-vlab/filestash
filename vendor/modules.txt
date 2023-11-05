@@ -103,7 +103,7 @@ golang.org/x/crypto/ssh
 golang.org/x/crypto/ssh/agent
 golang.org/x/crypto/ssh/internal/bcrypt_pbkdf
 golang.org/x/crypto/ssh/knownhosts
-# golang.org/x/image v0.5.0
+# golang.org/x/image v0.10.0
 ## explicit; go 1.12
 golang.org/x/image/bmp
 golang.org/x/image/draw
@@ -116,7 +116,7 @@ golang.org/x/net/html/atom
 golang.org/x/net/html/charset
 golang.org/x/net/internal/socks
 golang.org/x/net/proxy
-# golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4
+# golang.org/x/sync v0.1.0
 ## explicit
 golang.org/x/sync/semaphore
 # golang.org/x/sys v0.13.0

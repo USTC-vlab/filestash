@@ -5,7 +5,7 @@ A modified [filestash](https://github.com/mickael-kerjean/filestash) for Vlab pl
 ## Changes
 
 -   Removed unused plugins and deps
--   Added a working, reproducible `package-lock.json` under Node.js 16
+-   Added a working, reproducible `package-lock.json` under Node.js 18
 -   Vlab backends now are based on sshpiper interface, with password-free login support
 -   A Docker build script
 -   Libvips is now supported with `govips` packages, with no more external nonreproducible C static library binary

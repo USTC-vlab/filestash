@@ -3,7 +3,14 @@ import path from "path";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import { MenuBar } from "./menubar";
-import { Bundle, Icon, NgIf, Loader, EventEmitter, EventReceiver } from "../../components/";
+import {
+    Bundle,
+    Icon,
+    NgIf,
+    Loader,
+    EventEmitter,
+    EventReceiver,
+} from "../../components/";
 import { alert } from "../../helpers/";
 import { Pager } from "./pager";
 import { t } from "../../locales/";
@@ -11,16 +18,21 @@ import "./imageviewer.scss";
 import "./pager.scss";
 
 const SmallExif = (props) => (
-    <Bundle loader={import(/* webpackChunkName: "exif" */"./image_exif")} symbol="SmallExif">
-        {(Comp) => <Comp {...props}/>}
+    <Bundle
+        loader={import(/* webpackChunkName: "exif" */ "./image_exif")}
+        symbol="SmallExif"
+    >
+        {(Comp) => <Comp {...props} />}
     </Bundle>
 );
 const LargeExif = (props) => (
-    <Bundle loader={import(/* webpackChunkName: "exif" */"./image_exif")} symbol="LargeExif">
-        {(Comp) => <Comp {...props}/>}
+    <Bundle
+        loader={import(/* webpackChunkName: "exif" */ "./image_exif")}
+        symbol="LargeExif"
+    >
+        {(Comp) => <Comp {...props} />}
     </Bundle>
 );
-
 
 @EventReceiver
 @EventEmitter
@@ -34,7 +46,7 @@ export class ImageViewer extends React.Component {
             is_loaded: false,
             draggable: true,
         };
-        this.shortcut= (e) => {
+        this.shortcut = (e) => {
             if (e.keyCode === 27) {
                 this.setState({ show_exif: false });
             } else if (e.keyCode === 73) {
@@ -42,7 +54,7 @@ export class ImageViewer extends React.Component {
             }
         };
         this.refresh = () => {
-            this.setState({ "_": Math.random() });
+            this.setState({ _: Math.random() });
         };
         this.container = React.createRef();
     }
@@ -101,36 +113,77 @@ export class ImageViewer extends React.Component {
             <div className="component_imageviewer">
                 <MenuBar title={this.props.filename} download={this.props.data}>
                     <NgIf type="inline" cond={hasExif(this.props.filename)}>
-                        <Icon name="info" onClick={this.toggleExif.bind(this)} />
+                        <Icon
+                            name="info"
+                            onClick={this.toggleExif.bind(this)}
+                        />
                     </NgIf>
-                    <NgIf type="inline" cond={("webkitRequestFullscreen" in document.body) || ("mozRequestFullScreen" in document.body)}>
-                        <Icon name="fullscreen" onClick={this.requestFullScreen.bind(this)} />
+                    <NgIf
+                        type="inline"
+                        cond={
+                            "webkitRequestFullscreen" in document.body ||
+                            "mozRequestFullScreen" in document.body
+                        }
+                    >
+                        <Icon
+                            name="fullscreen"
+                            onClick={this.requestFullScreen.bind(this)}
+                        />
                     </NgIf>
                 </MenuBar>
-                <div ref={this.container} className={"component_image_container "+(document.webkitIsFullScreen || document.mozFullScreen ? "fullscreen" : "")}>
+                <div
+                    ref={this.container}
+                    className={
+                        "component_image_container " +
+                        (document.webkitIsFullScreen || document.mozFullScreen
+                            ? "fullscreen"
+                            : "")
+                    }
+                >
                     <div className="images_wrapper">
-                        <ImageFancy draggable={this.state.draggable} onLoad={() => this.setState({ is_loaded: true })} url={this.props.data} />
+                        <ImageFancy
+                            draggable={this.state.draggable}
+                            onLoad={() => this.setState({ is_loaded: true })}
+                            url={this.props.data}
+                        />
                     </div>
-                    <div className={"images_aside scroll-y"+(this.state.show_exif ? " open": "")}>
+                    <div
+                        className={
+                            "images_aside scroll-y" +
+                            (this.state.show_exif ? " open" : "")
+                        }
+                    >
                         <div className="header">
-                            <div>{ t("Info") }</div>
+                            <div>{t("Info")}</div>
                             <div style={{ flex: 1 }}>
-                                <Icon name="close" onClick={this.toggleExif.bind(this)} />
+                                <Icon
+                                    name="close"
+                                    onClick={this.toggleExif.bind(this)}
+                                />
                             </div>
                         </div>
                         <div className="content">
-                            <LargeExif data={this.props.data} show={this.state.show_exif} ready={this.state.is_loaded} />
+                            <LargeExif
+                                data={this.props.data}
+                                show={this.state.show_exif}
+                                ready={this.state.is_loaded}
+                            />
                         </div>
                     </div>
                     <Pager
                         type={["image"]}
                         path={this.props.path}
-                        pageChange={(files) => this.setState({ draggable: files.length > 1 ? true : false })}
-                        next={(e) => this.setState({ preload: e })} />
+                        pageChange={(files) =>
+                            this.setState({
+                                draggable: files.length > 1 ? true : false,
+                            })
+                        }
+                        next={(e) => this.setState({ preload: e })}
+                    />
                 </div>
 
                 <NgIf cond={this.state.is_loaded}>
-                    <Img style={{ display: "none" }} src={this.state.preload}/>
+                    <Img style={{ display: "none" }} src={this.state.preload} />
                 </NgIf>
             </div>
         );
@@ -150,7 +203,10 @@ class ImageFancy extends React.Component {
         };
 
         this.img = new Image();
-        this.img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
+        this.img.src =
+            "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
+
+        this.nodeRef = React.createRef();
     }
 
     UNSAFE_componentWillReceiveProps(nextProp) {
@@ -189,38 +245,48 @@ class ImageFancy extends React.Component {
     }
     imageDragEnd(e) {
         const drag_end = {
-            x: function(dragX, touch) {
+            x: (function (dragX, touch) {
                 // const t = new Date();
                 if (dragX !== null) return dragX;
                 if (touch && touch[0]) {
                     return touch[0].clientX;
                 }
                 return 0;
-            }(e.pageX || null, e.changedTouches || null),
+            })(e.pageX || null, e.changedTouches || null),
             t: new Date(),
         };
 
-        const direction = function(x_current, x_init) {
+        const direction = (function (x_current, x_init) {
             if (x_current.t - x_init.t > 200) {
-                if (Math.abs(x_current.x - x_init.x) < (window.innerWidth < 500 ? window.innerWidth / 3 : 250)) return "neutral";
+                if (
+                    Math.abs(x_current.x - x_init.x) <
+                    (window.innerWidth < 500 ? window.innerWidth / 3 : 250)
+                )
+                    return "neutral";
             }
             return x_current.x > x_init.x ? "right" : "left";
-        }(drag_end, this.state.drag_init);
+        })(drag_end, this.state.drag_init);
 
         if (direction === "left") {
-            return this.setState({
-                drag_current: { x: - window.innerWidth },
-                hasAction: false,
-            }, () => {
-                this.props.emit("media::next");
-            });
+            return this.setState(
+                {
+                    drag_current: { x: -window.innerWidth },
+                    hasAction: false,
+                },
+                () => {
+                    this.props.emit("media::next");
+                }
+            );
         } else if (direction === "right") {
-            return this.setState({
-                drag_current: { x: + window.innerWidth },
-                hasAction: false,
-            }, () => {
-                this.props.emit("media::previous");
-            });
+            return this.setState(
+                {
+                    drag_current: { x: +window.innerWidth },
+                    hasAction: false,
+                },
+                () => {
+                    this.props.emit("media::previous");
+                }
+            );
         }
         return this.setState({
             drag_current: { x: 0 },
@@ -229,9 +295,15 @@ class ImageFancy extends React.Component {
     }
     imageDrag(e) {
         if (e.pageX > 0) {
-            this.setState({ drag_current: { x: e.pageX - this.state.drag_init.x } });
+            this.setState({
+                drag_current: { x: e.pageX - this.state.drag_init.x },
+            });
         } else if (e.touches && e.touches[0].clientX > 0) {
-            this.setState({ drag_current: { x: e.touches[0].clientX - this.state.drag_init.x } });
+            this.setState({
+                drag_current: {
+                    x: e.touches[0].clientX - this.state.drag_init.x,
+                },
+            });
         }
     }
 
@@ -239,41 +311,65 @@ class ImageFancy extends React.Component {
         if (this.state.isError) {
             return (
                 <span className="error">
-                    <div><div className="label">{ t("Can't load this picture") }</div></div>
+                    <div>
+                        <div className="label">
+                            {t("Can't load this picture")}
+                        </div>
+                    </div>
                 </span>
             );
         }
         if (this.state.isLoading) {
             return (
                 <div className="loader">
-                    <Loader style={{ margin: "auto" }}/>
+                    <Loader style={{ margin: "auto" }} />
                     <Img
                         className="photo"
                         onError={this.onError.bind(this)}
                         onLoad={this.onLoad.bind(this)}
                         style={{ display: "none" }}
-                        src={this.props.url} />
+                        src={this.props.url}
+                    />
                 </div>
             );
         }
         return (
-            <TransitionGroup>
-                <CSSTransition classNames="image" exit={true} enter={true} appear={true} timeout={{ enter: 5000, exit: 5000 }}>
-                    <div key={this.props.url}>
-                        <Img
-                            src={this.props.url}
-                            style={{ transform: "translateX("+this.state.drag_current.x+"px)" }}
-                            className={this.state.hasAction ? "photo": "photo idle"}
-                            onTouchStart={this.imageDragStart.bind(this)}
-                            onDragStart={this.imageDragStart.bind(this)}
-                            onDragEnd={this.imageDragEnd.bind(this)}
-                            onTouchEnd={this.imageDragEnd.bind(this)}
-                            onDrag={this.imageDrag.bind(this)}
-                            onTouchMove={this.imageDrag.bind(this)}
-                            draggable={this.props.draggable} />
-                    </div>
+            // <TransitionGroup>
+                <CSSTransition
+                    nodeRef={this.nodeRef}
+                    classNames="image"
+                    exit={true}
+                    enter={true}
+                    appear={true}
+                    timeout={{ enter: 5000, exit: 5000 }}
+                >
+                    <span ref={this.nodeRef}>
+                        <div key={this.props.url}>
+                            <Img
+                                src={this.props.url}
+                                style={{
+                                    transform:
+                                        "translateX(" +
+                                        this.state.drag_current.x +
+                                        "px)",
+                                }}
+                                className={
+                                    this.state.hasAction
+                                        ? "photo"
+                                        : "photo idle"
+                                }
+                                onTouchStart={this.imageDragStart.bind(this)}
+                                onDragStart={this.imageDragStart.bind(this)}
+                                onDragEnd={this.imageDragEnd.bind(this)}
+                                onTouchEnd={this.imageDragEnd.bind(this)}
+                                onDrag={this.imageDrag.bind(this)}
+                                onTouchMove={this.imageDrag.bind(this)}
+                                draggable={this.props.draggable}
+                            />
+                        </div>
+                    </span>
                 </CSSTransition>
-            </TransitionGroup>
+            // </TransitionGroup>
         );
     }
 }
@@ -285,7 +381,16 @@ class Img extends React.Component {
 
     render() {
         const image_url = (url, size) => {
-            return url+"&size="+parseInt(Math.max(window.innerWidth*size, window.innerHeight*size));
+            return (
+                url +
+                "&size=" +
+                parseInt(
+                    Math.max(
+                        window.innerWidth * size,
+                        window.innerHeight * size
+                    )
+                )
+            );
         };
         if (!this.props.src) return null;
 
@@ -293,7 +398,14 @@ class Img extends React.Component {
             <img
                 {...this.props}
                 src={image_url(this.props.src, 1)}
-                srcSet={image_url(this.props.src, 1)+", "+image_url(this.props.src, 3/2)+" 1.5x, "+image_url(this.props.src, 2)+" 2x"}
+                srcSet={
+                    image_url(this.props.src, 1) +
+                    ", " +
+                    image_url(this.props.src, 3 / 2) +
+                    " 1.5x, " +
+                    image_url(this.props.src, 2) +
+                    " 2x"
+                }
             />
         );
     }

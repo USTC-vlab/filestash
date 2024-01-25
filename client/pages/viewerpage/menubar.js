@@ -5,24 +5,37 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { Container, NgIf, Icon } from "../../components/";
 import "./menubar.scss";
 
-
 export const MenuBar = (props) => {
+    const nodeRef = React.useRef(null);
     return (
         <div className="component_menubar">
             <Container>
-                <TransitionGroup>
-                    <CSSTransition classNames="menubar" exit={false} enter={false} appear={true} timeout={{ appear: 550 }}>
-                        <div>
-                            <div className="titlebar" style={{ letterSpacing: "0.3px" }}>{ props.title }</div>
-                            <div className="action-item no-select">
-                                <span className="specific">
-                                    { props.children }
-                                </span>
-                                { props.download === null ? null : <DownloadButton link={ props.download } name={ props.title } /> }
-                            </div>
+                <CSSTransition
+                    nodeRef={nodeRef}
+                    classNames="menubar"
+                    exit={false}
+                    enter={false}
+                    appear={true}
+                    timeout={{ appear: 550 }}
+                >
+                    <span ref={nodeRef}>
+                        <div
+                            className="titlebar"
+                            style={{ letterSpacing: "0.3px" }}
+                        >
+                            {props.title}
                         </div>
-                    </CSSTransition>
-                </TransitionGroup>
+                        <div className="action-item no-select">
+                            <span className="specific">{props.children}</span>
+                            {props.download === null ? null : (
+                                <DownloadButton
+                                    link={props.download}
+                                    name={props.title}
+                                />
+                            )}
+                        </div>
+                    </span>
+                </CSSTransition>
             </Container>
         </div>
     );
@@ -60,7 +73,11 @@ class DownloadButton extends React.Component {
         return (
             <span className="download-button">
                 <NgIf cond={!this.state.loading} type="inline">
-                    <a href={this.props.link} download={this.props.name} onClick={this.onDownloadRequest.bind(this)}>
+                    <a
+                        href={this.props.link}
+                        download={this.props.name}
+                        onClick={this.onDownloadRequest.bind(this)}
+                    >
                         <Icon name="download_white" />
                     </a>
                 </NgIf>

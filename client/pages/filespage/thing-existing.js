@@ -106,6 +106,7 @@ export class ExistingThing extends React.Component {
             preview: null,
         };
         this.card = React.createRef();
+        this.filenameElement = React.createRef();
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -142,6 +143,12 @@ export class ExistingThing extends React.Component {
                     this.setState({ preview: url+"&thumbnail=true" });
                 });
             }
+        }
+    }
+
+    preventOpeningOnEnter(e) {
+        if (e.keyCode === 13 && this.filenameElement.current) { // Enter
+            this.filenameElement.current.onRename(e);
         }
     }
 
@@ -248,7 +255,10 @@ export class ExistingThing extends React.Component {
 
         return connectDragSource(connectDropNativeFile(connectDropFile(
             <div className={"component_thing view-"+this.props.view+(this.props.selected === true ? " selected" : " not-selected")}>
-                <ToggleableLink onClick={this.onThingClick.bind(this)} to={fileLink + window.location.search} disabled={this.props.file.icon === "loading"}>
+                <ToggleableLink onClick={this.onThingClick.bind(this)}
+                                to={fileLink + window.location.search}
+                                disabled={this.props.file.icon === "loading"}
+                                onKeyDown={this.preventOpeningOnEnter.bind(this)}>
                     <Card ref={this.card} className={[this.state.hover, className].join(" ")}>
                         <Image preview={this.state.preview}
                             icon={this.props.file.icon || this.props.file.type}
@@ -256,6 +266,7 @@ export class ExistingThing extends React.Component {
                             path={path.join(this.props.path, this.props.file.name)}
                             hide_extension={this.props.metadata.hide_extension} />
                         <Filename filename={this.props.file.name}
+                            ref={this.filenameElement}
                             filesize={this.props.file.size}
                             filetype={this.props.file.type}
                             hide_extension={this.props.metadata.hide_extension}

@@ -1,13 +1,11 @@
 .formbuilder{
-    input[type="checkbox"]{
-        top: 5px;
-    }
     .description{
-        margin-top: -5px;
+        margin-top: -2px;
         margin-bottom: 10px;
-        opacity: 0.5;
-        font-size: 0.95em;
+        opacity: 0.6;
+        font-size: 0.9em;
         line-height: 1em;
+        text-align: justify;
     }
 
     input::placeholder, textarea::placeholder{
@@ -45,6 +43,21 @@
             background: var(--bg-color);
             height: 300px;
             width: 100%;
+        }
+    }
+
+    .formbuilder_password {
+        display: flex;
+        &:focus-within img.component_icon {
+            border-color: var(--emphasis-primary);
+        }
+        img.component_icon {
+            height: 20px;
+            border: none;
+            cursor: pointer;
+            padding: 5px 5px;
+            border-bottom: 2px solid rgba(70, 99, 114, 0.1);
+            transition: border-color 0.2s ease-out;
         }
     }
 }

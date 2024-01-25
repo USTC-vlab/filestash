@@ -35,7 +35,7 @@
 }
 
 :root {
-    --bg-color: #f2f3f5;
+    --bg-color: #fafafa;
     --color: #57595A;
     --emphasis: #466372;
     --primary: #9AD1ED;
@@ -46,7 +46,9 @@
     --error: #f26d6d;
     --success: #63d9b1;
     --dark: #313538;
-    --dark-mode-bg-color: #242424;
+}
+body.dark-mode {
+    --bg-color: #242424;
 }
 
 html {
@@ -62,8 +64,9 @@ body, html {
     height: 100%;
     margin: 0;
 }
-body.dark-mode{ background: var(--dark-mode-bg-color); }
-
+body.dark-mode{ background: var(--bg-color); }
+body.dark-mode .component_modal > div,
+body.dark-mode .component_page_admin{ --bg-color: #f2f3f5; }
 
 .center{
     text-align: center;
@@ -96,14 +99,6 @@ button::-moz-focus-inner {
 input, textarea, select {
     transition: border 0.2s;
     outline: none;
-}
-
-input[type="checkbox"] {
-    position: relative;
-    top: 1px;
-    vertical-align: top;
-    margin-top: auto;
-    margin-bottom: auto;
 }
 
 .no-select {

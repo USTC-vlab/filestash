@@ -32,7 +32,7 @@ export class BreadCrumb extends React.Component {
                 return {
                     full: sub_path + "/",
                     label: label,
-                    minify: (function() {
+                    minify: (function () {
                         if (index === 0) {
                             return false;
                         }
@@ -69,7 +69,7 @@ export class BreadCrumb extends React.Component {
                     className={this.props.className + " no-select"}
                 >
                     <Logout />
-                    <TransitionGroup>
+                    <TransitionGroup component="span">
                         {this.state.path.map((path, index) => {
                             return (
                                 <CSSTransition

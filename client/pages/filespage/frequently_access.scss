@@ -1,6 +1,6 @@
 .component_frequently-access{
-    min-height: 110px;
-    margin-top: 5px;
+    min-height: 145px;
+    padding: 0 0 7px 0;
     .component_container{
         padding: 0;
     }
@@ -8,6 +8,7 @@
         height: 25px;
     }
     .caption{
+        margin-top: 15px;
         letter-spacing: 0.06em;
         display: inline-block;
         text-transform: uppercase;
@@ -19,9 +20,9 @@
         display: flex;
         a{
             width: 33.33%;
-            background: var(--super-light);
-            box-shadow: rgba(158, 163, 172, 0.3) 0px 19px 60px, rgba(158, 163, 172, 0.22) 0px 15px 20px;
-            transition: box-shadow 0.05s linear 0s;
+            background: rgba(0,0,0,0.05);
+            transition: background 0.05s linear 0s;
+            border-radius: 2px;
             overflow: hidden;
             margin-right: 5px;
             padding: 5px;
@@ -46,25 +47,25 @@
         @media (max-width: 450px){ a:nth-child(3){display: none;} }
     }
     .nothing_placeholder{
-        padding: 15px;
+        padding: 20px;
         text-align: center;
-        background: var(--super-light);
-        border: 1px dashed rgba(0,0,0,0.1);
-        border-radius: 2px;
-        color: var(--light);
-        font-weight: 100;
-        svg{
+        background: var(--emphasis-primary);
+        color: rgba(0,0,0,0.5);
+        border-radius: 5px;
+        svg {
             display: block;
             width: 45px;
             margin: 0 auto;
             padding-bottom: 5px;
         }
+        position: relative;
+        top: 25px;
     }
 }
 
 .touch-no .component_frequently-access .frequent_wrapper a:hover{
-    transition: box-shadow 0.2s linear 0s;
-    box-shadow: rgba(158, 163, 172, 0.3) 0px 19px 70px, rgba(158, 163, 172, 0.22) 0px 15px 40px;
+    transition: background 0.1s linear 0s;
+    background: var(--emphasis-primary);
 }
 
 
@@ -107,12 +108,12 @@
      .frequent_wrapper a{
          color: var(--light);
          background: var(--dark);
-         box-shadow: 2px 2px 10px rgba(0,0,0,0.15);
-         &:hover{
-             box-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+         &:hover {
+             background: rgba(255, 255, 255, 0.05)
          }
      }
      .nothing_placeholder{
          background: var(--dark);
+         color: rgba(255, 255, 255, 0.5);
      }
  }

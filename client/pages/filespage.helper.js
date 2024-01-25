@@ -89,7 +89,7 @@ export const onCreate = function(path, type, file) {
     if (type === "file") {
         return Files.touch(path, file)
             .then(() => {
-                notify.send(t("A file named \"{{VALUE}}\" was created", Path.basename(path)), "success");
+                notify.send(t("A file named {{VALUE}} was created", Path.basename(path)), "success");
                 return Promise.resolve();
             })
             .catch((err) => {
@@ -98,7 +98,7 @@ export const onCreate = function(path, type, file) {
             });
     } else if (type === "directory") {
         return Files.mkdir(path)
-            .then(() => notify.send(t("A folder named \"{{VALUE}}\" was created\"", Path.basename(path)), "success"))
+            .then(() => notify.send(t("A folder named {{VALUE}} was created", Path.basename(path)), "success"))
             .catch((err) => notify.send(err, "error"));
     } else {
         return Promise.reject({ message: t("internal error: can't create a {{VALUE}}", type.toString()), code: "UNKNOWN_TYPE" });
@@ -107,13 +107,13 @@ export const onCreate = function(path, type, file) {
 
 export const onRename = function(from, to, type) {
     return Files.mv(from, to, type)
-        .then(() => notify.send(t("The file \"{{VALUE}}\" was renamed", Path.basename(from)), "success"))
+        .then(() => notify.send(t("The file {{VALUE}} was renamed", Path.basename(from)), "success"))
         .catch((err) => notify.send(err, "error"));
 };
 
 export const onDelete = function(path, type) {
     return Files.rm(path, type)
-        .then(() => notify.send(t("The file {{VALUE}} was deleted\"", Path.basename(path)), "success"))
+        .then(() => notify.send(t("The file {{VALUE}} was deleted", Path.basename(path)), "success"))
         .catch((err) => notify.send(err, "error"));
 };
 

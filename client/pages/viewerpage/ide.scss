@@ -53,10 +53,10 @@
     transition: all 0.4s ease-out;
     opacity: 1;
 }
-.fab-leave{
+.fab-exit{
     opacity: 1;
 }
-.fab-leave.fab-leave-active{
+.fab-exit.fab-exit-active{
     transition: opacity 0.2s ease-out;
     opacity: 0;
 }

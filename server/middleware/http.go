@@ -2,9 +2,10 @@ package middleware
 
 import (
 	"fmt"
-	. "github.com/mickael-kerjean/filestash/server/common"
 	"net/http"
 	"path/filepath"
+
+	. "github.com/mickael-kerjean/filestash/server/common"
 )
 
 func ApiHeaders(fn func(App, http.ResponseWriter, *http.Request)) func(ctx App, res http.ResponseWriter, req *http.Request) {
@@ -50,7 +51,7 @@ func IndexHeaders(fn func(App, http.ResponseWriter, *http.Request)) func(ctx App
 		cspHeader += "style-src 'self' 'unsafe-inline'; "
 		cspHeader += "font-src 'self' data:; "
 		cspHeader += "manifest-src 'self'; "
-		cspHeader += "script-src 'self' 'sha256-JNAde5CZQqXtYRLUk8CGgyJXo6C7Zs1lXPPClLM1YM4=' 'sha256-9/gQeQaAmVkFStl6tfCbHXn8mr6PgtxlH+hEp685lzY=' 'sha256-ER9LZCe8unYk8AJJ2qopE+rFh7OUv8QG5q3h6jZeoSk='; "
+		cspHeader += "script-src 'self' 'sha256-JNAde5CZQqXtYRLUk8CGgyJXo6C7Zs1lXPPClLM1YM4=' 'sha256-9/gQeQaAmVkFStl6tfCbHXn8mr6PgtxlH+hEp685lzY=' 'sha256-ER9LZCe8unYk8AJJ2qopE+rFh7OUv8QG5q3h6jZeoSk=' 'sha256-v9RVH+iaG5NjnVQO59K4vl9kvb//+Tw6Nx9lFgU7Rp8=' 'sha256-WEZ4b2/isCVVV9MK39ELHUlR+GhvgcSk9svUZky96vE='; "
 		cspHeader += "img-src 'self' blob: data: https://maps.wikimedia.org; "
 		cspHeader += "connect-src 'self'; "
 		cspHeader += "object-src 'self'; "

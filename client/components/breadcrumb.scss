@@ -3,11 +3,11 @@
     z-index: 5;
     .breadcrumb{
         background: white;
+        border-bottom: 2px solid rgba(100, 100, 100, 0.05);
+        transition: 1s ease border-bottom;
         margin: 0 0 0px 0;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-        border-bottom: 1px solid #e8e8e8;
         z-index: 1000;
-        padding: 4px 0;
+        padding: 3px 0;
 
         .ul{
             list-style-type: none;
@@ -21,12 +21,15 @@
             }
         }
     }
+    &:hover .breadcrumb {
+        border-bottom: 2px solid rgba(100, 100, 100, 0.1);
+    }
     .component_logout{
         float: right;
         display: inline-block;
         margin: 0 0px 0 5px;
         line-height: 25px;
-        // padding: 7px 0;
+        padding: 7px 0;
         a{display: block; vertical-align: middle;}
         .component_icon{
             height: 20px;
@@ -39,10 +42,10 @@
 
     .component_path-element{
         display: inline-block;
-        .label{color: var(--color);padding: 2px 5px;}
+        .label{color: rgba(0,0,0,0.75); padding: 4px 5px;}
         a.label{
             position: relative;
-            color: var(--light);
+            color: rgba(0,0,0,0.5);
             span.title{
                 position: absolute;
                 left: 0;
@@ -51,7 +54,7 @@
                 font-size: 0.8em;
                 opacity: 0;
                 transform: translateY(5px);
-                border-radius: 2px;
+                border-radius: 3px;
                 white-space: nowrap;
                 padding: 3px 10px!important;
                 margin: 23px 0px 5px 0px;
@@ -63,7 +66,7 @@
             font-size: 18px;
             display: inline-block;
 
-            a{border-radius: 2px; letter-spacing: -0.5px;}
+            a{border-radius: 3px; letter-spacing: -0.5px;}
             &.highlight a{
                 background: var(--emphasis-primary);
                 border: 2px solid var(--primary);
@@ -79,7 +82,7 @@
 
 body.touch-no{
     .component_path-element-wrapper a.label:hover{
-        background: var(--super-light);
+        background: rgba(0,0,0,0.05);
         span.title{
             opacity: 1;
             transform: translateY(0px);
@@ -87,6 +90,10 @@ body.touch-no{
         }
     }
 }
+body.dark-mode.touch-no {
+    .component_path-element-wrapper a.label:hover { background: rgba(255, 255, 255, 0.05); }
+}
+
 
 // mobile user have a scrollable breadcrumb
 body.touch-yes{
@@ -137,10 +144,6 @@ body.touch-yes{
         transition: all 0.2s ease-out;
     }
 
-
-
-
-
     .saving_indicator-exit{
         opacity: 1;
     }
@@ -164,12 +167,11 @@ body.touch-yes{
 .dark-mode{
     .component_breadcrumb{
         .breadcrumb{
-            background: var(--dark);
-            border-bottom-color: rgba(0,0,0,0.2);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: rgba(0,0,0,0.07);
         }
-        .label{
-            color: var(--super-light);
+        .component_path-element {
+            .label{ color: #f1f1f1; opacity: 0.7; }
+            a.label { opacity: 1; }
         }
     }
 }

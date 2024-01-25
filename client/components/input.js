@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./input.scss";
+import { nop } from "../helpers/";
 
 export class Input extends React.Component {
     constructor(props) {
@@ -8,15 +9,30 @@ export class Input extends React.Component {
     }
 
     render() {
-        return (
-            <input
-                className="component_input"
-                onChange={this.props.onChange}
-                {...this.props}
-                ref={(comp) => {
-                    this.ref = comp;
-                }} />
-        );
+        switch(this.props.type) {
+        case "checkbox":
+            return (
+                <div
+                    className="component_checkbox"
+                    onMouseDown={this.props.onMouseDown && this.props.onMouseDown.bind(this)}
+                    onMouseUp={this.props.onMouseUp && this.props.onMouseUp.bind(this)}>
+                    <input
+                        type="checkbox"
+                        {...this.props}
+                        onChange={this.props.onChange || nop}
+                        ref={(comp) => this.ref = comp } />
+                    <span className="indicator"></span>
+                </div>
+            );
+        default:
+            return (
+                <input
+                    className="component_input"
+                    onChange={this.props.onChange || nop}
+                    {...this.props}
+                    ref={(comp) => this.ref = comp } />
+            );
+        }
     }
 }
 

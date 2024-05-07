@@ -2,7 +2,7 @@ import React from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
-pdfjs.GlobalWorkerOptions.workerSrc = "/assets/vendor/pdfjs/2.6.347/build/pdf.worker.js";
+pdfjs.GlobalWorkerOptions.workerSrc = "/assets/vendor/pdfjs/build/pdf.worker.js";
 
 export class PDFJSViewer extends React.Component {
     state = {

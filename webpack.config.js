@@ -15,12 +15,6 @@ let config = {
         filename: 'assets/js/[name]_[chunkhash].js',
         chunkFilename: "assets/js/chunk_[name]_[id]_[chunkhash].js"
     },
-    // https://github.com/webpack-contrib/css-loader/issues/1136
-    // resolve: {
-    //     alias: {
-    //         '/assets': path.resolve(__dirname, "client/assets"),
-    //     }
-    // },
     resolve: {
         fallback: {
             crypto: false,
@@ -36,11 +30,14 @@ let config = {
             },
             {
                 test: /\.html$/,
-                loader: 'html-loader'
-            },
-            {
-                test: /\.woff2$/,
-                loader: 'file-loader'
+                loader: 'html-loader',
+                options: {
+                    sources: {
+                        urlFilter: (attribute, value, resourcePath) => {
+                            return false;
+                        }
+                    }
+                }
             },
             {
                 test: /\.scss$/,
@@ -98,7 +95,7 @@ let config = {
         }),
         new CopyWebpackPlugin({
             patterns: [
-                { from: "node_modules/pdfjs-dist/", to: "assets/vendor/pdfjs/2.6.347/" }
+                { from: "node_modules/pdfjs-dist/", to: "assets/vendor/pdfjs/" }
             ]
         }),
     ]

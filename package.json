@@ -20,7 +20,7 @@
     "exif-js": "^2.3.0",
     "little-loader": "^0.2.0",
     "path-browserify": "^1.0.1",
-    "pdfjs-dist": "2.6.347",
+    "pdfjs-dist": "4.2.67",
     "prop-types": "^15.5.10",
     "react": "^16.5.0",
     "react-dnd": "^14.0.0",

@@ -49,7 +49,7 @@ export class MobileFileUpload extends React.Component {
 
         return (
             <TransitionGroup>
-                <CSSTransition classNames="mobilefileupload" exit={false} enter={false} appear={true}>
+                <CSSTransition classNames="mobilefileupload" exit={false} enter={false} appear={true} timeout={{ enter: 300, exit: 300 }}>
                     <div className="component_mobilefileupload">
                         <form>
                             <input onChange={this.onUpload.bind(this)} type="file" name="file" id="mobilefileupload" multiple/>

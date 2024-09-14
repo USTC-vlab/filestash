@@ -1,7 +1,6 @@
 import React from "react";
 import EXIF from "exif-js";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import { withRouter } from "react-router-dom";
 
 import { NgIf, Icon, EventReceiver, Button } from "../../components/";
 import { t } from "../../locales/";
@@ -181,7 +180,6 @@ export class SmallExif extends Exif {
 }
 
 @EventReceiver
-@withRouter
 export class LargeExif extends Exif {
     constructor(props) {
         super(props);

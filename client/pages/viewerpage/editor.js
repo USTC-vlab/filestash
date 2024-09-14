@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router";
 import CodeMirror from "codemirror/lib/codemirror";
 import "codemirror/lib/codemirror.css";
 window.CodeMirror = CodeMirror;
@@ -21,7 +20,7 @@ import { NgIf, Loader } from "../../components/";
 import { org_shifttab } from "./editor/emacs-org";
 import "./editor.scss";
 
-@withRouter
+
 export class Editor extends React.Component {
     constructor(props) {
         super(props);

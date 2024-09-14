@@ -1,6 +1,5 @@
 import React from "react";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import { withRouter } from "react-router";
 import { Subject } from "rxjs/Subject";
 
 import { NgIf, Fab, Icon, Dropdown, DropdownButton, DropdownList, DropdownItem } from "../../components/";
@@ -11,6 +10,7 @@ import { OrgTodosViewer, OrgEventsViewer } from "./org_viewer";
 import { t } from "../../locales/";
 
 import "./ide.scss";
+import { withRouter } from "../../helpers/routerhook";
 
 @withRouter
 export class IDE extends React.Component {

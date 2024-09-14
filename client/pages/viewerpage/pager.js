@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { Files } from "../../model/";
 import { sort } from "../../pages/filespage.helper.js";
@@ -13,6 +13,7 @@ import {
     appendShareToUrl,
 } from "../../helpers/";
 import "./pager.scss";
+import { withRouter } from "../../helpers/routerhook.js";
 
 @EventEmitter
 @EventReceiver

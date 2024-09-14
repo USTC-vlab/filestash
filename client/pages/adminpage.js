@@ -8,6 +8,7 @@ import { Admin } from "../model";
 import { notify } from "../helpers/";
 import { HomePage, BackendPage, SettingsPage, LogPage, SetupPage, LoginPage } from "./adminpage/";
 import { t } from "../locales/";
+import { ElementWrapper } from "../helpers/routerhook";
 
 function AdminOnly(WrappedComponent) {
     let initIsAdmin = null;
@@ -47,11 +48,11 @@ export default AdminOnly((props) => {
             <div className="page_container scroll-y">
                 <CSSTransition key={location.pathname} transitionName="adminpage" transitionAppearTimeout={30000}>
                     <Switch>
-                        <Route path={match.url + "/backend"} render={()=><BackendPage isSaving={setIsSaving}/>} />
-                        <Route path={match.url + "/settings"} render={()=><SettingsPage isSaving={setIsSaving}/>} />
-                        <Route path={match.url + "/logs"} render={() =><LogPage isSaving={setIsSaving}/>} />
-                        <Route path={match.url + "/setup"} component={SetupPage} />
-                        <Route path={match.url} component={HomePage} />
+                        <Route path={match.url + "/backend"} children={<ElementWrapper routeElement={BackendPage} isSaving={setIsSaving}/>} />
+                        <Route path={match.url + "/settings"} children={<ElementWrapper routeElement={SettingsPage} isSaving={setIsSaving}/>} />
+                        <Route path={match.url + "/logs"} children={<ElementWrapper routeElement={LogPage} isSaving={setIsSaving}/>} />
+                        <Route path={match.url + "/setup"} children={<SetupPage />} />
+                        <Route path={match.url} children={<HomePage />} />
                     </Switch>
                 </CSSTransition>
             </div>

@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim AS builder
+FROM debian:bookworm-slim AS builder
 LABEL MAINTAINER="Keyu Tao <taoky@mail.ustc.edu.cn>"
 
 # First we need: Node.js 18 and Go 1.20.10
@@ -8,7 +8,7 @@ ENV NVM_VERSION 0.39.5
 ENV NVM_DIR /usr/local/nvm
 ENV PATH /usr/local/go/bin:${NVM_DIR}/versions/node/v${NODE_VERSION}/bin:$PATH
 RUN mkdir -p ${NVM_DIR} && apt update && \
-    apt install --no-install-recommends -y curl make libvips-dev tar gzip ca-certificates git gcc && \
+    apt install --no-install-recommends -y curl make libvips-dev tar gzip ca-certificates git gcc openssh-client && \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh | bash && \
     . ${NVM_DIR}/nvm.sh && nvm install ${NODE_VERSION} && \
     nvm alias default ${NODE_VERSION} && nvm use default && \
@@ -30,7 +30,7 @@ RUN npm install && make build_init && \
 RUN mv dist filestash && tar czf /filestash.tar.gz ./filestash
 
 # Stage 2
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 LABEL MAINTAINER="Keyu Tao <taoky@mail.ustc.edu.cn>"
 COPY --from=builder /filestash.tar.gz /
 RUN apt update && apt install --no-install-recommends -y libvips && \

@@ -5,13 +5,31 @@ package bimg
 #include "vips/vips.h"
 */
 import "C"
+import "errors"
 
 const (
 	// Quality defines the default JPEG quality to be used.
 	Quality = 75
-	// MaxSize defines the maximum pixels width or height supported.
-	MaxSize = 16383
 )
+
+// maxSize defines maximum pixels width or height supported.
+var maxSize = 16383
+
+// MaxSize returns maxSize.
+func MaxSize() int {
+	return maxSize
+}
+
+// SetMaxSize sets maxSize.
+func SetMaxsize(s int) error {
+	if s <= 0 {
+		return errors.New("Size must be higher than zero.")
+	}
+
+	maxSize = s
+
+	return nil
+}
 
 // Gravity represents the image gravity value.
 type Gravity int
@@ -62,11 +80,11 @@ type Angle int
 const (
 	// D0 represents the rotation angle 0 degrees.
 	D0 Angle = 0
-	// D45 represents the rotation angle 90 degrees.
+	// D45 represents the rotation angle 45 degrees.
 	D45 Angle = 45
 	// D90 represents the rotation angle 90 degrees.
 	D90 Angle = 90
-	// D135 represents the rotation angle 90 degrees.
+	// D135 represents the rotation angle 135 degrees.
 	D135 Angle = 135
 	// D180 represents the rotation angle 180 degrees.
 	D180 Angle = 180
@@ -74,7 +92,7 @@ const (
 	D235 Angle = 235
 	// D270 represents the rotation angle 270 degrees.
 	D270 Angle = 270
-	// D315 represents the rotation angle 180 degrees.
+	// D315 represents the rotation angle 315 degrees.
 	D315 Angle = 315
 )
 
@@ -223,11 +241,15 @@ type Options struct {
 	Sharpen        Sharpen
 	Threshold      float64
 	Gamma          float64
+	Brightness     float64
+	Contrast       float64
 	OutputICC      string
 	InputICC       string
 	Palette        bool
-	// Speed defines the AVIF encoders CPU effort. Valid values are 0-8.
-	Speed          int
+	// Speed defines the AVIF encoders CPU effort. Valid values are:
+	// 0-8 for AVIF encoding.
+	// 0-9 for PNG encoding.
+	Speed int
 
 	// private fields
 	autoRotateOnly bool

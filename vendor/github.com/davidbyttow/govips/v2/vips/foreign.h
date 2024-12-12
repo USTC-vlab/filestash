@@ -25,7 +25,8 @@ typedef enum types {
   HEIF,
   BMP,
   AVIF,
-  JP2K
+  JP2K,
+  JXL
 } ImageType;
 
 typedef enum ParamType {
@@ -96,14 +97,24 @@ typedef struct SaveParams {
   double pngDither;
   int pngBitdepth;
 
+  // GIF (with CGIF)
+  double gifDither;
+  int gifEffort;
+  int gifBitdepth;
+
   // WEBP
   BOOL webpLossless;
   BOOL webpNearLossless;
   int webpReductionEffort;
   char *webpIccProfile;
+  BOOL webpMinSize;
+  int webpKMin;
+  int webpKMax;
 
-  // HEIF
-  BOOL heifLossless;
+  // HEIF - https://github.com/libvips/libvips/blob/master/libvips/foreign/heifsave.c#L71
+  int heifBitdepth; // Bitdepth to save at for >8 bit images
+  BOOL heifLossless; // Lossless compression
+  int heifEffort; // CPU effort (0 - 9)
 
   // TIFF
   VipsForeignTiffCompression tiffCompression;
@@ -112,16 +123,17 @@ typedef struct SaveParams {
   BOOL tiffTile;
   int tiffTileHeight;
   int tiffTileWidth;
-  double tiffXRes;
-  double tiffYRes;
-
-  // AVIF
-  int avifSpeed;
 
   // JPEG2000
   BOOL jp2kLossless;
   int jp2kTileWidth;
   int	jp2kTileHeight;
+
+  // JXL
+  int jxlTier;
+  double jxlDistance;
+  int jxlEffort;
+  BOOL jxlLossless;
 } SaveParams;
 
 SaveParams create_save_params(ImageType outputFormat);

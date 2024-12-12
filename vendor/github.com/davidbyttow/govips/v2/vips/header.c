@@ -6,6 +6,11 @@ unsigned long has_icc_profile(VipsImage *in) {
   return vips_image_get_typeof(in, VIPS_META_ICC_NAME);
 }
 
+unsigned long get_icc_profile(VipsImage *in, const void **data,
+                              size_t *dataLength) {
+  return image_get_blob(in, VIPS_META_ICC_NAME, data, dataLength);
+}
+
 gboolean remove_icc_profile(VipsImage *in) {
   return vips_image_remove(in, VIPS_META_ICC_NAME);
 }
@@ -14,24 +19,22 @@ unsigned long has_iptc(VipsImage *in) {
   return vips_image_get_typeof(in, VIPS_META_IPTC_NAME);
 }
 
-char** image_get_fields(VipsImage *in) {
-    return vips_image_get_fields(in);
+char **image_get_fields(VipsImage *in) { return vips_image_get_fields(in); }
+
+void image_set_string(VipsImage *in, const char *name, const char *str) {
+  vips_image_set_string(in, name, str);
 }
 
-// won't remove the ICC profile and orientation
-void remove_metadata(VipsImage *in) {
-  gchar **fields = vips_image_get_fields(in);
-
-  for (int i = 0; fields[i] != NULL; i++) {
-    if (strncmp(fields[i], VIPS_META_ICC_NAME, sizeof(VIPS_META_ICC_NAME)) &&
-        strncmp(fields[i], VIPS_META_ORIENTATION,
-                sizeof(VIPS_META_ORIENTATION))) {
-      vips_image_remove(in, fields[i]);
-    }
-  }
-
-  g_strfreev(fields);
+unsigned long image_get_string(VipsImage *in, const char *name,
+                               const char **out) {
+  return vips_image_get_string(in, name, out);
 }
+
+unsigned long image_get_as_string(VipsImage *in, const char *name, char **out) {
+  return vips_image_get_as_string(in, name, out);
+}
+
+void remove_field(VipsImage *in, char *field) { vips_image_remove(in, field); }
 
 int get_meta_orientation(VipsImage *in) {
   int orientation = 0;
@@ -74,4 +77,46 @@ void set_page_height(VipsImage *in, int height) {
 
 int get_meta_loader(const VipsImage *in, const char **out) {
   return vips_image_get_string(in, VIPS_META_LOADER, out);
+}
+
+int get_image_delay(VipsImage *in, int **out) {
+  return vips_image_get_array_int(in, "delay", out, NULL);
+}
+
+void set_image_delay(VipsImage *in, const int *array, int n) {
+  return vips_image_set_array_int(in, "delay", array, n);
+}
+
+void image_set_double(VipsImage *in, const char *name, double i) {
+  vips_image_set_double(in, name, i);
+}
+
+unsigned long image_get_double(VipsImage *in, const char *name, double *out) {
+  return vips_image_get_double(in, name, out);
+}
+
+void image_set_int(VipsImage *in, const char *name, int i) {
+  vips_image_set_int(in, name, i);
+}
+
+unsigned long image_get_int(VipsImage *in, const char *name, int *out) {
+  return vips_image_get_int(in, name, out);
+}
+
+void image_set_blob(VipsImage *in, const char *name, const void *data,
+                    size_t dataLength) {
+  vips_image_set_blob_copy(in, name, data, dataLength);
+}
+
+unsigned long image_get_blob(VipsImage *in, const char *name, const void **data,
+                             size_t *dataLength) {
+  if (vips_image_get_typeof(in, name) == 0) {
+    return 0;
+  }
+
+  if (vips_image_get_blob(in, name, data, dataLength)) {
+    return -1;
+  }
+
+  return 0;
 }

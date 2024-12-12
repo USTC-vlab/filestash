@@ -2,9 +2,6 @@ package vips
 
 // #include "color.h"
 import "C"
-import (
-	"unsafe"
-)
 
 // Color represents an RGB
 type Color struct {
@@ -37,7 +34,6 @@ const (
 	InterpretationSRGB      Interpretation = C.VIPS_INTERPRETATION_sRGB
 	InterpretationYXY       Interpretation = C.VIPS_INTERPRETATION_YXY
 	InterpretationFourier   Interpretation = C.VIPS_INTERPRETATION_FOURIER
-	InterpretationGB16      Interpretation = C.VIPS_INTERPRETATION_RGB16
 	InterpretationGrey16    Interpretation = C.VIPS_INTERPRETATION_GREY16
 	InterpretationMatrix    Interpretation = C.VIPS_INTERPRETATION_MATRIX
 	InterpretationScRGB     Interpretation = C.VIPS_INTERPRETATION_scRGB
@@ -47,7 +43,7 @@ const (
 // Intent represents VIPS_INTENT type
 type Intent int
 
-//Intent enum
+// Intent enum
 const (
 	IntentPerceptual Intent = C.VIPS_INTENT_PERCEPTUAL
 	IntentRelative   Intent = C.VIPS_INTENT_RELATIVE
@@ -81,11 +77,11 @@ func vipsICCTransform(in *C.VipsImage, outputProfile string, inputProfile string
 	var cEmbedded C.gboolean
 
 	cOutputProfile := C.CString(outputProfile)
-	defer C.free(unsafe.Pointer(cOutputProfile))
+	defer freeCString(cOutputProfile)
 
 	if inputProfile != "" {
 		cInputProfile = C.CString(inputProfile)
-		defer C.free(unsafe.Pointer(cInputProfile))
+		defer freeCString(cInputProfile)
 	}
 
 	if embedded {

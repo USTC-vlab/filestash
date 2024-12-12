@@ -1,4 +1,47 @@
 
+v1.1.9 / 2022-04-05
+===================
+
+  * chore(History): version changes
+  * Merge pull request #374 from Mereng/brightness_contrast
+  * Merge pull request #393 from lucor/gifsave
+  * Add GIF save support from libvips 8.12
+  * Support brightness and contrast
+
+v1.1.8 / 2022-04-05
+===================
+
+  * chore(version): bump
+  * Merge pull request #405 from igsr5/feat/#404-support-way-to-change–MaxSize
+  * Fix review
+  * Add getter, setter for MaxSize
+
+v1.1.7 / 2022-02-23
+===================
+
+  * Merge pull request #398 from vaibsharma/vaibsharma/feature/speed_for_png_buffer
+  * reason for speed=3 added
+  * allow effort param for png encoding when palette is true
+
+v1.1.6 / 2022-01-28
+===================
+
+  * Update README.md
+  * Merge pull request #368 from exaring/fix-shrinking-on-small-webp-images
+  * Merge pull request #360 from jaberwoky/master
+  * Merge pull request #378 from kyfk/fix_typo_and_format
+  * goimports
+  * fix typo in comments
+  * Merge pull request #377 from ZloyDyadka/vector-flag
+  * Vips: cast go.int to c.INT in VipsVectorSetEnabled
+  * Vips: add VipsVectorSetEnabled
+  * Remove debug output
+  * Fix for blurry images from WEBP input and small output dimensions
+  * Merge pull request #367 from Keruspe/segv
+  * unref the image *after* we used it
+  * add test
+  * fix panic on reading Exif
+
 v1.1.5 / 2020-11-21
 ===================
 

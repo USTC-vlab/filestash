@@ -15,7 +15,7 @@ export class FrequentlyAccess extends React.Component {
 
     render() {
         return (
-            <div className="component_frequently-access">
+            <div className="component_frequently-access no-select">
                 <TransitionGroup>
                     <CSSTransition classNames="frequent-access" exit={false} enter={true} appear={true} timeout={{ enter: 500 }}>
                         <Container key={this.props.files === null ? "nothing" : "something"}>

@@ -31,7 +31,6 @@
     "react-pdf": "7.7.3",
     "react-router": "^5.3.4",
     "react-router-dom": "^5.3.4",
-    "react-selectable": "git+https://github.com/USTC-vlab/react-selectable.git",
     "react-sticky": "^6.0.2",
     "react-transition-group": "^4.4.2",
     "rxjs": "^5.4.0",

@@ -2,10 +2,9 @@ import React from "react";
 import path from "path";
 import { Link } from "react-router-dom";
 import { DragSource, DropTarget } from "react-dnd";
-import { createSelectable } from "react-selectable";
 
 import "./thing.scss";
-import { Card, NgIf, Icon, EventEmitter, img_placeholder } from "../../components/";
+import { Card, NgIf, Icon, EventEmitter, img_placeholder, Input } from "../../components/";
 import { pathBuilder, basename, filetype, prompt, alert, leftPad, getMimeType, debounce, memory } from "../../helpers/";
 import { Files } from "../../model/";
 import { t } from "../../locales/";
@@ -80,7 +79,7 @@ const nativeFileTarget = {
 };
 
 
-@createSelectable
+
 @EventEmitter
 @DropTarget("__NATIVE_FILE__", nativeFileTarget, (connect, monitor) => ({
     connectDropNativeFile: connect.dropTarget(),
@@ -214,13 +213,21 @@ export class ExistingThing extends React.Component {
     }
 
     onThingClick(e) {
-        if (e.ctrlKey === true) {
+        if (e.ctrlKey === true || e.target.classList.contains("component_checkbox")) {
             e.preventDefault();
             this.props.emit(
                 "file.select",
                 pathBuilder(this.props.path, this.props.file.name, this.props.file.type),
             );
         }
+    }
+
+    onThingClickCheckbox(e) {
+        e.preventDefault();
+        this.props.emit(
+            "file.select",
+            pathBuilder(this.props.path, this.props.file.name, this.props.file.type),
+        );
     }
 
     _confirm_delete_text() {
@@ -260,6 +267,7 @@ export class ExistingThing extends React.Component {
                                 disabled={this.props.file.icon === "loading"}
                                 onKeyDown={this.preventOpeningOnEnter.bind(this)}>
                     <Card ref={this.card} className={[this.state.hover, className].join(" ")}>
+                        <Input type="checkbox" checked={this.props.selected} />
                         <Image preview={this.state.preview}
                             icon={this.props.file.icon || this.props.file.type}
                             view={this.props.view}

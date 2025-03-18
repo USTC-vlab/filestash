@@ -3,7 +3,7 @@ LABEL MAINTAINER="Keyu Tao <taoky@mail.ustc.edu.cn>"
 
 # First we need: Node.js 18 and Go 1.20.10
 ENV NODE_VERSION 18.18.0
-ENV GO_VERSION 1.20.10
+ENV GO_VERSION 1.24.1
 ENV NVM_VERSION 0.39.5
 ENV NVM_DIR /usr/local/nvm
 ENV PATH /usr/local/go/bin:${NVM_DIR}/versions/node/v${NODE_VERSION}/bin:$PATH

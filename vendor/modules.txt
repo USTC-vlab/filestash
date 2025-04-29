@@ -69,7 +69,7 @@ golang.org/x/crypto/ssh/internal/bcrypt_pbkdf
 golang.org/x/image/bmp
 golang.org/x/image/draw
 golang.org/x/image/math/f64
-# golang.org/x/net v0.37.0
+# golang.org/x/net v0.38.0
 ## explicit; go 1.23.0
 golang.org/x/net/html
 golang.org/x/net/html/atom

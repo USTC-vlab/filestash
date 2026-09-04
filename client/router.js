@@ -19,14 +19,14 @@ export default class AppRouter extends React.Component {
             <div style={{ height: "100%" }}>
                 <BrowserRouter>
                     <Switch>
-                        <Route exact path={URL_HOME} children={<HomePage />} />
+                        <Route exact path={URL_HOME}><HomePage /></Route>
                         {/* <Route path={`${URL_SHARE}/:id*`} component={SharePage} /> */}
-                        <Route path={URL_LOGIN} children={<ElementWrapper routeElement={ConnectPage} /> } />
-                        <Route path={`${URL_FILES}/:path*`} children={<ElementWrapper routeElement={FilesPage} /> } />
-                        <Route path={`${URL_VIEWER}/:path*`} children={<ElementWrapper routeElement={ViewerPage} /> } />
-                        <Route path={URL_LOGOUT} children={<ElementWrapper routeElement={LogoutPage} /> } />
-                        <Route path={URL_ADMIN} children={<AdminPage />} />
-                        <Route children={<NotFoundPage />} />
+                        <Route path={URL_LOGIN}><ElementWrapper routeElement={ConnectPage} /></Route>
+                        <Route path={`${URL_FILES}/:path*`}><ElementWrapper routeElement={FilesPage} /></Route>
+                        <Route path={`${URL_VIEWER}/:path*`}><ElementWrapper routeElement={ViewerPage} /></Route>
+                        <Route path={URL_LOGOUT}><ElementWrapper routeElement={LogoutPage} /></Route>
+                        <Route path={URL_ADMIN}><AdminPage /></Route>
+                        <Route><NotFoundPage /></Route>
                     </Switch>
                 </BrowserRouter>
                 <ModalPrompt /> <ModalAlert /> <ModalConfirm />

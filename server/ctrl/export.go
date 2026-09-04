@@ -14,7 +14,7 @@ import (
 	"strings"
 )
 
-//go:generate sh -c "go run ../generator/emacs-el.go > export_generated.go && go fmt export_generated.go"
+//go:generate sh -c "go run ../generator/emacs-el > export_generated.go && go fmt export_generated.go"
 var EmacsElConfig string = ""
 
 func FileExport(ctx App, res http.ResponseWriter, req *http.Request) {

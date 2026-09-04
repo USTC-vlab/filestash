@@ -123,7 +123,7 @@ export class FilesPage extends React.Component {
                 }
             });
             this.onRefresh();
-        } else if(e.code === "KeyA" && e.ctrlKey === true) {
+        } else if (e.code === "KeyA" && e.ctrlKey === true) {
             if (this.state.selected.length === this.state.files.length) {
                 this.handleMultiSelect([], e);
             } else {
@@ -258,7 +258,7 @@ export class FilesPage extends React.Component {
         } else if (e.target.classList.contains("component_thing")) {
             return;
         }
-        this.handleMultiSelect(selectedFiles, {target: e.target.parentElement});
+        this.handleMultiSelect(selectedFiles, { target: e.target.parentElement });
         return;
     }
     toggleSelect(path) {

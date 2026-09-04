@@ -48,11 +48,11 @@ export default AdminOnly((props) => {
             <div className="page_container scroll-y">
                 <CSSTransition key={location.pathname} transitionName="adminpage" transitionAppearTimeout={30000}>
                     <Switch>
-                        <Route path={match.url + "/backend"} children={<ElementWrapper routeElement={BackendPage} isSaving={setIsSaving}/>} />
-                        <Route path={match.url + "/settings"} children={<ElementWrapper routeElement={SettingsPage} isSaving={setIsSaving}/>} />
-                        <Route path={match.url + "/logs"} children={<ElementWrapper routeElement={LogPage} isSaving={setIsSaving}/>} />
-                        <Route path={match.url + "/setup"} children={<SetupPage />} />
-                        <Route path={match.url} children={<HomePage />} />
+                        <Route path={match.url + "/backend"}><ElementWrapper routeElement={BackendPage} isSaving={setIsSaving}/></Route>
+                        <Route path={match.url + "/settings"}><ElementWrapper routeElement={SettingsPage} isSaving={setIsSaving}/></Route>
+                        <Route path={match.url + "/logs"}><ElementWrapper routeElement={LogPage} isSaving={setIsSaving}/></Route>
+                        <Route path={match.url + "/setup"}><SetupPage /></Route>
+                        <Route path={match.url}><HomePage /></Route>
                     </Switch>
                 </CSSTransition>
             </div>

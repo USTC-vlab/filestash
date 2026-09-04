@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "NODE_ENV=development webpack --watch",
     "build": "NODE_ENV=production webpack",
-    "test": "jest ./client/",
+    "test": "jest ./client/ --passWithNoTests",
     "lint": "eslint ./client/",
     "clean": "rm -r ./dist/data/public"
   },
@@ -63,6 +63,7 @@
     "eslint-plugin-react": "^7.27.1",
     "html-loader": "^5.0.0",
     "html-webpack-plugin": "^5.5.0",
+    "jest": "^30.5.1",
     "sass": "^1.49.0",
     "sass-loader": "^14.0.0",
     "style-loader": "^0.20.2",

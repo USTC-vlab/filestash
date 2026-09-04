@@ -9,7 +9,7 @@ export class Input extends React.Component {
     }
 
     render() {
-        switch(this.props.type) {
+        switch (this.props.type) {
         case "checkbox":
             return (
                 <div

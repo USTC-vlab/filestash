@@ -32,7 +32,7 @@ export class BreadCrumb extends React.Component {
                 return {
                     full: sub_path + "/",
                     label: label,
-                    minify: (function () {
+                    minify: (function() {
                         if (index === 0) {
                             return false;
                         }

@@ -1,6 +1,6 @@
 import React from "react";
 import path from "path";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { CSSTransition } from "react-transition-group";
 
 import { MenuBar } from "./menubar";
 import {
@@ -245,7 +245,7 @@ class ImageFancy extends React.Component {
     }
     imageDragEnd(e) {
         const drag_end = {
-            x: (function (dragX, touch) {
+            x: (function(dragX, touch) {
                 // const t = new Date();
                 if (dragX !== null) return dragX;
                 if (touch && touch[0]) {
@@ -256,13 +256,14 @@ class ImageFancy extends React.Component {
             t: new Date(),
         };
 
-        const direction = (function (x_current, x_init) {
+        const direction = (function(x_current, x_init) {
             if (x_current.t - x_init.t > 200) {
                 if (
                     Math.abs(x_current.x - x_init.x) <
                     (window.innerWidth < 500 ? window.innerWidth / 3 : 250)
-                )
+                ) {
                     return "neutral";
+                }
             }
             return x_current.x > x_init.x ? "right" : "left";
         })(drag_end, this.state.drag_init);
@@ -275,7 +276,7 @@ class ImageFancy extends React.Component {
                 },
                 () => {
                     this.props.emit("media::next");
-                }
+                },
             );
         } else if (direction === "right") {
             return this.setState(
@@ -285,7 +286,7 @@ class ImageFancy extends React.Component {
                 },
                 () => {
                     this.props.emit("media::previous");
-                }
+                },
             );
         }
         return this.setState({
@@ -335,40 +336,40 @@ class ImageFancy extends React.Component {
         }
         return (
             // <TransitionGroup>
-                <CSSTransition
-                    nodeRef={this.nodeRef}
-                    classNames="image"
-                    exit={true}
-                    enter={true}
-                    appear={true}
-                    timeout={{ enter: 5000, exit: 5000 }}
-                >
-                    <span ref={this.nodeRef}>
-                        <div key={this.props.url}>
-                            <Img
-                                src={this.props.url}
-                                style={{
-                                    transform:
+            <CSSTransition
+                nodeRef={this.nodeRef}
+                classNames="image"
+                exit={true}
+                enter={true}
+                appear={true}
+                timeout={{ enter: 5000, exit: 5000 }}
+            >
+                <span ref={this.nodeRef}>
+                    <div key={this.props.url}>
+                        <Img
+                            src={this.props.url}
+                            style={{
+                                transform:
                                         "translateX(" +
                                         this.state.drag_current.x +
                                         "px)",
-                                }}
-                                className={
-                                    this.state.hasAction
-                                        ? "photo"
-                                        : "photo idle"
-                                }
-                                onTouchStart={this.imageDragStart.bind(this)}
-                                onDragStart={this.imageDragStart.bind(this)}
-                                onDragEnd={this.imageDragEnd.bind(this)}
-                                onTouchEnd={this.imageDragEnd.bind(this)}
-                                onDrag={this.imageDrag.bind(this)}
-                                onTouchMove={this.imageDrag.bind(this)}
-                                draggable={this.props.draggable}
-                            />
-                        </div>
-                    </span>
-                </CSSTransition>
+                            }}
+                            className={
+                                this.state.hasAction
+                                    ? "photo"
+                                    : "photo idle"
+                            }
+                            onTouchStart={this.imageDragStart.bind(this)}
+                            onDragStart={this.imageDragStart.bind(this)}
+                            onDragEnd={this.imageDragEnd.bind(this)}
+                            onTouchEnd={this.imageDragEnd.bind(this)}
+                            onDrag={this.imageDrag.bind(this)}
+                            onTouchMove={this.imageDrag.bind(this)}
+                            draggable={this.props.draggable}
+                        />
+                    </div>
+                </span>
+            </CSSTransition>
             // </TransitionGroup>
         );
     }
@@ -387,8 +388,8 @@ class Img extends React.Component {
                 parseInt(
                     Math.max(
                         window.innerWidth * size,
-                        window.innerHeight * size
-                    )
+                        window.innerHeight * size,
+                    ),
                 )
             );
         };

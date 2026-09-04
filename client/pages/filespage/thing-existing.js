@@ -79,7 +79,6 @@ const nativeFileTarget = {
 };
 
 
-
 @EventEmitter
 @DropTarget("__NATIVE_FILE__", nativeFileTarget, (connect, monitor) => ({
     connectDropNativeFile: connect.dropTarget(),
@@ -263,9 +262,9 @@ export class ExistingThing extends React.Component {
         return connectDragSource(connectDropNativeFile(connectDropFile(
             <div className={"component_thing view-"+this.props.view+(this.props.selected === true ? " selected" : " not-selected")}>
                 <ToggleableLink onClick={this.onThingClick.bind(this)}
-                                to={fileLink + window.location.search}
-                                disabled={this.props.file.icon === "loading"}
-                                onKeyDown={this.preventOpeningOnEnter.bind(this)}>
+                    to={fileLink + window.location.search}
+                    disabled={this.props.file.icon === "loading"}
+                    onKeyDown={this.preventOpeningOnEnter.bind(this)}>
                     <Card ref={this.card} className={[this.state.hover, className].join(" ")}>
                         <Input type="checkbox" checked={this.props.selected} />
                         <Image preview={this.state.preview}

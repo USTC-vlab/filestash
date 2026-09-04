@@ -5,9 +5,9 @@ export const withRouter = (Component) => {
     const WithRouter = (props) => {
         const history = useHistory();
         return <Component {...props} history={history} />;
-    }
+    };
     return WithRouter;
-}
+};
 
 export const ElementWrapper = (props) => {
     const params = useParams();
@@ -16,4 +16,4 @@ export const ElementWrapper = (props) => {
     const match = useRouteMatch();
     const Element = props.routeElement;
     return <Element params={params} locations={locations} history={history} match={match} {...props} />;
-}
+};

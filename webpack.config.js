@@ -24,6 +24,12 @@ let config = {
     module: {
         rules: [
             {
+                test: /\.m?js$/,
+                resolve: {
+                    fullySpecified: false,
+                },
+            },
+            {
                 test: path.join(__dirname, 'client'),
                 use: ['babel-loader'],
                 exclude: /node_modules/

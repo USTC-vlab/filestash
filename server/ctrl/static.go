@@ -99,6 +99,8 @@ func CustomCssHandler(ctx App, res http.ResponseWriter, req *http.Request) {
 func ServeFile(res http.ResponseWriter, req *http.Request, filePath string) {
 	zFilePath := filePath + ".gz"
 	bFilePath := filePath + ".br"
+	res.Header().Set("Content-Type", GetMimeType(filePath))
+	res.Header().Set("Vary", "Accept-Encoding")
 
 	etagNormal := hashFile(filePath, 10)
 	etagGzip := hashFile(zFilePath, 10)

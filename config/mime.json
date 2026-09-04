@@ -63,6 +63,7 @@
 	"jpg": "image/jpeg",
 	"js": "application/javascript",
 	"json": "application/json",
+	"mjs": "application/javascript",
 	"kar": "audio/midi",
 	"kdc": "image/x-kodak-kdc",
 	"kml": "application/vnd.google-earth.kml+xml",

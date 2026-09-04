@@ -12,6 +12,7 @@ let config = {
     output: {
         path: path.join(__dirname, 'dist', 'data', 'public'),
         publicPath: '/',
+        clean: true,
         filename: 'assets/js/[name]_[chunkhash].js',
         chunkFilename: "assets/js/chunk_[name]_[id]_[chunkhash].js"
     },
@@ -101,7 +102,11 @@ let config = {
         }),
         new CopyWebpackPlugin({
             patterns: [
-                { from: "node_modules/pdfjs-dist/", to: "assets/vendor/pdfjs/" }
+                { from: "node_modules/pdfjs-dist/build/pdf.worker.min.mjs", to: "assets/vendor/pdfjs/build/" },
+                { from: "node_modules/pdfjs-dist/cmaps/", to: "assets/vendor/pdfjs/cmaps/" },
+                { from: "node_modules/pdfjs-dist/iccs/", to: "assets/vendor/pdfjs/iccs/" },
+                { from: "node_modules/pdfjs-dist/standard_fonts/", to: "assets/vendor/pdfjs/standard_fonts/" },
+                { from: "node_modules/pdfjs-dist/wasm/", to: "assets/vendor/pdfjs/wasm/" },
             ]
         }),
     ]
@@ -115,14 +120,14 @@ if (process.env.NODE_ENV === 'production') {
     config.plugins.push(new CompressionPlugin({
         filename: "[path][base].gz[query]",
         algorithm: "gzip",
-        test: /\.js$|\.json$|\.html$|\.svg|\.ico$/,
+        test: /\.(?:m?js|json|html|svg|ico)$/,
         threshold: 0,
         minRatio: 0.8
     }));
     config.plugins.push(new CompressionPlugin({
         filename: "[path][base].br[query]",
         algorithm: "brotliCompress",
-        test: /\.js$|\.json$|\.html$|\.svg|\.ico$/,
+        test: /\.(?:m?js|json|html|svg|ico)$/,
         threshold: 0,
         minRatio: 0.8
     }));

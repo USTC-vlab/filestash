@@ -21,6 +21,9 @@ export class PDFJSViewer extends React.Component {
                 options={{
                     cMapUrl: "/assets/vendor/pdfjs/cmaps/",
                     cMapPacked: true,
+                    iccUrl: "/assets/vendor/pdfjs/iccs/",
+                    standardFontDataUrl: "/assets/vendor/pdfjs/standard_fonts/",
+                    wasmUrl: "/assets/vendor/pdfjs/wasm/",
                 }}>
                 {
                     Array.from(

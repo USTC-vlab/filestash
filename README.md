@@ -5,7 +5,7 @@ A modified [filestash](https://github.com/mickael-kerjean/filestash) for Vlab pl
 ## Changes
 
 -   Removed unused plugins and deps
--   Added a working, reproducible `package-lock.json` under Node.js 20
+-   Added a reproducible `pnpm-lock.yaml` under Node.js 24
 -   Vlab backends now are based on sshpiper interface, with password-free login support
 -   A Docker build script
 -   Libvips is now supported with `govips` packages, with no more external nonreproducible C static library binary
@@ -27,7 +27,8 @@ git clone https://github.com/ustc-vlab/filestash
 cd filestash
 
 # Install dependencies
-npm install # frontend dependencies
+corepack enable
+pnpm install # frontend dependencies
 make build_init # install the required static libraries
 mkdir -p ./dist/data/state/
 cp -R config ./dist/data/state/

@@ -1,8 +1,8 @@
 FROM debian:bookworm-slim AS builder
 LABEL MAINTAINER="Keyu Tao <taoky@mail.ustc.edu.cn>"
 
-# First we need: Node.js 20 and Go 1.26.0
-ENV NODE_VERSION 20.19.4
+# First we need: Node.js 24 and Go 1.26.0
+ENV NODE_VERSION 24.20.0
 ENV GO_VERSION 1.26.0
 ENV NVM_VERSION 0.39.5
 ENV NVM_DIR /usr/local/nvm
@@ -12,6 +12,7 @@ RUN mkdir -p ${NVM_DIR} && apt update && \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh | bash && \
     . ${NVM_DIR}/nvm.sh && nvm install ${NODE_VERSION} && \
     nvm alias default ${NODE_VERSION} && nvm use default && \
+    corepack enable && corepack prepare pnpm@11.3.0 --activate && \
     curl -L https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz > /tmp/go.tar.gz && \
     tar -C /usr/local -xzf /tmp/go.tar.gz && \
     rm -f /tmp/go.tar.gz && \
@@ -22,7 +23,7 @@ WORKDIR /app
 COPY . /app
 
 # Build!
-RUN npm install && make build_init && \
+RUN pnpm install --frozen-lockfile && make build_init && \
     mkdir -p ./dist/data/state && cp -R config ./dist/data/state && \
     make build_frontend && make build_backend
 
